@@ -3,242 +3,946 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สาขาเทคโนโลยีธุรกิจดิจิทัล - วิทยาลัยอาชีวศึกษาสระบุรี</title>
+    <title>DBT | เทคโนโลยีธุรกิจดิจิทัล อาชีวศึกษาสระบุรี</title>
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
+        /* --- ตั้งค่าเริ่มต้น --- */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #f8fafc;
+            color: #334155;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #ffffff;
-            min-height: 100vh;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        /* --- ส่วนหัว (Header) --- */
+        header {
+            background: linear-gradient(90deg, #fce7f3 0%, #e9d5ff 100%);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        /* Header Bar */
-        .header {
-            background: linear-gradient(90deg, #e2b0ff 0%, #a855f7 100%);
-            padding: 15px 25px;
+        .header-logo-text {
+            text-align: center;
+        }
+
+        .header-logo-text h1 {
+            font-size: 20px;
+            color: #7e22ce;
+            font-weight: 700;
+        }
+
+        .header-logo-text p {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            color: #b45309;
+            font-weight: 600;
+        }
+
+        .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .header img {
-            width: 55px;
-            height: 55px;
-            background: #fff;
-            border-radius: 50%;
-            padding: 3px;
-        }
-
-        .header-title h1 {
-            font-size: 1.5rem;
-            color: #d97706; /* สีทอง */
-            font-weight: bold;
-            text-shadow: 0px 1px 1px rgba(255,255,255,0.8);
-        }
-
-        .header-title h2 {
-            font-size: 0.95rem;
-            color: #d97706;
-            letter-spacing: 1px;
-        }
-
-        /* Menu Grid */
-        .menu-section {
-            padding: 40px 20px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .menu-btn {
-            background: #e5e7eb;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #b45309; /* สีข้อความทองเข้ม */
-            text-align: center;
-            text-decoration: none;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .menu-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.8), 0 6px 12px rgba(0,0,0,0.15);
-            background: #f3f4f6;
-        }
-
-        /* Content Section */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 30px 0 20px 0;
-        }
-
-        .activity-card {
-            text-align: center;
-            padding: 0 20px 40px 20px;
-        }
-
-        .activity-card img {
-            width: 100%;
-            max-width: 700px;
+        .user-status-badge {
+            display: none;
+            background: #7e22ce;
+            color: white;
+            padding: 4px 12px;
             border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .activity-card p {
-            margin-top: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
+        .user-status-badge.admin {
+            background: #dc2626;
         }
 
-        /* Personnel Section */
-        .personnel-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            padding: 20px;
-            max-width: 850px;
-            margin: 0 auto 50px auto;
+        .icon-btn {
+            font-size: 24px;
+            color: #7e22ce;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
         }
 
-        .personnel-card {
+        .icon-btn:hover {
+            background: rgba(126, 34, 206, 0.1);
+        }
+
+        /* --- Sidebar Menu --- */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 1001;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease-in-out;
+            padding: 25px 20px;
             display: flex;
             flex-direction: column;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f5f9;
+            margin-bottom: 20px;
         }
 
-        .avatar-frame {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 4px solid #f59e0b;
-            padding: 3px;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        .sidebar-header h3 {
+            color: #7e22ce;
+            font-size: 18px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .sidebar-menu a:hover {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .admin-only-item {
+            display: none;
+            background: #fef2f2;
+            border: 1px dashed #ef4444;
+            border-radius: 8px;
+        }
+
+        .admin-only-item a {
+            color: #dc2626 !important;
+        }
+
+        /* --- ส่วนแบนเนอร์ (Hero Section) --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 480px;
             overflow: hidden;
-            background: #fff;
         }
 
-        .avatar-frame img {
+        .hero img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
         }
 
-        .badge {
-            margin-top: 10px;
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            color: #92400e;
-            font-size: 0.75rem;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .hero-overlay-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.6), transparent);
+        }
+
+        .login-overlay {
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            transform: translateY(-50%);
+            color: white;
+            max-width: 500px;
+        }
+
+        .login-overlay h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .login-overlay p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .btn-login {
+            background: #ffffff;
+            padding: 12px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #7e22ce;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: 0.3s;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-login:hover {
+            background: #f3e8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        /* --- โครงสร้างส่วนทั่วไป (Section Style) --- */
+        section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
             text-align: center;
-            font-weight: bold;
+            margin-bottom: 40px;
+            position: relative;
         }
 
-        /* Responsive Design */
+        .section-title h2 {
+            display: inline-block;
+            font-size: 28px;
+            color: #581c87;
+            padding: 0 20px;
+            background: #f8fafc;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e9d5ff, transparent);
+            z-index: 0;
+        }
+
+        /* --- ส่วนเกี่ยวกับสาขา (About Section) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .about-card {
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+        }
+
+        .about-card:hover {
+            border-color: #c084fc;
+            transform: translateY(-5px);
+        }
+
+        .about-icon {
+            width: 60px;
+            height: 60px;
+            background: #f3e8ff;
+            color: #7e22ce;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+
+        .about-card h3 {
+            font-size: 20px;
+            color: #1e1b4b;
+            margin-bottom: 12px;
+        }
+
+        /* --- ส่วนกิจกรรม (Activities Section) --- */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .activity-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #f1f5f9;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(126, 34, 206, 0.1);
+        }
+
+        .card-img {
+            height: 220px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .activity-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .card-body h3 {
+            font-size: 18px;
+            color: #1e1b4b;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .card-body p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* --- ส่วนบุคลากร (Faculty Section) --- */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .faculty-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #f1f5f9;
+        }
+
+        .faculty-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 4px solid #f3e8ff;
+        }
+
+        .faculty-card h4 {
+            font-size: 16px;
+            color: #1e1b4b;
+        }
+
+        .faculty-card p {
+            font-size: 13px;
+            color: #7e22ce;
+        }
+
+        /* --- Modal Pop-up เข้าสู่ระบบ --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .modal-content h3 {
+            text-align: center;
+            color: #7e22ce;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        /* ตัวเลือกประเภทผู้ใช้งาน (Role Switcher) */
+        .role-selector {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .role-btn.active {
+            background: white;
+            color: #7e22ce;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #475569;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #7e22ce;
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1);
+        }
+
+        .admin-code-group {
+            display: none;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #fca5a5;
+        }
+
+        .admin-code-group label {
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #7e22ce;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #6b21a8;
+        }
+
+        .admin-notice {
+            font-size: 12px;
+            color: #dc2626;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 50px 5% 20px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+
+        .footer-info h3 {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .footer-info p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            font-size: 13px;
+        }
+
+        /* --- Custom Notification Box --- */
+        .custom-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid #7e22ce;
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .custom-alert.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .custom-alert.error {
+            border-left-color: #ef4444;
+        }
+
+        /* --- Responsive --- */
         @media (max-width: 768px) {
-            .menu-grid, .personnel-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .menu-grid, .personnel-grid {
-                grid-template-columns: 1fr;
-            }
-            .header-title h1 {
-                font-size: 1.2rem;
-            }
+            .header-logo-text h1 { font-size: 16px; }
+            .header-logo-text p { font-size: 11px; }
+            .hero { height: 320px; }
+            .login-overlay h2 { font-size: 26px; }
+            .login-overlay p { font-size: 14px; }
+            .login-overlay { left: 5%; right: 5%; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="header">
-            <img src="https://via.placeholder.com/60" alt="DBT Logo">
-            <div class="header-title">
-                <h1>วิทยาลัยอาชีวศึกษาสระบุรี</h1>
-                <h2>DIGITAL BUSINESS TECHNOLOGY</h2>
-            </div>
-        </header>
-
-        <section class="menu-section">
-            <div class="menu-grid">
-                <a href="#personnel" class="menu-btn">บุคลากร</a>
-                <a href="#" class="menu-btn">ตารางสอน</a>
-                <a href="#" class="menu-btn">ใบลา/ใบออกนอกวิทยาลัย</a>
-                <a href="#activity" class="menu-btn">กิจกรรม</a>
-                <a href="#" class="menu-btn">Facebook</a>
-                <a href="#" class="menu-btn">รู้จักสาขาเรา</a>
-            </div>
-        </section>
-
-        <hr style="border: none; border-top: 1px solid #eee; margin: 0 20px;">
-
-        <section id="activity">
-            <h2 class="section-title">กำหนดการกิจกรรม</h2>
-            <div class="activity-card">
-                <img src="https://via.placeholder.com/700x350" alt="กิจกรรมไหว้ครู">
-                <p>กิจกรรมไหว้ครู ประจำปี 2569</p>
-            </div>
-        </section>
-
-        <section id="personnel">
-            <div class="header" style="margin-bottom: 30px;">
-                <div class="header-title">
-                    <h1 style="color: #d97706;">หน้า 2 - บุคลากร</h1>
-                </div>
-            </div>
-            
-            <div class="personnel-grid">
-                <div class="personnel-card">
-                    <div class="avatar-frame">
-                        <img src="https://via.placeholder.com/150" alt="หัวหน้าสาขา">
-                    </div>
-                    <span class="badge">หัวหน้าสาขาเทคโนโลยีธุรกิจดิจิทัล</span>
-                </div>
-                <div class="personnel-card">
-                    <div class="avatar-frame">
-                        <img src="https://via.placeholder.com/150" alt="ครูประจำสาขา">
-                    </div>
-                    <span class="badge">ครูประจำสาขาเทคโนโลยีธุรกิจดิจิทัล</span>
-                </div>
-                <div class="personnel-card">
-                    <div class="avatar-frame">
-                        <img src="https://via.placeholder.com/150" alt="ครูประจำสาขา">
-                    </div>
-                    <span class="badge">ครูประจำสาขาเทคโนโลยีธุรกิจดิจิทัล</span>
-                </div>
-            </div>
-        </section>
+    <!-- Notification Box -->
+    <div class="custom-alert" id="customAlert">
+        <i class="fa-solid fa-circle-info" id="alertIcon"></i>
+        <span id="alertMessage">ข้อความแจ้งเตือน</span>
     </div>
 
+    <!-- Overlay แบ็กดรอปเมื่อเปิด Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- แถบเมนูด้านข้าง (Sidebar Menu) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>เมนูหลัก</h3>
+            <div class="icon-btn" id="closeSidebar"><i class="fa-solid fa-xmark"></i></div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#about"><i class="fa-solid fa-graduation-cap"></i> เกี่ยวกับสาขา</a></li>
+            <li><a href="#activities"><i class="fa-solid fa-images"></i> ภาพกิจกรรม</a></li>
+            <li><a href="#faculty"><i class="fa-solid fa-user-tie"></i> บุคลากร</a></li>
+            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> ติดต่อเรา</a></li>
+            <!-- เมนูเฉพาะ Admin -->
+            <li class="admin-only-item" id="adminMenuItem">
+                <a href="#admin-panel"><i class="fa-solid fa-gears"></i> ระบบจัดการหลังบ้าน (Admin)</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ส่วนหัว (Header) -->
+    <header>
+        <div class="icon-btn" id="openSidebar"><i class="fa-solid fa-bars"></i></div>
+        
+        <div class="header-logo-text">
+            <h1>วิทยาลัยอาชีวศึกษาสระบุรี</h1>
+            <p>DIGITAL BUSINESS TECHNOLOGY</p>
+        </div>
+
+        <div class="header-right">
+            <span class="user-status-badge" id="userBadge">ผู้ใช้งานทั่วไป</span>
+            <div class="icon-btn" id="openUserModal"><i class="fa-solid fa-circle-user"></i></div>
+        </div>
+    </header>
+
+    <!-- ส่วนแบนเนอร์หลัก (Hero Section) -->
+    <section class="hero" style="padding: 0; max-width: 100%;">
+        <img src="https://images.unsplash.com/photo-1523050853063-915894612233?auto=format&fit=crop&q=80&w=1200" alt="วิทยาลัยอาชีวศึกษาสระบุรี">
+        <div class="hero-overlay-gradient"></div>
+        <div class="login-overlay">
+            <h2>สาขาเทคโนโลยีธุรกิจดิจิทัล</h2>
+            <p>มุ่งเน้นการสร้างสรรค์นวัตกรรม ดิจิทัลมาร์เก็ตติ้ง และเทคโนโลยีธุรกิจยุคใหม่</p>
+            <button class="btn-login" id="heroLoginBtn">เข้าสู่ระบบ</button>
+        </div>
+    </section>
+
+    <!-- ส่วนเกี่ยวกับสาขา (About Section) -->
+    <section id="about">
+        <div class="section-title">
+            <h2>หลักสูตรที่เปิดสอน</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                <h3>ระดับ ปวช.</h3>
+                <p>ประกาศนียบัตรวิชาชีพ มุ่งเน้นการเรียนรู้พื้นฐานเทคโนโลยี คอมพิวเตอร์ และการสร้างสื่อดิจิทัลเบื้องต้น</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>ระดับ ปวส.</h3>
+                <p>ประกาศนียบัตรวิชาชีพชั้นสูง เน้นทักษะการบริหารจัดการธุรกิจดิจิทัล การตลาดออนไลน์ และ E-Commerce</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon"><i class="fa-solid fa-rocket"></i></div>
+                <h3>ต่อยอดอาชีพ</h3>
+                <p>เตรียมความพร้อมสู่การเป็นนักการตลาดดิจิทัล ผู้ประกอบการออนไลน์ และนักพัฒนาระบบธุรกิจ</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนกิจกรรม (Activities Section) -->
+    <section id="activities">
+        <div class="section-title">
+            <h2>ภาพกิจกรรมสาขา</h2>
+        </div>
+
+        <div class="activity-grid">
+            <div class="activity-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=400" alt="พิธีไหว้ครู">
+                </div>
+                <div class="card-body">
+                    <h3>พิธีไหว้ครู ประจำปีการศึกษา 2569</h3>
+                    <p>สืบสานประเพณีแสดงความเคารพต่อครูอาจารย์ของนักศึกษาสาขาเทคโนโลยีธุรกิจดิจิทัล</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=400" alt="แข่งขันโครงงาน">
+                </div>
+                <div class="card-body">
+                    <h3>รางวัลเหรียญเงิน โครงงานวิทยาศาสตร์</h3>
+                    <p>ความสำเร็จของนักศึกษาในการแข่งขันนวัตกรรมดิจิทัลระดับชาติ ครั้งที่ 35</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400" alt="อบรมสัมมนา">
+                </div>
+                <div class="card-body">
+                    <h3>อบรมสัมมนาธุรกิจดิจิทัล</h3>
+                    <p>การบรรยายพิเศษจากผู้เชี่ยวชาญด้านการตลาดออนไลน์และ E-Commerce</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนบุคลากร (Faculty Section) -->
+    <section id="faculty">
+        <div class="section-title">
+            <h2>คณะครูประจำสาขา</h2>
+        </div>
+        <div class="faculty-grid">
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="หัวหน้าสาขา" class="faculty-img">
+                <h4>ดร. สมศรี มีสุข</h4>
+                <p>หัวหน้าสาขาวิชา</p>
+            </div>
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200" alt="ครูประจำสาขา" class="faculty-img">
+                <h4>อาจารย์ สมชาย ใจดี</h4>
+                <p>ครูประจำสาขาวิชา</p>
+            </div>
+            <div class="faculty-card">
+                <img src="https://images.unsplash.com/photo-1580894732413-a7235a163697?auto=format&fit=crop&q=80&w=200" alt="ครูประจำสาขา" class="faculty-img">
+                <h4>อาจารย์ วรรณา สุขใจ</h4>
+                <p>ครูประจำสาขาวิชา</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal เข้าสู่ระบบ (Pop-up Login) -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h3 id="modalTitle">เข้าสู่ระบบ</h3>
+
+            <!-- ปุ่มสลับสถานะ Admin / User -->
+            <div class="role-selector">
+                <button type="button" class="role-btn active" id="userRoleBtn">นักศึกษา / บุคคลทั่วไป</button>
+                <button type="button" class="role-btn" id="adminRoleBtn">ผู้ดูแลระบบ (Admin)</button>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">ชื่อผู้ใช้ / อีเมล</label>
+                    <input type="text" id="username" placeholder="ระบุชื่อผู้ใช้" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" placeholder="ระบุรหัสผ่าน" required>
+                </div>
+
+                <!-- ช่องใส่ Admin Secret Code (แสดงเมื่อเลือกเป็น Admin) -->
+                <div class="form-group admin-code-group" id="adminCodeGroup">
+                    <label for="adminCode"><i class="fa-solid fa-key"></i> รหัสอนุมัติแอดมิน (Admin Key)</label>
+                    <input type="password" id="adminCode" placeholder="ใส่รหัสลับ Admin (ทดสอบ: 1234)">
+                    <small class="admin-notice">* ต้องใช้รหัสผ่านพิเศษสำหรับสิทธิ์ Admin</small>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">เข้าสู่ระบบ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ส่วนท้าย (Footer) -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-info">
+                <h3>วิทยาลัยอาชีวศึกษาสระบุรี</h3>
+                <p><i class="fa-solid fa-location-dot"></i> 214 ถนนพหลโยธิน ตำบลปากเพรียว อำเภอเมือง จังหวัดสระบุรี 18000</p>
+                <p><i class="fa-solid fa-phone"></i> โทรศัพท์: 036-211-122</p>
+            </div>
+            <div class="footer-info">
+                <h3>สาขาเทคโนโลยีธุรกิจดิจิทัล</h3>
+                <p><i class="fa-solid fa-envelope"></i> อีเมล: dbt@svc.ac.th</p>
+                <p><i class="fa-brands fa-facebook"></i> Facebook: เทคโนโลยีธุรกิจดิจิทัล อาชีวศึกษาสระบุรี</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 สาขาเทคโนโลยีธุรกิจดิจิทัล วิทยาลัยอาชีวศึกษาสระบุรี | สงวนลิขสิทธิ์</p>
+        </div>
+    </footer>
+
+    <!-- ส่วนควบคุมด้วย JavaScript -->
+    <script>
+        // --- กำหนดรหัสแอดมินสำหรับการทดสอบ ---
+        const ADMIN_SECRET_CODE = "1234";
+        let currentRole = "user"; // "user" หรือ "admin"
+
+        // --- การแสดงการแจ้งเตือน (Custom Notification) ---
+        function showAlert(msg, isError = false) {
+            const alertBox = document.getElementById('customAlert');
+            const alertMsg = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+
+            alertMsg.textContent = msg;
+            if (isError) {
+                alertBox.classList.add('error');
+                alertIcon.className = 'fa-solid fa-triangle-exclamation';
+                alertIcon.style.color = '#ef4444';
+            } else {
+                alertBox.classList.remove('error');
+                alertIcon.className = 'fa-solid fa-circle-check';
+                alertIcon.style.color = '#7e22ce';
+            }
+
+            alertBox.classList.add('show');
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3500);
+        }
+
+        // --- ระบบควบคุม Sidebar ---
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        }
+
+        openSidebar.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // --- ระบบควบคุม Modal เข้าสู่ระบบ ---
+        const loginModal = document.getElementById('loginModal');
+        const openUserModal = document.getElementById('openUserModal');
+        const heroLoginBtn = document.getElementById('heroLoginBtn');
+        const closeModal = document.getElementById('closeModal');
+
+        const userRoleBtn = document.getElementById('userRoleBtn');
+        const adminRoleBtn = document.getElementById('adminRoleBtn');
+        const adminCodeGroup = document.getElementById('adminCodeGroup');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function showLoginModal() {
+            loginModal.classList.add('active');
+        }
+
+        function hideLoginModal() {
+            loginModal.classList.remove('active');
+        }
+
+        openUserModal.addEventListener('click', showLoginModal);
+        heroLoginBtn.addEventListener('click', showLoginModal);
+        closeModal.addEventListener('click', hideLoginModal);
+
+        // ปิด Modal เมื่อคลิกพื้นที่ภายนอก
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                hideLoginModal();
+            }
+        });
+
+        // สลับ Role ระหว่าง User กับ Admin
+        userRoleBtn.addEventListener('click', () => {
+            currentRole = "user";
+            userRoleBtn.classList.add('active');
+            adminRoleBtn.classList.remove('active');
+            adminCodeGroup.style.display = "none";
+            submitBtn.textContent = "เข้าสู่ระบบ";
+            submitBtn.style.background = "#7e22ce";
+        });
+
+        adminRoleBtn.addEventListener('click', () => {
+            currentRole = "admin";
+            adminRoleBtn.classList.add('active');
+            userRoleBtn.classList.remove('active');
+            adminCodeGroup.style.display = "block";
+            submitBtn.textContent = "เข้าสู่ระบบแอดมิน";
+            submitBtn.style.background = "#dc2626";
+        });
+
+        // จัดการการส่งฟอร์ม Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const adminCodeInput = document.getElementById('adminCode').value;
+            const userBadge = document.getElementById('userBadge');
+            const adminMenuItem = document.getElementById('adminMenuItem');
+
+            if (currentRole === "admin") {
+                // ตรวจสอบรหัสลับ Admin
+                if (adminCodeInput === ADMIN_SECRET_CODE) {
+                    showAlert('ยินดีต้อนรับ ผู้ดูแลระบบ (Admin) ' + user);
+                    userBadge.textContent = 'Admin: ' + user;
+                    userBadge.classList.add('admin');
+                    userBadge.style.display = 'inline-block';
+                    adminMenuItem.style.display = 'block'; // แสดงเมนูแอดมิน
+                    hideLoginModal();
+                } else {
+                    showAlert('รหัสอนุมัติแอดมินไม่ถูกต้อง!', true);
+                }
+            } else {
+                showAlert('ยินดีต้อนรับคุณ ' + user + ' เข้าสู่ระบบ');
+                userBadge.textContent = 'คุณ ' + user;
+                userBadge.classList.remove('admin');
+                userBadge.style.display = 'inline-block';
+                adminMenuItem.style.display = 'none';
+                hideLoginModal();
+            }
+        });
+    </script>
 </body>
 </html>
