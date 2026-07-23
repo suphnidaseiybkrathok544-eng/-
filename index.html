@@ -199,12 +199,14 @@
             width: 100%;
             height: 480px;
             overflow: hidden;
+            background-color: #1e293b;
         }
 
         .hero img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .hero-overlay-gradient {
@@ -213,7 +215,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(15, 23, 42, 0.6), transparent);
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(15, 23, 42, 0.1) 100%);
         }
 
         .login-overlay {
@@ -222,19 +224,23 @@
             left: 8%;
             transform: translateY(-50%);
             color: white;
-            max-width: 500px;
+            max-width: 550px;
+            z-index: 10;
         }
 
         .login-overlay h2 {
             font-size: 36px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 12px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            line-height: 1.2;
         }
 
         .login-overlay p {
             font-size: 18px;
             margin-bottom: 25px;
-            opacity: 0.9;
+            opacity: 0.95;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+            line-height: 1.5;
         }
 
         .btn-login {
@@ -245,7 +251,7 @@
             color: #7e22ce;
             font-weight: 600;
             border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
             transition: 0.3s;
             display: inline-block;
             cursor: pointer;
@@ -254,7 +260,7 @@
         .btn-login:hover {
             background: #f3e8ff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
         /* --- โครงสร้างส่วนทั่วไป (Section Style) --- */
@@ -359,6 +365,7 @@
             height: 220px;
             width: 100%;
             overflow: hidden;
+            background: #e2e8f0;
         }
 
         .card-img img {
@@ -437,6 +444,19 @@
             border: 1px solid #fca5a5;
             border-radius: 8px;
             outline: none;
+            background: white;
+        }
+
+        .file-upload-box {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .file-upload-box label {
+            font-size: 13px;
+            color: #991b1b;
+            font-weight: 600;
         }
 
         .btn-add-activity {
@@ -471,13 +491,14 @@
         }
 
         .faculty-img {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
             margin: 0 auto 15px;
             border: 4px solid #f3e8ff;
             box-shadow: 0 4px 10px rgba(126, 34, 206, 0.15);
+            background: #e2e8f0;
         }
 
         .faculty-card h4 {
@@ -756,11 +777,12 @@
 
     <!-- ส่วนแบนเนอร์หลัก (Hero Section) -->
     <section class="hero" style="padding: 0; max-width: 100%;">
-        <img src="https://images.unsplash.com/photo-1523050853063-915894612233?auto=format&fit=crop&q=80&w=1200" alt="วิทยาลัยอาชีวศึกษาสระบุรี">
+        <!-- รูปภาพแบนเนอร์หลัก -->
+        <img id="heroImage" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200" alt="สาขาเทคโนโลยีธุรกิจดิจิทัล อาชีวศึกษาสระบุรี">
         <div class="hero-overlay-gradient"></div>
         <div class="login-overlay">
             <h2>สาขาเทคโนโลยีธุรกิจดิจิทัล</h2>
-            <p>มุ่งเน้นการสร้างสรรค์นวัตกรรมและเทคโนโลยีธุรกิจยุคใหม่</p>
+            <p>มุ่งเน้นการสร้างสรรค์นวัตกรรม ดิจิทัลมาร์เก็ตติ้ง และเทคโนโลยีธุรกิจยุคใหม่</p>
             <button class="btn-login" id="heroLoginBtn">เข้าสู่ระบบ</button>
         </div>
     </section>
@@ -833,13 +855,23 @@
 
         <!-- ส่วนสำหรับ Admin เพิ่ม/แก้ไขงาน (เฉพาะ Admin มองเห็น) -->
         <div id="adminPanel">
-            <h3><i class="fa-solid fa-pen-to-square"></i> เพิ่มกิจกรรม/ผลงานใหม่ (สำหรับแอดมิน)</h3>
+            <h3><i class="fa-solid fa-pen-to-square"></i> เพิ่มกิจกรรม/เปลี่ยนรูปแบนเนอร์ (สำหรับแอดมิน)</h3>
             <div class="admin-form-grid">
                 <input type="text" id="newTitle" class="admin-input" placeholder="หัวข้อกิจกรรม...">
                 <input type="text" id="newDesc" class="admin-input" placeholder="รายละเอียดสั้นๆ...">
-                <input type="text" id="newImg" class="admin-input" placeholder="ลิงก์ URL รูปภาพ ( Unsplash, Imgur ฯลฯ )">
+                <div class="file-upload-box">
+                    <label><i class="fa-solid fa-image"></i> เลือกไฟล์รูปจากเครื่อง (สำหรับเปลี่ยนแบนเนอร์/กิจกรรม):</label>
+                    <input type="file" id="fileImgInput" class="admin-input" accept="image/*">
+                </div>
+                <div class="file-upload-box">
+                    <label><i class="fa-solid fa-link"></i> หรือใส่ลิงก์ URL รูปภาพ:</label>
+                    <input type="text" id="newImg" class="admin-input" placeholder="https://example.com/image.jpg">
+                </div>
             </div>
-            <button class="btn-add-activity" id="addActivityBtn"><i class="fa-solid fa-plus"></i> เพิ่มกิจกรรมลงหน้าเว็บ</button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn-add-activity" id="addActivityBtn"><i class="fa-solid fa-plus"></i> เพิ่มกิจกรรมลงหน้าเว็บ</button>
+                <button class="btn-add-activity" id="changeHeroBtn" style="background: #4f46e5;"><i class="fa-solid fa-mountain-sun"></i> อัปโหลดเปลี่ยนรูปแบนเนอร์หลักด้านบน</button>
+            </div>
         </div>
     </section>
 
@@ -852,32 +884,29 @@
             
             <!-- ครูท่านที่ 1 -->
             <div class="faculty-card">
-                <!-- ⬇️ เปลี่ยน URL รูปครูท่านที่ 1 ตรงนี้ ⬇️ -->
-                <img src="https://rms.rsc.ac.th/files/87016_25011714145016.jpg" alt="ณัชกานต์ รอดสการข" class="faculty-img">
+                <img id="teacherImg1" src="https://rms.rsc.ac.th/files/87016_25011714145016.jpg" alt="ณัชกานต์ รอดสการ" class="faculty-img">
                 <h4>ณัชกานต์ รอดสการ</h4>
                 <p>หัวหน้าสาขาวิชา</p>
             </div>
 
             <!-- ครูท่านที่ 2 -->
             <div class="faculty-card">
-                <!-- ⬇️ เปลี่ยน URL รูปครูท่านที่ 2 ตรงนี้ ⬇️ -->
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7B7UV4Oi5dIf0OzNwG1fK-_hChHIrRyRKzm0V6jpMsw&s" alt="นางสาวดาวพระศุกร์ ฤทธิบัณฑิตย์" class="faculty-img">
+                <img id="teacherImg2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7B7UV4Oi5dIf0OzNwG1fK-_hChHIrRyRKzm0V6jpMsw&s" alt="นางสาวดาวพระศุกร์ ฤทธิบัณฑิตย์" class="faculty-img">
                 <h4>นางสาวดาวพระศุกร์ ฤทธิบัณฑิตย์</h4>
                 <p>ครูประจำสาขาวิชา</p>
             </div>
 
             <!-- ครูท่านที่ 3 -->
             <div class="faculty-card">
-                <!-- ⬇️ เปลี่ยน URL รูปครูท่านที่ 3 ตรงนี้ ⬇️ -->
-                <img src="https://rms.rsc.ac.th/files/81579_25012013130513.jpg" alt="อาจารย์ อัญธิภา พรแสนจ" class="faculty-img">
+                <img id="teacherImg3" src="https://rms.rsc.ac.th/files/81579_25012013130513.jpg" alt="อาจารย์ อัญธิภา พรแสน" class="faculty-img">
                 <h4>อาจารย์ อัญธิภา พรแสน</h4>
                 <p>ครูประจำสาขาวิชา</p>
             </div>
-<!-- ครูท่านที่ 4 -->
+
+            <!-- ครูท่านที่ 4 -->
             <div class="faculty-card">
-                <!-- ⬇️ เปลี่ยน URL รูปครูท่านที่ 4 ตรงนี้ ⬇️ -->
-                <img src="https://rms.rsc.ac.th/files/60753_25011714145200.jpg" alt="อาจารย์ นางมลฤดี   พึ่งผล" class="faculty-img">
-                <h4>อาจารย์ นางมลฤดี   พึ่งผล</h4>
+                <img id="teacherImg4" src="https://rms.rsc.ac.th/files/60753_25011714145200.jpg" alt="อาจารย์ นางมลฤดี พึ่งผล" class="faculty-img">
+                <h4>อาจารย์ นางมลฤดี พึ่งผล</h4>
                 <p>ครูประจำสาขาวิชา</p>
             </div>
 
@@ -938,7 +967,7 @@
         // ==========================================
         // 🔑 รหัสผ่านเฉพาะแอดมินสำหรับแก้ไขข้อมูล
         // ==========================================
-        const ADMIN_PASSWORD = "311051";
+        const ADMIN_PASSWORD = "1234";
         
         let isUserAdmin = false;
         let selectedRole = "student"; // "student" หรือ "admin"
@@ -1089,42 +1118,66 @@
             showAlert('ออกจากระบบเรียบร้อยแล้ว');
         });
 
+        // --- ฟังก์ชันดึงรูปภาพจากไฟล์อัปโหลดหรือ URL ---
+        function getSelectedImageUrl(fileInputId, textInputId, callback) {
+            const fileInput = document.getElementById(fileInputId);
+            const textUrl = document.getElementById(textInputId).value.trim();
+
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if (textUrl) {
+                callback(textUrl);
+            } else {
+                callback("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200");
+            }
+        }
+
         // --- ระบบสำหรับแอดมินเพิ่มกิจกรรม/งานใหม่ ---
         document.getElementById('addActivityBtn').addEventListener('click', function() {
             const title = document.getElementById('newTitle').value;
             const desc = document.getElementById('newDesc').value;
-            let img = document.getElementById('newImg').value;
 
             if (!title || !desc) {
                 showAlert('กรุณากรอกหัวข้อและรายละเอียดกิจกรรม', true);
                 return;
             }
 
-            if (!img) {
-                img = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400"; // ภาพตั้งต้นกรณีไม่ได้ใส่ลิงก์
-            }
+            getSelectedImageUrl('fileImgInput', 'newImg', function(imgSrc) {
+                const container = document.getElementById('activityContainer');
+                const newCard = document.createElement('div');
+                newCard.className = 'activity-card';
+                newCard.innerHTML = `
+                    <button class="delete-card-btn" style="display: block;" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
+                    <div class="card-img">
+                        <img src="${imgSrc}" alt="${title}">
+                    </div>
+                    <div class="card-body">
+                        <h3>${title}</h3>
+                        <p>${desc}</p>
+                    </div>
+                `;
 
-            const container = document.getElementById('activityContainer');
-            const newCard = document.createElement('div');
-            newCard.className = 'activity-card';
-            newCard.innerHTML = `
-                <button class="delete-card-btn" style="display: block;" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
-                <div class="card-img">
-                    <img src="${img}" alt="${title}">
-                </div>
-                <div class="card-body">
-                    <h3>${title}</h3>
-                    <p>${desc}</p>
-                </div>
-            `;
+                container.prepend(newCard); // เพิ่มงานใหม่ไว้ด้านบนสุด
+                showAlert('เพิ่มกิจกรรมเรียบร้อยแล้ว!');
 
-            container.prepend(newCard); // เพิ่มงานใหม่ไว้ด้านบนสุด
-            showAlert('เพิ่มกิจกรรมเรียบร้อยแล้ว!');
+                // ล้างค่าช่องป้อนข้อมูล
+                document.getElementById('newTitle').value = '';
+                document.getElementById('newDesc').value = '';
+                document.getElementById('newImg').value = '';
+                document.getElementById('fileImgInput').value = '';
+            });
+        });
 
-            // ล้างค่าช่องป้อนข้อมูล
-            document.getElementById('newTitle').value = '';
-            document.getElementById('newDesc').value = '';
-            document.getElementById('newImg').value = '';
+        // --- ระบบเปลี่ยนรูปภาพแบนเนอร์หลัก (Hero Image) ---
+        document.getElementById('changeHeroBtn').addEventListener('click', function() {
+            getSelectedImageUrl('fileImgInput', 'newImg', function(imgSrc) {
+                document.getElementById('heroImage').src = imgSrc;
+                showAlert('เปลี่ยนรูปแบนเนอร์หลักเรียบร้อยแล้ว!');
+            });
         });
 
         // ระบบสำหรับแอดมินลบกิจกรรม
