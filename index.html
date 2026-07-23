@@ -57,6 +57,26 @@
             font-weight: 600;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-status-badge {
+            display: none;
+            background: #7e22ce;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .user-status-badge.admin {
+            background: #dc2626;
+        }
+
         .icon-btn {
             font-size: 24px;
             color: #7e22ce;
@@ -149,6 +169,17 @@
         .sidebar-menu a:hover {
             background: #f3e8ff;
             color: #7e22ce;
+        }
+
+        .admin-only-item {
+            display: none;
+            background: #fef2f2;
+            border: 1px dashed #ef4444;
+            border-radius: 8px;
+        }
+
+        .admin-only-item a {
+            color: #dc2626 !important;
         }
 
         /* --- ส่วนแบนเนอร์ (Hero Section) --- */
@@ -269,7 +300,7 @@
 
         .about-card:hover {
             border-color: #c084fc;
-            transform: translateY(-50%);
+            transform: translateY(-5px);
         }
 
         .about-icon {
@@ -408,7 +439,7 @@
             padding: 35px 30px;
             border-radius: 20px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             position: relative;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
@@ -427,6 +458,35 @@
             color: #7e22ce;
             margin-bottom: 20px;
             font-size: 22px;
+        }
+
+        /* ตัวเลือกประเภทผู้ใช้งาน (Role Switcher) */
+        .role-selector {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .role-btn.active {
+            background: white;
+            color: #7e22ce;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            font-weight: 600;
         }
 
         .form-group {
@@ -454,6 +514,19 @@
             box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1);
         }
 
+        .admin-code-group {
+            display: none;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #fca5a5;
+        }
+
+        .admin-code-group label {
+            color: #991b1b;
+            font-weight: 600;
+        }
+
         .btn-submit {
             width: 100%;
             background: #7e22ce;
@@ -469,6 +542,13 @@
 
         .btn-submit:hover {
             background: #6b21a8;
+        }
+
+        .admin-notice {
+            font-size: 12px;
+            color: #dc2626;
+            margin-top: 5px;
+            display: block;
         }
 
         /* --- Footer --- */
@@ -507,6 +587,34 @@
             font-size: 13px;
         }
 
+        /* --- Custom Notification Box --- */
+        .custom-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid #7e22ce;
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .custom-alert.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .custom-alert.error {
+            border-left-color: #ef4444;
+        }
+
         /* --- Responsive --- */
         @media (max-width: 768px) {
             .header-logo-text h1 { font-size: 16px; }
@@ -519,6 +627,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Notification Box -->
+    <div class="custom-alert" id="customAlert">
+        <i class="fa-solid fa-circle-info" id="alertIcon"></i>
+        <span id="alertMessage">ข้อความแจ้งเตือน</span>
+    </div>
 
     <!-- Overlay แบ็กดรอปเมื่อเปิด Sidebar -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -534,6 +648,10 @@
             <li><a href="#activities"><i class="fa-solid fa-images"></i> ภาพกิจกรรม</a></li>
             <li><a href="#faculty"><i class="fa-solid fa-user-tie"></i> บุคลากร</a></li>
             <li><a href="#contact"><i class="fa-solid fa-envelope"></i> ติดต่อเรา</a></li>
+            <!-- เมนูเฉพาะ Admin -->
+            <li class="admin-only-item" id="adminMenuItem">
+                <a href="#admin-panel"><i class="fa-solid fa-gears"></i> ระบบจัดการหลังบ้าน (Admin)</a>
+            </li>
         </ul>
     </div>
 
@@ -546,7 +664,10 @@
             <p>DIGITAL BUSINESS TECHNOLOGY</p>
         </div>
 
-        <div class="icon-btn" id="openUserModal"><i class="fa-solid fa-circle-user"></i></div>
+        <div class="header-right">
+            <span class="user-status-badge" id="userBadge">ผู้ใช้งานทั่วไป</span>
+            <div class="icon-btn" id="openUserModal"><i class="fa-solid fa-circle-user"></i></div>
+        </div>
     </header>
 
     <!-- ส่วนแบนเนอร์หลัก (Hero Section) -->
@@ -651,7 +772,14 @@
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
-            <h3>เข้าสู่ระบบ</h3>
+            <h3 id="modalTitle">เข้าสู่ระบบ</h3>
+
+            <!-- ปุ่มสลับสถานะ Admin / User -->
+            <div class="role-selector">
+                <button type="button" class="role-btn active" id="userRoleBtn">นักศึกษา / บุคคลทั่วไป</button>
+                <button type="button" class="role-btn" id="adminRoleBtn">ผู้ดูแลระบบ (Admin)</button>
+            </div>
+
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">ชื่อผู้ใช้ / อีเมล</label>
@@ -661,7 +789,15 @@
                     <label for="password">รหัสผ่าน</label>
                     <input type="password" id="password" placeholder="ระบุรหัสผ่าน" required>
                 </div>
-                <button type="submit" class="btn-submit">เข้าสู่ระบบ</button>
+
+                <!-- ช่องใส่ Admin Secret Code (แสดงเมื่อเลือกเป็น Admin) -->
+                <div class="form-group admin-code-group" id="adminCodeGroup">
+                    <label for="adminCode"><i class="fa-solid fa-key"></i> รหัสอนุมัติแอดมิน (Admin Key)</label>
+                    <input type="password" id="adminCode" placeholder="ใส่รหัสลับ Admin (ทดสอบ: 1234)">
+                    <small class="admin-notice">* ต้องใช้รหัสผ่านพิเศษสำหรับสิทธิ์ Admin</small>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">เข้าสู่ระบบ</button>
             </form>
         </div>
     </div>
@@ -687,6 +823,33 @@
 
     <!-- ส่วนควบคุมด้วย JavaScript -->
     <script>
+        // --- กำหนดรหัสแอดมินสำหรับการทดสอบ ---
+        const ADMIN_SECRET_CODE = "1234";
+        let currentRole = "user"; // "user" หรือ "admin"
+
+        // --- การแสดงการแจ้งเตือน (Custom Notification) ---
+        function showAlert(msg, isError = false) {
+            const alertBox = document.getElementById('customAlert');
+            const alertMsg = document.getElementById('alertMessage');
+            const alertIcon = document.getElementById('alertIcon');
+
+            alertMsg.textContent = msg;
+            if (isError) {
+                alertBox.classList.add('error');
+                alertIcon.className = 'fa-solid fa-triangle-exclamation';
+                alertIcon.style.color = '#ef4444';
+            } else {
+                alertBox.classList.remove('error');
+                alertIcon.className = 'fa-solid fa-circle-check';
+                alertIcon.style.color = '#7e22ce';
+            }
+
+            alertBox.classList.add('show');
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3500);
+        }
+
         // --- ระบบควบคุม Sidebar ---
         const openSidebar = document.getElementById('openSidebar');
         const closeSidebar = document.getElementById('closeSidebar');
@@ -708,6 +871,11 @@
         const heroLoginBtn = document.getElementById('heroLoginBtn');
         const closeModal = document.getElementById('closeModal');
 
+        const userRoleBtn = document.getElementById('userRoleBtn');
+        const adminRoleBtn = document.getElementById('adminRoleBtn');
+        const adminCodeGroup = document.getElementById('adminCodeGroup');
+        const submitBtn = document.getElementById('submitBtn');
+
         function showLoginModal() {
             loginModal.classList.add('active');
         }
@@ -720,19 +888,60 @@
         heroLoginBtn.addEventListener('click', showLoginModal);
         closeModal.addEventListener('click', hideLoginModal);
 
-        // ปิด Modal เมื่อคลิกพื้นที่ภายนอกหน้าต่าง
+        // ปิด Modal เมื่อคลิกพื้นที่ภายนอก
         window.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 hideLoginModal();
             }
         });
 
-        // จัดการการฟอร์ม Login
+        // สลับ Role ระหว่าง User กับ Admin
+        userRoleBtn.addEventListener('click', () => {
+            currentRole = "user";
+            userRoleBtn.classList.add('active');
+            adminRoleBtn.classList.remove('active');
+            adminCodeGroup.style.display = "none";
+            submitBtn.textContent = "เข้าสู่ระบบ";
+            submitBtn.style.background = "#7e22ce";
+        });
+
+        adminRoleBtn.addEventListener('click', () => {
+            currentRole = "admin";
+            adminRoleBtn.classList.add('active');
+            userRoleBtn.classList.remove('active');
+            adminCodeGroup.style.display = "block";
+            submitBtn.textContent = "เข้าสู่ระบบแอดมิน";
+            submitBtn.style.background = "#dc2626";
+        });
+
+        // จัดการการส่งฟอร์ม Login
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
-            alert('ยินดีต้อนรับคุณ ' + user + ' เข้าสู่ระบบ');
-            hideLoginModal();
+            const adminCodeInput = document.getElementById('adminCode').value;
+            const userBadge = document.getElementById('userBadge');
+            const adminMenuItem = document.getElementById('adminMenuItem');
+
+            if (currentRole === "admin") {
+                // ตรวจสอบรหัสลับ Admin
+                if (adminCodeInput === ADMIN_SECRET_CODE) {
+                    showAlert('ยินดีต้อนรับ ผู้ดูแลระบบ (Admin) ' + user);
+                    userBadge.textContent = 'Admin: ' + user;
+                    userBadge.classList.add('admin');
+                    userBadge.style.display = 'inline-block';
+                    adminMenuItem.style.display = 'block'; // แสดงเมนูแอดมิน
+                    hideLoginModal();
+                } else {
+                    showAlert('รหัสอนุมัติแอดมินไม่ถูกต้อง!', true);
+                }
+            } else {
+                showAlert('ยินดีต้อนรับคุณ ' + user + ' เข้าสู่ระบบ');
+                userBadge.textContent = 'คุณ ' + user;
+                userBadge.classList.remove('admin');
+                userBadge.style.display = 'inline-block';
+                adminMenuItem.style.display = 'none';
+                hideLoginModal();
+            }
         });
     </script>
 </body>
