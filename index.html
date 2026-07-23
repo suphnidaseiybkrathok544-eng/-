@@ -67,7 +67,7 @@
             display: none;
             background: #7e22ce;
             color: white;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
@@ -75,6 +75,17 @@
 
         .user-status-badge.admin {
             background: #dc2626;
+        }
+
+        .logout-btn {
+            display: none;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
         }
 
         .icon-btn {
@@ -336,6 +347,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             border: 1px solid #f1f5f9;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
         .activity-card:hover {
@@ -375,6 +387,71 @@
         .card-body p {
             color: #64748b;
             font-size: 14px;
+        }
+
+        .delete-card-btn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            font-size: 14px;
+        }
+
+        /* --- ส่วนระบบหลังบ้าน Admin Panel --- */
+        #adminPanel {
+            display: none;
+            background: #fef2f2;
+            border: 2px dashed #fca5a5;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        #adminPanel h3 {
+            color: #dc2626;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .btn-add-activity {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-add-activity:hover {
+            background: #b91c1c;
         }
 
         /* --- ส่วนบุคลากร (Faculty Section) --- */
@@ -460,7 +537,7 @@
             font-size: 22px;
         }
 
-        /* ตัวเลือกประเภทผู้ใช้งาน (Role Switcher) */
+        /* ตัวเลือกประเภทผู้ใช้งาน */
         .role-selector {
             display: flex;
             background: #f1f5f9;
@@ -471,7 +548,7 @@
 
         .role-btn {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             border: none;
             background: transparent;
             border-radius: 8px;
@@ -487,6 +564,10 @@
             color: #7e22ce;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
             font-weight: 600;
+        }
+
+        .role-btn.admin-tab.active {
+            color: #dc2626;
         }
 
         .form-group {
@@ -514,7 +595,7 @@
             box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1);
         }
 
-        .admin-code-group {
+        .admin-pass-group {
             display: none;
             background: #fef2f2;
             padding: 12px;
@@ -522,7 +603,7 @@
             border: 1px solid #fca5a5;
         }
 
-        .admin-code-group label {
+        .admin-pass-group label {
             color: #991b1b;
             font-weight: 600;
         }
@@ -650,7 +731,7 @@
             <li><a href="#contact"><i class="fa-solid fa-envelope"></i> ติดต่อเรา</a></li>
             <!-- เมนูเฉพาะ Admin -->
             <li class="admin-only-item" id="adminMenuItem">
-                <a href="#admin-panel"><i class="fa-solid fa-gears"></i> ระบบจัดการหลังบ้าน (Admin)</a>
+                <a href="#adminPanel"><i class="fa-solid fa-gears"></i> จัดการกิจกรรม (แอดมิน)</a>
             </li>
         </ul>
     </div>
@@ -666,6 +747,7 @@
 
         <div class="header-right">
             <span class="user-status-badge" id="userBadge">ผู้ใช้งานทั่วไป</span>
+            <button class="logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> ออก</button>
             <div class="icon-btn" id="openUserModal"><i class="fa-solid fa-circle-user"></i></div>
         </div>
     </header>
@@ -711,8 +793,10 @@
             <h2>ภาพกิจกรรมสาขา</h2>
         </div>
 
-        <div class="activity-grid">
+        <div class="activity-grid" id="activityContainer">
+            <!-- ข้อมูลตัวอย่างกิจกรรม -->
             <div class="activity-card">
+                <button class="delete-card-btn" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
                 <div class="card-img">
                     <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=400" alt="พิธีไหว้ครู">
                 </div>
@@ -723,6 +807,7 @@
             </div>
 
             <div class="activity-card">
+                <button class="delete-card-btn" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
                 <div class="card-img">
                     <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=400" alt="แข่งขันโครงงาน">
                 </div>
@@ -733,6 +818,7 @@
             </div>
 
             <div class="activity-card">
+                <button class="delete-card-btn" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
                 <div class="card-img">
                     <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400" alt="อบรมสัมมนา">
                 </div>
@@ -741,6 +827,17 @@
                     <p>การบรรยายพิเศษจากผู้เชี่ยวชาญด้านการตลาดออนไลน์และ E-Commerce</p>
                 </div>
             </div>
+        </div>
+
+        <!-- ส่วนสำหรับ Admin เพิ่ม/แก้ไขงาน (เฉพาะ Admin มองเห็น) -->
+        <div id="adminPanel">
+            <h3><i class="fa-solid fa-pen-to-square"></i> เพิ่มกิจกรรม/ผลงานใหม่ (สำหรับแอดมิน)</h3>
+            <div class="admin-form-grid">
+                <input type="text" id="newTitle" class="admin-input" placeholder="หัวข้อกิจกรรม...">
+                <input type="text" id="newDesc" class="admin-input" placeholder="รายละเอียดสั้นๆ...">
+                <input type="text" id="newImg" class="admin-input" placeholder="ลิงก์ URL รูปภาพ ( Unsplash, Imgur ฯลฯ )">
+            </div>
+            <button class="btn-add-activity" id="addActivityBtn"><i class="fa-solid fa-plus"></i> เพิ่มกิจกรรมลงหน้าเว็บ</button>
         </div>
     </section>
 
@@ -752,8 +849,8 @@
         <div class="faculty-grid">
             <div class="faculty-card">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="หัวหน้าสาขา" class="faculty-img">
-                <h4>ครูเเก้ว</h4>
-                <p>หัวหน้าสาขาวิชาเทคโนโลยีธุรกิจดิจิทัล</p>
+                <h4>ดร. สมศรี มีสุข</h4>
+                <p>หัวหน้าสาขาวิชา</p>
             </div>
             <div class="faculty-card">
                 <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200" alt="ครูประจำสาขา" class="faculty-img">
@@ -774,30 +871,26 @@
             <span class="close-modal" id="closeModal">&times;</span>
             <h3 id="modalTitle">เข้าสู่ระบบ</h3>
 
-            <!-- ปุ่มสลับสถานะ Admin / User -->
+            <!-- ปุ่มสลับสถานะ Admin / นักเรียน -->
             <div class="role-selector">
-                <button type="button" class="role-btn active" id="userRoleBtn">นักศึกษา / บุคคลทั่วไป</button>
-                <button type="button" class="role-btn" id="adminRoleBtn">ผู้ดูแลระบบ (Admin)</button>
+                <button type="button" class="role-btn active" id="studentRoleBtn">นักเรียน / บุคคลทั่วไป</button>
+                <button type="button" class="role-btn admin-tab" id="adminRoleBtn"><i class="fa-solid fa-lock"></i> ผู้ดูแลระบบ (Admin)</button>
             </div>
 
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">ชื่อผู้ใช้ / อีเมล</label>
-                    <input type="text" id="username" placeholder="ระบุชื่อผู้ใช้" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">รหัสผ่าน</label>
-                    <input type="password" id="password" placeholder="ระบุรหัสผ่าน" required>
+                    <label for="username">ชื่อผู้ใช้งาน</label>
+                    <input type="text" id="username" placeholder="ระบุชื่อของคุณ" required>
                 </div>
 
-                <!-- ช่องใส่ Admin Secret Code (แสดงเมื่อเลือกเป็น Admin) -->
-                <div class="form-group admin-code-group" id="adminCodeGroup">
-                    <label for="adminCode"><i class="fa-solid fa-key"></i> รหัสอนุมัติแอดมิน (Admin Key)</label>
-                    <input type="password" id="adminCode" placeholder="ใส่รหัสลับ Admin (ทดสอบ: 1234)">
-                    <small class="admin-notice">* ต้องใช้รหัสผ่านพิเศษสำหรับสิทธิ์ Admin</small>
+                <!-- ช่องใส่รหัส Admin (แสดงเฉพาะตอนสลับเป็นแอดมิน) -->
+                <div class="form-group admin-pass-group" id="adminPassGroup">
+                    <label for="adminPass"><i class="fa-solid fa-key"></i> รหัสผ่านแอดมิน</label>
+                    <input type="password" id="adminPass" placeholder="ใส่รหัสแอดมิน (1234)">
+                    <small class="admin-notice">* เฉพาะแอดมินเท่านั้นที่ต้องใส่รหัสเพื่อแก้ไขข้อมูล</small>
                 </div>
 
-                <button type="submit" class="btn-submit" id="submitBtn">เข้าสู่ระบบ</button>
+                <button type="submit" class="btn-submit" id="submitBtn">เข้าใช้งาน</button>
             </form>
         </div>
     </div>
@@ -812,7 +905,7 @@
             </div>
             <div class="footer-info">
                 <h3>สาขาเทคโนโลยีธุรกิจดิจิทัล</h3>
-                <p><i class="fa-solid fa-envelope"></i> อีเมล: @svc.ac.th</p>
+                <p><i class="fa-solid fa-envelope"></i> อีเมล: dbt@svc.ac.th</p>
                 <p><i class="fa-brands fa-facebook"></i> Facebook: เทคโนโลยีธุรกิจดิจิทัล อาชีวศึกษาสระบุรี</p>
             </div>
         </div>
@@ -823,9 +916,13 @@
 
     <!-- ส่วนควบคุมด้วย JavaScript -->
     <script>
-        // --- กำหนดรหัสแอดมินสำหรับการทดสอบ ---
-        const ADMIN_SECRET_CODE = "311051//";
-        let currentRole = "user"; // "user" หรือ "admin"
+        // ==========================================
+        // 🔑 รหัสผ่านเฉพาะแอดมินสำหรับแก้ไขข้อมูล
+        // ==========================================
+        const ADMIN_PASSWORD = "1234";
+        
+        let isUserAdmin = false;
+        let selectedRole = "student"; // "student" หรือ "admin"
 
         // --- การแสดงการแจ้งเตือน (Custom Notification) ---
         function showAlert(msg, isError = false) {
@@ -871,10 +968,11 @@
         const heroLoginBtn = document.getElementById('heroLoginBtn');
         const closeModal = document.getElementById('closeModal');
 
-        const userRoleBtn = document.getElementById('userRoleBtn');
+        const studentRoleBtn = document.getElementById('studentRoleBtn');
         const adminRoleBtn = document.getElementById('adminRoleBtn');
-        const adminCodeGroup = document.getElementById('adminCodeGroup');
+        const adminPassGroup = document.getElementById('adminPassGroup');
         const submitBtn = document.getElementById('submitBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
 
         function showLoginModal() {
             loginModal.classList.add('active');
@@ -888,28 +986,29 @@
         heroLoginBtn.addEventListener('click', showLoginModal);
         closeModal.addEventListener('click', hideLoginModal);
 
-        // ปิด Modal เมื่อคลิกพื้นที่ภายนอก
         window.addEventListener('click', (e) => {
             if (e.target === loginModal) {
                 hideLoginModal();
             }
         });
 
-        // สลับ Role ระหว่าง User กับ Admin
-        userRoleBtn.addEventListener('click', () => {
-            currentRole = "user";
-            userRoleBtn.classList.add('active');
+        // สลับ Role ระหว่าง นักเรียน (ไม่ต้องใช้รหัส) กับ แอดมิน (ใช้รหัส)
+        studentRoleBtn.addEventListener('click', () => {
+            selectedRole = "student";
+            studentRoleBtn.classList.add('active');
             adminRoleBtn.classList.remove('active');
-            adminCodeGroup.style.display = "none";
-            submitBtn.textContent = "เข้าสู่ระบบ";
+            adminPassGroup.style.display = "none";
+            document.getElementById('adminPass').required = false;
+            submitBtn.textContent = "เข้าใช้งาน";
             submitBtn.style.background = "#7e22ce";
         });
 
         adminRoleBtn.addEventListener('click', () => {
-            currentRole = "admin";
+            selectedRole = "admin";
             adminRoleBtn.classList.add('active');
-            userRoleBtn.classList.remove('active');
-            adminCodeGroup.style.display = "block";
+            studentRoleBtn.classList.remove('active');
+            adminPassGroup.style.display = "block";
+            document.getElementById('adminPass').required = true;
             submitBtn.textContent = "เข้าสู่ระบบแอดมิน";
             submitBtn.style.background = "#dc2626";
         });
@@ -918,31 +1017,105 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
-            const adminCodeInput = document.getElementById('adminCode').value;
+            const adminPassInput = document.getElementById('adminPass').value;
             const userBadge = document.getElementById('userBadge');
             const adminMenuItem = document.getElementById('adminMenuItem');
+            const adminPanel = document.getElementById('adminPanel');
 
-            if (currentRole === "admin") {
-                // ตรวจสอบรหัสลับ Admin
-                if (adminCodeInput === ADMIN_SECRET_CODE) {
-                    showAlert('ยินดีต้อนรับ ผู้ดูแลระบบ (Admin) ' + user);
+            if (selectedRole === "admin") {
+                // ตรวจสอบรหัสแอดมิน
+                if (adminPassInput === ADMIN_PASSWORD) {
+                    isUserAdmin = true;
+                    showAlert('เข้าสู่ระบบแอดมินสำเร็จ คุณมีสิทธิ์แก้ไขข้อมูล');
                     userBadge.textContent = 'Admin: ' + user;
                     userBadge.classList.add('admin');
                     userBadge.style.display = 'inline-block';
-                    adminMenuItem.style.display = 'block'; // แสดงเมนูแอดมิน
+                    logoutBtn.style.display = 'inline-block';
+                    adminMenuItem.style.display = 'block';
+                    adminPanel.style.display = 'block'; // แสดงกล่องเพิ่มงาน
+                    
+                    // แสดงปุ่มลบการ์ดสำหรับแอดมิน
+                    document.querySelectorAll('.delete-card-btn').forEach(btn => btn.style.display = 'block');
+                    
                     hideLoginModal();
                 } else {
-                    showAlert('รหัสอนุมัติแอดมินไม่ถูกต้อง!', true);
+                    showAlert('รหัสผ่านแอดมินไม่ถูกต้อง!', true);
                 }
             } else {
-                showAlert('ยินดีต้อนรับคุณ ' + user + ' เข้าสู่ระบบ');
-                userBadge.textContent = 'คุณ ' + user;
+                // นักเรียน/บุคคลทั่วไป เข้าใช้งานได้ทันทีไม่ต้องใส่รหัส
+                isUserAdmin = false;
+                showAlert('ยินดีต้อนรับคุณ ' + user);
+                userBadge.textContent = 'นักเรียน: ' + user;
                 userBadge.classList.remove('admin');
                 userBadge.style.display = 'inline-block';
+                logoutBtn.style.display = 'inline-block';
                 adminMenuItem.style.display = 'none';
+                adminPanel.style.display = 'none';
+                
+                // ซ่อนปุ่มลบสำหรับนักเรียน
+                document.querySelectorAll('.delete-card-btn').forEach(btn => btn.style.display = 'none');
+                
                 hideLoginModal();
             }
         });
+
+        // ปุ่มออกจากระบบ
+        logoutBtn.addEventListener('click', () => {
+            isUserAdmin = false;
+            document.getElementById('userBadge').style.display = 'none';
+            logoutBtn.style.display = 'none';
+            document.getElementById('adminMenuItem').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.querySelectorAll('.delete-card-btn').forEach(btn => btn.style.display = 'none');
+            showAlert('ออกจากระบบเรียบร้อยแล้ว');
+        });
+
+        // --- ระบบสำหรับแอดมินเพิ่มกิจกรรม/งานใหม่ ---
+        document.getElementById('addActivityBtn').addEventListener('click', function() {
+            const title = document.getElementById('newTitle').value;
+            const desc = document.getElementById('newDesc').value;
+            let img = document.getElementById('newImg').value;
+
+            if (!title || !desc) {
+                showAlert('กรุณากรอกหัวข้อและรายละเอียดกิจกรรม', true);
+                return;
+            }
+
+            if (!img) {
+                img = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=400"; // ภาพตั้งต้นกรณีไม่ได้ใส่ลิงก์
+            }
+
+            const container = document.getElementById('activityContainer');
+            const newCard = document.createElement('div');
+            newCard.className = 'activity-card';
+            newCard.innerHTML = `
+                <button class="delete-card-btn" style="display: block;" onclick="deleteActivity(this)"><i class="fa-solid fa-trash"></i></button>
+                <div class="card-img">
+                    <img src="${img}" alt="${title}">
+                </div>
+                <div class="card-body">
+                    <h3>${title}</h3>
+                    <p>${desc}</p>
+                </div>
+            `;
+
+            container.prepend(newCard); // เพิ่มงานใหม่ไว้ด้านบนสุด
+            showAlert('เพิ่มกิจกรรมเรียบร้อยแล้ว!');
+
+            // ล้างค่าช่องป้อนข้อมูล
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newDesc').value = '';
+            document.getElementById('newImg').value = '';
+        });
+
+        // ระบบสำหรับแอดมินลบกิจกรรม
+        function deleteActivity(btn) {
+            if (isUserAdmin) {
+                const card = btn.closest('.activity-card');
+                card.remove();
+                showAlert('ลบกิจกรรมเรียบร้อยแล้ว');
+            }
+        }
     </script>
 </body>
 </html>
