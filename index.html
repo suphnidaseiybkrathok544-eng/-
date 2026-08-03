@@ -78,7 +78,6 @@
   .section-container.tight{padding-top:36px;}
   .bg-alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .section-title-plain{font-family:'Kanit',sans-serif;font-size:24px;font-weight:700;color:var(--purple-deep);padding-bottom:8px;border-bottom:3px solid var(--gold);display:inline-block;margin-bottom:28px;}
-  .section-toprow{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
 
   .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
 
@@ -246,10 +245,7 @@
   </header>
 
   <div class="section-banner"><h2>ข่าวประชาสัมพันธ์</h2></div>
-  <section class="section-container tight admin-live" id="news">
-    <div class="section-toprow">
-      <div></div>
-    </div>
+  <section class="section-container tight" id="news">
     <div class="news-grid" id="newsGrid"></div>
   </section>
 
@@ -260,19 +256,19 @@
     </div>
   </section>
 
-  <section class="section-container admin-live" id="works">
+  <section class="section-container" id="works">
     <h2 class="section-title-plain">ผลงานนักศึกษา</h2>
     <div class="portfolio-grid" id="worksGrid"></div>
   </section>
 
-  <section class="bg-alt admin-live" id="faculty">
+  <section class="bg-alt" id="faculty">
     <div class="section-container">
       <h2 class="section-title-plain">คณาจารย์ประจำสาขา</h2>
       <div class="faculty-grid" id="staffGrid"></div>
     </div>
   </section>
 
-  <section class="section-container admin-live" id="download">
+  <section class="section-container" id="download">
     <h2 class="section-title-plain">ดาวน์โหลดเอกสาร</h2>
     <ul class="dl-list" id="dlGrid"></ul>
   </section>
@@ -289,6 +285,7 @@
           <li><a href="#home">หน้าแรก</a></li>
           <li><a href="#courses">หลักสูตร</a></li>
           <li><a href="#news">ข่าวสาร</a></li>
+          <li><a href="#download">ดาวน์โหลดเอกสาร</a></li>
           <li><a href="#contact">ติดต่อสอบถาม</a></li>
         </ul>
       </div>
