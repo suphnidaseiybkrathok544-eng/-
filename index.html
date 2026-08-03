@@ -22,7 +22,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{font-family:'Prompt','Kanit',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;}
-  a{color:inherit;}
+  a{color:inherit;text-decoration:none;}
   ::-webkit-scrollbar{width:8px;}
   ::-webkit-scrollbar-thumb{background:var(--purple-light);border-radius:10px;}
 
@@ -40,11 +40,9 @@
   
   .nav-right{display:flex;align-items:center;gap:15px;}
   .nav-links{display:flex;gap:18px;list-style:none;}
-  .nav-links li a{text-decoration:none;color:#fff;font-size:13.5px;font-weight:500;position:relative;padding-bottom:4px;}
+  .nav-links li a{color:#fff;font-size:13.5px;font-weight:500;position:relative;padding-bottom:4px;}
   .nav-links li a::after{content:"";position:absolute;left:0;bottom:0;width:0%;height:2px;background:var(--gold);transition:width .25s ease;}
   .nav-links li a:hover::after{width:100%;}
-  
-  .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;}
   
   .admin-entry{
     width:36px;height:36px;border-radius:50%;
@@ -57,7 +55,6 @@
 
   /* ===== Hero ===== */
   .hero{position:relative;overflow:hidden;background:#fff;padding-bottom:0;}
-  .hero-ribbons{position:absolute;inset:0;z-index:0;pointer-events:none;}
   .hero-inner{
     position:relative;z-index:2;
     max-width:1180px;margin:0 auto;
@@ -69,8 +66,8 @@
   .hero-sub{margin-top:12px;font-size:14px;font-weight:600;letter-spacing:2.5px;color:var(--gold);}
   .hero-desc{margin-top:16px;font-size:14px;color:var(--text-soft);max-width:420px;}
   .hero-actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;}
-  .btn-primary{background:var(--purple);color:#fff;font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;text-decoration:none;box-shadow:0 8px 20px rgba(74,22,128,0.25);text-align:center;}
-  .btn-ghost{border:1.5px solid var(--gold);color:var(--purple);font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;text-decoration:none;text-align:center;}
+  .btn-primary{background:var(--purple);color:#fff;font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;box-shadow:0 8px 20px rgba(74,22,128,0.25);text-align:center;}
+  .btn-ghost{border:1.5px solid var(--gold);color:var(--purple);font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;text-align:center;}
   .hero-photo{position:relative;flex-shrink:0;width:260px;height:260px;}
   .hero-photo .ring{position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold));}
   .hero-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #fff;display:block;}
@@ -80,13 +77,10 @@
   .section-banner h2{font-family:'Kanit',sans-serif;color:#fff;font-size:19px;font-weight:600;letter-spacing:1px;}
 
   .section-container{max-width:1180px;margin:0 auto;padding:45px 24px;}
-  .section-container.tight{padding-top:30px;}
   .bg-alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .section-title-plain{font-family:'Kanit',sans-serif;font-size:22px;font-weight:700;color:var(--purple-deep);padding-bottom:6px;border-bottom:3px solid var(--gold);display:inline-block;margin-bottom:24px;}
 
-  .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
-
-  /* ===== Calendar Section ===== */
+  /* ===== Calendar ===== */
   .calendar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
   .calendar-card{
     background:#fff;border-radius:12px;padding:18px;
@@ -104,6 +98,22 @@
   .calendar-info h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:4px;}
   .calendar-info p{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
 
+  /* ===== News ===== */
+  .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);}
+  .news-card .body{padding:18px;}
+  .news-card .date{font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
+  .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .news-card p{font-size:12.5px;color:var(--text-soft);}
+
+  /* ===== Course ===== */
+  .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+  .course-card{background:#fff;padding:22px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
+  .course-card h3{font-size:16.5px;color:var(--purple-deep);margin-bottom:10px;}
+  .course-card p{font-size:13px;color:#555;margin-bottom:14px;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .tag{background:#f2e9fb;color:var(--purple);font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+
   /* ===== Faculty ===== */
   .faculty-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:24px 16px;justify-content:center;}
   .faculty-card{text-align:center;display:flex;flex-direction:column;align-items:center;background:#fff;padding:18px 12px;border-radius:16px;box-shadow:0 4px 12px rgba(47,15,92,0.03);border:1px solid var(--line);transition:transform .2s ease;}
@@ -113,6 +123,13 @@
   .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;display:block;}
   .faculty-card h4{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:6px;line-height:1.3;}
   .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;width:100%;word-wrap:break-word;margin-bottom:8px;}
+
+  /* ===== Downloads ===== */
+  .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+  .dl-item{background:#fff;padding:14px 18px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;}
+  .dl-item .label{font-size:13px;display:flex;align-items:center;gap:8px;}
+  .dl-badge{font-size:10px;font-weight:700;background:var(--purple);color:#fff;padding:3px 7px;border-radius:4px;}
+  .dl-item a{color:var(--purple);font-weight:600;font-size:12.5px;}
 
   /* ===== Footer ===== */
   footer{background:var(--purple-deep);color:#fff;padding:40px 24px 20px;}
@@ -133,7 +150,6 @@
     .hero-inner{flex-direction:column;text-align:center;}
     .hero-actions{justify-content:center;}
     .nav-links{display:none;}
-    .menu-toggle{display:block;}
   }
 </style>
 </head>
@@ -151,9 +167,12 @@
       <ul class="nav-links">
         <li><a href="#hero">หน้าแรก</a></li>
         <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
-        <li><a href="#faculty">บุคลากร</a></li>
+        <li><a href="#news">ข่าวประชาสัมพันธ์</a></li>
+        <li><a href="#course">หลักสูตร</a></li>
+        <li><a href="#faculty">คณาจารย์</a></li>
+        <li><a href="#downloads">เอกสาร</a></li>
       </ul>
-      <div class="admin-entry" onclick="openAdminModal()" title="แผงควบคุมผู้ดูแลระบบ">⚙️</div>
+      <div class="admin-entry" onclick="openAdminModal()" title="แก้ไขข้อมูล">⚙️</div>
     </div>
   </nav>
 
@@ -178,17 +197,86 @@
   <div class="section-banner">
     <h2>📅 ปฏิทินกิจกรรม / กำหนดการ</h2>
   </div>
-
   <section class="section-container" id="calendar">
-    <div class="calendar-grid" id="calendarGrid">
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </section>
+
+  <section class="section-container bg-alt" id="news">
+    <h2 class="section-title-plain">ข่าวประชาสัมพันธ์</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="body">
+          <span class="date">15 ม.ค. 2026</span>
+          <h3>เปิดรับสมัครนักศึกษาใหม่ ประจำปีการศึกษา 2569</h3>
+          <p>สาขาเทคโนโลยีธุรกิจดิจิทัล เปิดรับสมัครนักศึกษาระดับ ปวช. และ ปวส. ผู้สนใจสามารถสมัครได้ทางออนไลน์</p>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section-container" id="course">
+    <h2 class="section-title-plain">หลักสูตรที่เปิดสอน</h2>
+    <div class="course-grid">
+      <div class="course-card">
+        <h3>ระดับ ประกาศนียบัตรวิชาชีพ (ปวช.)</h3>
+        <p>มุ่งเน้นการเรียนรู้พื้นฐานเทคโนโลยีคอมพิวเตอร์ การพัฒนาเว็บไซต์ การออกแบบกราฟิก และธุรกิจเบื้องต้น</p>
+        <div class="tags">
+          <span class="tag">Web Design</span>
+          <span class="tag">Graphic</span>
+          <span class="tag">E-Commerce</span>
+        </div>
+      </div>
+      <div class="course-card">
+        <h3>ระดับ ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</h3>
+        <p>เจาะลึกระบบการจัดการข้อมูลดิจิทัล การพัฒนารีพอร์ต วิเคราะห์ข้อมูล และการตลาดดิจิทัลเชิงลึก</p>
+        <div class="tags">
+          <span class="tag">Digital Marketing</span>
+          <span class="tag">Database</span>
+          <span class="tag">System Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-container bg-alt" id="faculty">
+    <h2 class="section-title-plain">คณาจารย์ประจำสาขา</h2>
+    <div class="faculty-grid">
+      <div class="faculty-card">
+        <div class="faculty-photo">
+          <div class="ring"></div>
+          <img src="https://via.placeholder.com/150" alt="อาจารย์ประจำสาขา">
+        </div>
+        <h4>อาจารย์ประจำสาขา DBT</h4>
+        <span class="faculty-badge">หัวหน้าสาขาวิชา</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-container" id="downloads">
+    <h2 class="section-title-plain">เอกสารดาวน์โหลด</h2>
+    <ul class="dl-list">
+      <li class="dl-item">
+        <div class="label">
+          <span class="dl-badge">PDF</span>
+          <span>ใบสมัครเข้าศึกษาต่อ สาขา DBT</span>
+        </div>
+        <a href="#">ดาวน์โหลด</a>
+      </li>
+      <li class="dl-item">
+        <div class="label">
+          <span class="dl-badge">PDF</span>
+          <span>แผนการเรียนระดับ ปวช. / ปวส.</span>
+        </div>
+        <a href="#">ดาวน์โหลด</a>
+      </li>
+    </ul>
   </section>
 
   <footer>
     <div class="footer-inner">
       <div>
         <h3>สาขาเทคโนโลยีธุรกิจดิจิทัล (DBT)</h3>
-        <p style="font-size: 13px; margin-top: 8px; opacity: 0.8;">มุ่งมั่นพัฒนาผู้เรียนสู่การเป็นผู้ประกอบการและบุคลากรดิจิทัลมืออาชีพ</p>
+        <p style="font-size:13px; margin-top:8px; opacity:0.8;">มุ่งมั่นพัฒนาผู้เรียนสู่การเป็นผู้ประกอบการและบุคลากรดิจิทัลมืออาชีพ</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -256,6 +344,7 @@
 
     function renderCalendar() {
       const grid = document.getElementById("calendarGrid");
+      if(!grid) return;
       grid.innerHTML = "";
       
       seed.forEach(item => {
@@ -299,7 +388,6 @@
       this.reset();
     });
 
-    // เริ่มต้นแสดงผลข้อมูล
     renderCalendar();
   </script>
 </body>
