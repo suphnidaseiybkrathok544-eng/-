@@ -171,6 +171,10 @@
     font-family:'Prompt',sans-serif;font-size:13.5px;background:var(--paper);
   }
   .field textarea{min-height:70px;resize:vertical;}
+  .img-upload-box{border:1px dashed var(--line);border-radius:10px;padding:12px;background:var(--paper);}
+  .img-preview{display:block;width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;}
+  .img-upload-box input[type="file"]{font-size:12px;width:100%;margin-bottom:8px;}
+  .img-url-input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;font-size:12px;background:#fff;}
   .form-actions{display:flex;gap:10px;margin-top:6px;}
   .btn-save{background:var(--purple);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
   .btn-cancel{background:#eee;color:#555;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
@@ -393,7 +397,7 @@ const SECTIONS = {
     fields: [
       {name:"category", label:"หมวดหมู่ผลงาน", placeholder:"แอปพลิเคชัน / เว็บไซต์"},
       {name:"title", label:"ชื่อผลงาน"},
-      {name:"img", label:"ลิงก์รูปภาพ (URL)"}
+      {name:"img", label:"รูปภาพ", image:true}
     ],
     seed: [
       {id:"w1", category:"แอปพลิเคชันชุมชน", title:"Smart Local Shop App", img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=500&auto=format&fit=crop"},
@@ -413,7 +417,7 @@ const SECTIONS = {
     fields: [
       {name:"name", label:"ชื่อ-นามสกุล"},
       {name:"role", label:"ตำแหน่ง / ความเชี่ยวชาญ"},
-      {name:"img", label:"ลิงก์รูปภาพ (URL)"}
+      {name:"img", label:"รูปภาพ", image:true}
     ],
     seed: [
       {id:"s1", name:"ผศ.ดร.สมชาย ใจดี", role:"หัวหน้าสาขาวิชา", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
@@ -463,11 +467,15 @@ function toast(msg){
 }
 
 // ---------- Storage ----------
+// หมายเหตุ: ใช้ localStorage ของเบราว์เซอร์ในการบันทึกข้อมูล ซึ่งจะช่วยให้ข้อมูล
+// ยังอยู่ครบเมื่อปิดหน้าแล้วเปิดใหม่ "บนเครื่อง/เบราว์เซอร์เดียวกัน" เท่านั้น
+// ถ้าต้องการให้ทุกคนที่เข้าเว็บเห็นข้อมูลชุดเดียวกัน (แก้ครั้งเดียวเห็นทุกคน)
+// ต้องมีระบบฐานข้อมูล/เซิร์ฟเวอร์เก็บข้อมูลจริง ซึ่ง localStorage ทำแบบนั้นไม่ได้
 async function loadSection(type){
   const cfg = SECTIONS[type];
   try{
-    const res = await window.storage.get(cfg.key, true);
-    state[type] = res ? JSON.parse(res.value) : cfg.seed.slice();
+    const raw = localStorage.getItem(cfg.key);
+    state[type] = raw ? JSON.parse(raw) : cfg.seed.slice();
   }catch(e){
     state[type] = cfg.seed.slice();
   }
@@ -475,9 +483,10 @@ async function loadSection(type){
 async function saveSection(type){
   const cfg = SECTIONS[type];
   try{
-    await window.storage.set(cfg.key, JSON.stringify(state[type]), true);
+    localStorage.setItem(cfg.key, JSON.stringify(state[type]));
   }catch(e){
     console.error("บันทึกไม่สำเร็จ", e);
+    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะรูปภาพมีขนาดใหญ่เกินไป ลองใช้รูปที่เล็กลงหรือใช้ลิงก์รูปภาพแทน");
   }
 }
 
@@ -519,14 +528,28 @@ function renderDashBody(){
   const body = document.getElementById("dashBody");
   const editingItem = editingId ? items.find(i => i.id === editingId) : null;
 
-  const formFields = cfg.fields.map(f => `
+  const formFields = cfg.fields.map(f => {
+    if(f.image){
+      const current = editingItem ? (editingItem[f.name] || "") : "";
+      return `
+      <div class="field">
+        <label>${esc(f.label)}</label>
+        <div class="img-upload-box">
+          <img class="img-preview ${current ? "" : "hidden"}" data-preview="${f.name}" src="${esc(current)}" alt="">
+          <input type="file" accept="image/*" data-imgfile="${f.name}">
+          <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือวางลิงก์รูปภาพ (URL) ตรงนี้" value="${esc(current)}">
+        </div>
+      </div>`;
+    }
+    return `
     <div class="field">
       <label>${esc(f.label)}</label>
       ${f.area
         ? `<textarea data-field="${f.name}" placeholder="${esc(f.placeholder||'')}">${editingItem ? esc(editingItem[f.name]) : ""}</textarea>`
         : `<input type="text" data-field="${f.name}" placeholder="${esc(f.placeholder||'')}" value="${editingItem ? esc(editingItem[f.name]) : ""}">`
       }
-    </div>`).join("");
+    </div>`;
+  }).join("");
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
@@ -553,6 +576,35 @@ function renderDashBody(){
   `;
 
   document.getElementById("itemForm").addEventListener("submit", onSubmitItem);
+  body.querySelectorAll("[data-imgfile]").forEach(input => {
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if(!file) return;
+      if(file.size > 1.8 * 1024 * 1024){
+        alert("ไฟล์รูปภาพใหญ่เกินไป กรุณาเลือกไฟล์ไม่เกิน ~1.8MB หรือลดขนาดรูปก่อนอัปโหลด");
+        input.value = "";
+        return;
+      }
+      const fieldName = input.dataset.imgfile;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const urlField = body.querySelector(`[data-field="${fieldName}"]`);
+        const preview = body.querySelector(`[data-preview="${fieldName}"]`);
+        urlField.value = reader.result;
+        preview.src = reader.result;
+        preview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+  body.querySelectorAll(".img-url-input").forEach(input => {
+    input.addEventListener("input", () => {
+      const fieldName = input.dataset.field;
+      const preview = body.querySelector(`[data-preview="${fieldName}"]`);
+      if(input.value){ preview.src = input.value; preview.classList.remove("hidden"); }
+      else { preview.classList.add("hidden"); }
+    });
+  });
   const cancelBtn = document.getElementById("cancelEdit");
   if(cancelBtn) cancelBtn.addEventListener("click", () => { editingId = null; renderDashBody(); });
   body.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => { editingId = b.dataset.edit; renderDashBody(); }));
