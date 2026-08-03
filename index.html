@@ -152,7 +152,8 @@
   .footer-bottom{text-align:center;padding-top:14px;font-size:11px;color:#a898c8;}
 
   /* ===== Admin Card Tools ===== */
-  .admin-live .card-tools{display:flex;position:absolute;top:6px;right:6px;gap:5px;z-index:5;}
+  .admin-live .card-tools{display:none;position:absolute;top:6px;right:6px;gap:5px;z-index:5;}
+  .admin-live.show-admin-tools .card-tools{display:flex;}
   .card-tools button{
     width:24px;height:24px;border-radius:5px;border:none;cursor:pointer;
     font-size:11px;display:flex;align-items:center;justify-content:center;
@@ -197,11 +198,7 @@
     font-family:'Prompt',sans-serif;font-size:12.5px;background:var(--paper);
   }
   .field textarea{min-height:55px;resize:vertical;}
-  .img-upload-box{border:1px dashed var(--line);border-radius:8px;padding:8px;background:var(--paper);}
-  .img-preview{display:block;width:100%;max-height:110px;object-fit:cover;border-radius:6px;margin-bottom:6px;}
-  .img-upload-box input[type="file"]{font-size:11px;width:100%;margin-bottom:5px;}
-  .img-url-input{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:6px;font-size:11px;background:#fff;}
-  .form-actions{display:flex;gap:8px;margin-top:4px;}
+  .form-actions{display:flex;gap:8px;margin-top:10px;}
   .btn-save{background:var(--purple);color:#fff;border:none;padding:9px 16px;border-radius:7px;font-weight:600;font-size:12px;cursor:pointer;}
   .btn-cancel{background:#eee;color:#555;border:none;padding:9px 16px;border-radius:7px;font-weight:600;font-size:12px;cursor:pointer;}
   
@@ -371,7 +368,7 @@
     <div class="admin-modal" style="max-width:320px; max-height:auto;">
       <div class="admin-modal-head"><h3>เข้าสู่ระบบแอดมิน</h3><button class="close-x" id="closeLogin">✕</button></div>
       <div class="login-box">
-        <p>กรอกรหัสผ่านสำหรับผู้ดูแลระบบเพื่อแก้ไขเนื้อหาเว็บไซต์</p>
+        <p>กรอกรหัสผ่านสำหรับผู้ดูแลระบบ (รหัสผ่านเริ่มต้น: <b>dbt2569</b>)</p>
         <div class="field"><input type="password" id="pwInput" placeholder="รหัสผ่าน"></div>
         <button class="btn-save" style="width:100%" id="pwSubmit">เข้าสู่ระบบ</button>
         <div class="status-msg" id="loginError"></div>
@@ -478,7 +475,7 @@ const SECTIONS = {
     fields: [
       {name:"category", label:"หมวดหมู่ผลงาน", placeholder:"แอปพลิเคชัน / เว็บไซต์"},
       {name:"title", label:"ชื่อผลงาน"},
-      {name:"img", label:"รูปภาพ", image:true}
+      {name:"img", label:"ลิงก์รูปภาพ (URL)", placeholder:"https://..."}
     ],
     seed: [
       {id:"w1", category:"แอปพลิเคชันชุมชน", title:"Smart Local Shop App", img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=500&auto=format&fit=crop"},
@@ -500,7 +497,7 @@ const SECTIONS = {
       {name:"role", label:"ตำแหน่ง / ความเชี่ยวชาญ"},
       {name:"phone", label:"เบอร์โทรศัพท์", placeholder:"02-xxx-xxxx"},
       {name:"email", label:"อีเมล", placeholder:"name@institution.ac.th"},
-      {name:"img", label:"รูปภาพ", image:true}
+      {name:"img", label:"ลิงก์รูปภาพ (URL)", placeholder:"https://..."}
     ],
     seed: [
       {id:"s1", name:"ผศ.ดร.สมชาย ใจดี", role:"หัวหน้าสาขาวิชา", phone:"02-111-2222", email:"somchai@institution.ac.th", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
@@ -568,12 +565,11 @@ function saveSection(type){
     localStorage.setItem(cfg.key, JSON.stringify(state[type]));
   }catch(e){
     console.error("บันทึกไม่สำเร็จ", e);
-    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะขนาดไฟล์ใหญ่เกินไป");
+    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะข้อมูลมีขนาดใหญ่เกินไป");
   }
 }
 
 function renderCardTools(type, id){
-  if(!isAdmin) return "";
   return `
     <div class="card-tools">
       <button class="edit-btn" onclick="editItem('${type}','${id}')" title="แก้ไข">✏️</button>
@@ -588,7 +584,7 @@ function renderPublic(type){
   if(!grid) return;
   const items = state[type] || [];
   if(items.length === 0){
-    grid.innerHTML = `<div class="empty-note">ยังไม่มีรายการ — เข้าสู่ระบบแอดมินเพื่อเพิ่มเนื้อหา</div>`;
+    grid.innerHTML = `<div class="empty-note">ยังไม่มีรายการ — คลิกปุ่ม ⚙️ ด้านล่างขวาเพื่อเพิ่มเนื้อหา</div>`;
     return;
   }
   grid.innerHTML = items.map(item => {
@@ -623,148 +619,125 @@ function renderDashBody(){
   const editingItem = editingId ? items.find(i => i.id === editingId) : null;
 
   const formFields = cfg.fields.map(f => {
-    if(f.image){
-      const current = editingItem ? (editingItem[f.name] || "") : "";
-      return `
-      <div class="field">
-        <label>${esc(f.label)}</label>
-        <div class="img-upload-box">
-          <img class="img-preview ${current ? "" : "hidden"}" data-preview="${f.name}" src="${esc(current)}" alt="">
-          <input type="file" accept="image/*" data-imgfile="${f.name}">
-          <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือวางลิงก์รูปภาพ (URL)" value="${esc(current)}">
-        </div>
-      </div>`;
+    const val = editingItem ? (editingItem[f.name] || "") : "";
+    if(f.area){
+      return `<div class="field"><label>${f.label}</label><textarea id="field_${f.name}" placeholder="${f.placeholder || ''}">${esc(val)}</textarea></div>`;
     }
-    return `
-    <div class="field">
-      <label>${esc(f.label)}</label>
-      ${f.area
-        ? `<textarea data-field="${f.name}" placeholder="${esc(f.placeholder||'')}">${editingItem ? esc(editingItem[f.name]) : ""}</textarea>`
-        : `<input type="text" data-field="${f.name}" placeholder="${esc(f.placeholder||'')}" value="${editingItem ? esc(editingItem[f.name]) : ""}">`
-      }
-    </div>`;
+    return `<div class="field"><label>${f.label}</label><input type="text" id="field_${f.name}" value="${esc(val)}" placeholder="${f.placeholder || ''}"></div>`;
   }).join("");
 
-  const listHtml = items.map(item => `
-    <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[1]?.name || cfg.fields[0].name])}</b>
-        <span>${esc(item[cfg.fields[0].name])}</span></div>
-      <div class="row-actions">
-        <button class="edit-btn" onclick="editItemFromDash('${item.id}')">แก้ไข</button>
-        <button class="del-btn" onclick="deleteItemDirect('${activeTab}','${item.id}')">ลบ</button>
-      </div>
-    </div>`).join("") || `<p style="font-size:11.5px;color:var(--text-soft);">ยังไม่มีรายการ</p>`;
+  const listRows = items.length === 0 ? `<p style="font-size:12px;color:var(--text-soft);text-align:center;padding:10px;">ยังไม่มีข้อมูล</p>` :
+    items.map(item => {
+      const primaryText = item.title || item.name || item.label || "รายการ";
+      const secondaryText = item.date || item.month || item.category || item.role || "";
+      return `
+        <div class="admin-list-item">
+          <div class="info">
+            <b>${esc(primaryText)}</b>
+            <span>${esc(secondaryText)}</span>
+          </div>
+          <div class="row-actions">
+            <button class="edit-btn" onclick="editItem('${activeTab}','${item.id}')">แก้ไข</button>
+            <button class="del-btn" onclick="deleteItem('${activeTab}','${item.id}')">ลบ</button>
+          </div>
+        </div>
+      `;
+    }).join("");
 
   body.innerHTML = `
-    <h4 style="font-size:13px;margin-bottom:8px;color:var(--purple-deep);">${editingItem ? "แก้ไขรายการ" : "เพิ่มรายการใหม่"} — ${cfg.label}</h4>
-    <form id="itemForm">
-      ${formFields}
-      <div class="form-actions">
-        <button type="submit" class="btn-save">${editingItem ? "บันทึกการแก้ไข" : "เพิ่มรายการ"}</button>
-        ${editingItem ? `<button type="button" class="btn-cancel" onclick="cancelEditing()">ยกเลิก</button>` : ""}
-      </div>
-    </form>
-    <hr style="margin:14px 0;border:none;border-top:1px solid var(--line);">
-    <h4 style="font-size:13px;margin-bottom:8px;color:var(--purple-deep);">รายการทั้งหมด (${items.length})</h4>
-    ${listHtml}
+    <div style="background:var(--paper);padding:12px;border-radius:10px;margin-bottom:14px;border:1px solid var(--line);">
+      <h4 style="font-size:13px;color:var(--purple-deep);margin-bottom:8px;">${editingItem ? "✏️ แก้ไขรายการ" : "➕ เพิ่มรายการใหม่"}</h4>
+      <form id="dashForm" onsubmit="handleFormSubmit(event)">
+        ${formFields}
+        <div class="form-actions">
+          <button type="submit" class="btn-save">${editingItem ? "บันทึกการแก้ไข" : "เพิ่มข้อมูล"}</button>
+          ${editingItem ? `<button type="button" class="btn-cancel" onclick="cancelEdit()">ยกเลิก</button>` : ""}
+        </div>
+      </form>
+    </div>
+    <h4 style="font-size:13px;color:var(--purple-deep);margin-bottom:8px;">รายการทั้งหมดใน ${cfg.label}</h4>
+    <div>${listRows}</div>
   `;
-
-  document.getElementById("itemForm").addEventListener("submit", onSubmitItem);
-  body.querySelectorAll("[data-imgfile]").forEach(input => {
-    input.addEventListener("change", () => {
-      const file = input.files[0];
-      if(!file) return;
-      if(file.size > 1.8 * 1024 * 1024){
-        alert("ไฟล์รูปภาพใหญ่เกินไป กรุณาเลือกไฟล์ไม่เกิน ~1.8MB");
-        input.value = "";
-        return;
-      }
-      const fieldName = input.dataset.imgfile;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const urlField = body.querySelector(`[data-field="${fieldName}"]`);
-        const preview = body.querySelector(`[data-preview="${fieldName}"]`);
-        urlField.value = reader.result;
-        preview.src = reader.result;
-        preview.classList.remove("hidden");
-      };
-      reader.readAsDataURL(file);
-    });
-  });
-  body.querySelectorAll(".img-url-input").forEach(input => {
-    input.addEventListener("input", () => {
-      const fieldName = input.dataset.field;
-      const preview = body.querySelector(`[data-preview="${fieldName}"]`);
-      if(input.value){ preview.src = input.value; preview.classList.remove("hidden"); }
-      else { preview.classList.add("hidden"); }
-    });
-  });
 }
 
-function cancelEditing(){ editingId = null; renderDashBody(); }
-function editItemFromDash(id){ editingId = id; renderDashBody(); }
-function editItem(type, id){
+function handleFormSubmit(e){
+  e.preventDefault();
+  const cfg = SECTIONS[activeTab];
+  const newItem = editingId ? {...(state[activeTab].find(i=>i.id===editingId))} : {id: uid()};
+  
+  cfg.fields.forEach(f => {
+    const el = document.getElementById(`field_${f.name}`);
+    if(el) newItem[f.name] = el.value.trim();
+  });
+
+  if(!state[activeTab]) state[activeTab] = [];
+  if(editingId){
+    const idx = state[activeTab].findIndex(i => i.id === editingId);
+    if(idx !== -1) state[activeTab][idx] = newItem;
+  } else {
+    state[activeTab].unshift(newItem);
+  }
+
+  saveSection(activeTab);
+  renderPublic(activeTab);
+  editingId = null;
+  renderDashBody();
+  toast("บันทึกข้อมูลเรียบร้อยแล้ว");
+}
+
+window.editItem = function(type, id){
   activeTab = type;
   editingId = id;
   openDash();
 }
 
-async function deleteItemDirect(type, id){
+window.deleteItemDirect = function(type, id){
   if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
-  state[type] = state[type].filter(i => i.id !== id);
+  state[type] = (state[type] || []).filter(i => i.id !== id);
   saveSection(type);
   renderPublic(type);
-  if(!document.getElementById("dashOverlay").classList.contains("hidden")){
-    renderDashBody();
-  }
-  toast("ลบรายการแล้ว");
+  toast("ลบรายการเรียบร้อยแล้ว");
 }
 
-async function onSubmitItem(e){
-  e.preventDefault();
-  const cfg = SECTIONS[activeTab];
-  const data = {};
-  cfg.fields.forEach(f => {
-    const el = e.target.querySelector(`[data-field="${f.name}"]`);
-    data[f.name] = el ? el.value.trim() : "";
-  });
-  if(editingId){
-    const idx = state[activeTab].findIndex(i => i.id === editingId);
-    if(idx > -1) state[activeTab][idx] = {...state[activeTab][idx], ...data};
-  } else {
-    state[activeTab].push({id: uid(), ...data});
-  }
-  saveSection(activeTab);
+window.deleteItem = function(type, id){
+  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
+  state[type] = (state[type] || []).filter(i => i.id !== id);
+  saveSection(type);
+  renderPublic(type);
+  renderDashBody();
+  toast("ลบรายการเรียบร้อยแล้ว");
+}
+
+window.cancelEdit = function(){
   editingId = null;
   renderDashBody();
-  renderPublic(activeTab);
-  toast("บันทึกเรียบร้อย");
 }
 
-// Mobile Menu Toggle
-const menuToggleBtn = document.getElementById("menuToggleBtn");
-const navLinksList = document.getElementById("navLinksList");
-menuToggleBtn.addEventListener("click", () => {
-  navLinksList.classList.toggle("open");
+// Event Listeners
+document.getElementById("menuToggleBtn").addEventListener("click", () => {
+  document.getElementById("navLinksList").classList.toggle("open");
 });
+
 document.querySelectorAll(".nav-link-item").forEach(link => {
   link.addEventListener("click", () => {
-    navLinksList.classList.remove("open");
+    document.getElementById("navLinksList").classList.remove("open");
   });
 });
 
-// Event Listeners
 document.getElementById("adminEntryBtn").addEventListener("click", () => {
-  if(isAdmin){ openDash(); } else {
+  if(isAdmin){
+    document.querySelectorAll(".admin-live").forEach(el => el.classList.toggle("show-admin-tools"));
+    toast(document.querySelectorAll(".admin-live")[0].classList.contains("show-admin-tools") ? "เปิดโหมดจัดการบนหน้าเว็บ" : "ปิดโหมดจัดการบนหน้าเว็บ");
+  } else {
     document.getElementById("loginOverlay").classList.remove("hidden");
     document.getElementById("pwInput").value = "";
     document.getElementById("loginError").textContent = "";
   }
 });
+
 document.getElementById("closeLogin").addEventListener("click", () => {
   document.getElementById("loginOverlay").classList.add("hidden");
 });
-document.getElementById("closeDash").addEventListener("click", closeDash);
 
 document.getElementById("pwSubmit").addEventListener("click", () => {
   const pw = document.getElementById("pwInput").value;
@@ -772,15 +745,15 @@ document.getElementById("pwSubmit").addEventListener("click", () => {
     isAdmin = true;
     document.getElementById("loginOverlay").classList.add("hidden");
     document.getElementById("openDashboardFab").classList.remove("hidden");
-    renderAllPublic();
-    openDash();
-    toast("เข้าสู่ระบบแอดมินสำเร็จ");
+    document.querySelectorAll(".admin-live").forEach(el => el.classList.add("show-admin-tools"));
+    toast("เข้าสู่ระบบแอดมินสำเร็จ!");
   } else {
     document.getElementById("loginError").textContent = "รหัสผ่านไม่ถูกต้อง";
   }
 });
 
 document.getElementById("openDashboardFab").addEventListener("click", openDash);
+document.getElementById("closeDash").addEventListener("click", closeDash);
 
 document.querySelectorAll(".admin-tab").forEach(tab => {
   tab.addEventListener("click", () => switchTab(tab.dataset.type));
