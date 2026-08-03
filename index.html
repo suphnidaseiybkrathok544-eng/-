@@ -70,7 +70,7 @@
   .hero-photo .ring{position:absolute;inset:-10px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold),var(--gold-light));}
   .hero-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:6px solid #fff;display:block;}
 
-  /* ===== Section banner (purple) ===== */
+  /* ===== Section banner ===== */
   .section-banner{background:linear-gradient(90deg,var(--purple-deep),var(--purple-mid));text-align:center;padding:16px 20px;}
   .section-banner h2{font-family:'Kanit',sans-serif;color:#fff;font-size:20px;font-weight:600;letter-spacing:1px;}
 
@@ -90,7 +90,7 @@
   .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
   .news-card p{font-size:12.5px;color:var(--text-soft);}
 
-  /* ===== Course (kept static) ===== */
+  /* ===== Course ===== */
   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
   .course-card{background:#fff;padding:24px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
   .course-card h3{font-size:17px;color:var(--purple-deep);margin-bottom:10px;}
@@ -130,23 +130,7 @@
   .footer-col li a{text-decoration:none;color:#d7c9ee;}
   .footer-bottom{text-align:center;padding-top:20px;font-size:12px;color:#a898c8;}
 
-  /* ===== Admin: floating card controls ===== */
-  .admin-live .card-tools{display:flex;position:absolute;top:8px;right:8px;gap:6px;z-index:5;}
-  .card-tools button{
-    width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;
-    font-size:12px;display:flex;align-items:center;justify-content:center;
-  }
-  .card-tools .edit-btn{background:#fff;color:var(--purple);box-shadow:0 2px 6px rgba(0,0,0,0.15);}
-  .card-tools .del-btn{background:#e0405c;color:#fff;}
-  .add-tile{
-    border:2px dashed var(--gold);border-radius:14px;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--purple);font-weight:600;font-size:13px;cursor:pointer;
-    min-height:130px;background:#fdfaff;
-  }
-  .add-tile:hover{background:#f6edff;}
-
-  /* ===== Admin overlay/modal ===== */
+  /* ===== Admin Modals & Controls ===== */
   .hidden{display:none !important;}
   .admin-overlay{
     position:fixed;inset:0;background:rgba(36,20,66,0.55);
@@ -256,7 +240,7 @@
       </div>
       <div class="hero-photo">
         <div class="ring"></div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW3_HTvgAEcvlDcW_KHw3rBWmFtPBDmckgbuBQfo1wTZ6iKfTcL222Ijk&s=10" alt="นักศึกษา">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop" alt="นักศึกษา">
       </div>
     </div>
   </header>
@@ -272,23 +256,7 @@
   <section class="bg-alt" id="courses">
     <div class="section-container">
       <h2 class="section-title-plain">หลักสูตรที่เปิดสอน</h2>
-      <div class="course-grid">
-        <div class="course-card">
-          <h3>ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)</h3>
-          <p>ปูพื้นฐานเทคโนโลยี การตลาดดิจิทัล และการใช้งานโปรแกรมประยุกต์พื้นฐานสำหรับธุรกิจ</p>
-          <div class="tags"><span class="tag">คอมพิวเตอร์พื้นฐาน</span><span class="tag">การสร้างสื่อดิจิทัล</span><span class="tag">การขายออนไลน์</span></div>
-        </div>
-        <div class="course-card">
-          <h3>ระดับ ปวส. (ประกาศนียบัตรวิชาชีพชั้นสูง)</h3>
-          <p>เจาะลึกการพัฒนาเว็บ การวิเคราะห์ข้อมูลธุรกิจ (Data Analytics) และการจัดการอีคอมเมิร์ซ</p>
-          <div class="tags"><span class="tag">Web Development</span><span class="tag">E-Commerce</span><span class="tag">UX/UI Design</span></div>
-        </div>
-        <div class="course-card">
-          <h3>ระดับ ปริญญาตรี (เทคโนโลยีบัณฑิต)</h3>
-          <p>เน้นการบริหารจัดการนวัตกรรมดิจิทัล การวิเคราะห์ข้อมูลขั้นสูง และการเป็นผู้ประกอบการดิจิทัล</p>
-          <div class="tags"><span class="tag">Digital Marketing</span><span class="tag">Business Intelligence</span><span class="tag">Startup</span></div>
-        </div>
-      </div>
+      <div class="course-grid" id="courseGrid"></div>
     </div>
   </section>
 
@@ -337,7 +305,6 @@
 
   <button class="admin-fab hidden" id="openDashboardFab">⚙️ จัดการเนื้อหา</button>
 
-  <!-- Login overlay -->
   <div class="admin-overlay hidden" id="loginOverlay">
     <div class="admin-modal" style="max-width:360px;">
       <div class="admin-modal-head"><h3>เข้าสู่ระบบแอดมิน</h3><button class="close-x" id="closeLogin">✕</button></div>
@@ -350,7 +317,6 @@
     </div>
   </div>
 
-  <!-- Dashboard overlay -->
   <div class="admin-overlay hidden" id="dashOverlay">
     <div class="admin-modal">
       <div class="admin-modal-head">
@@ -359,6 +325,7 @@
       </div>
       <div class="admin-tabs">
         <button class="admin-tab" data-type="news">ข่าวประชาสัมพันธ์</button>
+        <button class="admin-tab" data-type="courses">หลักสูตรที่เปิดสอน</button>
         <button class="admin-tab" data-type="works">ผลงานนักศึกษา</button>
         <button class="admin-tab" data-type="staff">บุคลากร</button>
         <button class="admin-tab" data-type="downloads">ไฟล์ดาวน์โหลด</button>
@@ -371,7 +338,7 @@
 
 <script>
 // ---------- Config ----------
-const ADMIN_PASSWORD = "dbt2569"; // เปลี่ยนรหัสผ่านนี้ได้ตามต้องการ (ระบบนี้เป็นการป้องกันฝั่งหน้าเว็บเท่านั้น ไม่ใช่ระบบล็อกอินที่ปลอดภัยจริง)
+const ADMIN_PASSWORD = "dbt2569"; // รหัสผ่านผู้ดูแลระบบ
 
 const SECTIONS = {
   news: {
@@ -388,9 +355,33 @@ const SECTIONS = {
       {id:"n4", date:"28 ธ.ค. 2025", title:"คว้าชัยแข่งนวัตกรรมดิจิทัล", desc:"นักศึกษาสาขา DBT คว้ารางวัลชนะเลิศการแข่งพัฒนาเว็บ"}
     ],
     render: (item) => `
-      <div class="date">${esc(item.date)}</div>
-      <h3>${esc(item.title)}</h3>
-      <p>${esc(item.desc)}</p>`
+      <div class="body">
+        <div class="date">${esc(item.date)}</div>
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.desc)}</p>
+      </div>`
+  },
+  courses: {
+    key: "dbt_site:courses", grid: "courseGrid", label: "หลักสูตรที่เปิดสอน",
+    fields: [
+      {name:"title", label:"ชื่อระดับหลักสูตร", placeholder:"ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)"},
+      {name:"desc", label:"รายละเอียดหลักสูตร", area:true},
+      {name:"tags", label:"แท็ก/ทักษะ (คั่นด้วยเครื่องหมายจุลภาค ,)", placeholder:"คอมพิวเตอร์พื้นฐาน, การสร้างสื่อดิจิทัล, การขายออนไลน์"}
+    ],
+    seed: [
+      {id:"c1", title:"ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)", desc:"ปูพื้นฐานเทคโนโลยี การตลาดดิจิทัล และการใช้งานโปรแกรมประยุกต์พื้นฐานสำหรับธุรกิจ", tags:"คอมพิวเตอร์พื้นฐาน, การสร้างสื่อดิจิทัล, การขายออนไลน์"},
+      {id:"c2", title:"ระดับ ปวส. (ประกาศนียบัตรวิชาชีพชั้นสูง)", desc:"เจาะลึกการพัฒนาเว็บ การวิเคราะห์ข้อมูลธุรกิจ (Data Analytics) และการจัดการอีคอมเมิร์ซ", tags:"Web Development, E-Commerce, UX/UI Design"},
+      {id:"c3", title:"ระดับ ปริญญาตรี (เทคโนโลยีบัณฑิต)", desc:"เน้นการบริหารจัดการนวัตกรรมดิจิทัล การวิเคราะห์ข้อมูลขั้นสูง และการเป็นผู้ประกอบการดิจิทัล", tags:"Digital Marketing, Business Intelligence, Startup"}
+    ],
+    render: (item) => {
+      const tagArray = item.tags ? item.tags.split(',').map(t => t.trim()).filter(t => t) : [];
+      const tagsHtml = tagArray.map(t => `<span class="tag">${esc(t)}</span>`).join('');
+      return `
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.desc)}</p>
+        <div class="tags">${tagsHtml}</div>`;
+    },
+    wrapClass: "course-card"
   },
   works: {
     key: "dbt_site:works", grid: "worksGrid", label: "ผลงานนักศึกษา",
@@ -432,7 +423,7 @@ const SECTIONS = {
     wrapClass: "faculty-card"
   },
   downloads: {
-    key: "dbt_site:downloads", grid: "dlGrid", label: "ไฟล์ดาวน์โหลด", listTag: "li",
+    key: "dbt_site:downloads", grid: "dlGrid", label: "ไฟล์ดาวน์โหลด",
     fields: [
       {name:"badge", label:"ประเภทไฟล์", placeholder:"PDF"},
       {name:"label", label:"ชื่อรายการ"},
@@ -466,12 +457,8 @@ function toast(msg){
   setTimeout(()=>t.classList.remove("show"), 1800);
 }
 
-// ---------- Storage ----------
-// ใช้ Google Sheet (ผ่าน Google Apps Script Web App) เป็นที่เก็บข้อมูลกลาง
-// เพื่อให้ทุกอุปกรณ์/ทุกคนที่เข้าเว็บเห็นข้อมูลชุดเดียวกัน
-// ตั้งค่า SHEET_API_URL ด้านล่างเป็นลิงก์ Web App ที่ได้จากการ Deploy Apps Script
-// ถ้ายังไม่ได้ตั้งค่า (เว้นว่างไว้) ระบบจะใช้ localStorage ของเครื่องแทนไปก่อน
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyq8u7SJau1HS-5Zh1epWSEVb6WY_62JjdVYteov51iY1YSFApcXJBAEB7h6uedcinm/exec";
+// ---------- Storage (Apps Script Connected) ----------
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzuyzVLUIQ-CP29EHTL5cYZML-8CJK3fLh3l4AqyGPVUouN3J1t0JEkTp4KXH4_CwdE/exec";
 
 async function loadSection(type){
   const cfg = SECTIONS[type];
@@ -495,6 +482,7 @@ async function loadSection(type){
     state[type] = cfg.seed.slice();
   }
 }
+
 async function saveSection(type){
   const cfg = SECTIONS[type];
   const jsonStr = JSON.stringify(state[type]);
@@ -508,11 +496,10 @@ async function saveSection(type){
       });
     }catch(e){
       console.error("บันทึกไป Google Sheet ไม่สำเร็จ", e);
-      alert("บันทึกไป Google Sheet ไม่สำเร็จ (เก็บไว้ในเครื่องนี้ชั่วคราวแล้ว) กรุณาตรวจสอบการเชื่อมต่อหรือลิงก์ Apps Script");
+      alert("บันทึกไป Google Sheet ไม่สำเร็จ (บันทึกในเครื่องนี้ชั่วคราวแล้ว)");
     }
   }
 }
-
 
 // ---------- Public render ----------
 function renderPublic(type){
@@ -526,9 +513,10 @@ function renderPublic(type){
   }
   grid.innerHTML = items.map(item => {
     const wrapClass = cfg.wrapClass ? cfg.wrapClass : (type === "news" ? "news-card" : "");
-    return `<div class="${wrapClass}" style="position:relative;">${cfg.render(item)}</div>`;
+    return `<div class="${wrapClass}">${cfg.render(item)}</div>`;
   }).join("");
 }
+
 function renderAllPublic(){
   Object.keys(SECTIONS).forEach(renderPublic);
 }
@@ -577,8 +565,10 @@ function renderDashBody(){
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[1] ? cfg.fields[1].name : cfg.fields[0].name])}</b>
-        <span>${esc(item[cfg.fields[0].name])}</span></div>
+      <div class="info">
+        <b>${esc(item[cfg.fields[0].name])}</b>
+        <span>${esc(item[cfg.fields[1] ? cfg.fields[1].name : cfg.fields[0].name])}</span>
+      </div>
       <div class="row-actions">
         <button class="edit-btn" data-edit="${item.id}">แก้ไข</button>
         <button class="del-btn" data-del="${item.id}">ลบ</button>
@@ -600,6 +590,7 @@ function renderDashBody(){
   `;
 
   document.getElementById("itemForm").addEventListener("submit", onSubmitItem);
+
   body.querySelectorAll("[data-imgfile]").forEach(input => {
     input.addEventListener("change", () => {
       const file = input.files[0];
@@ -621,6 +612,7 @@ function renderDashBody(){
       reader.readAsDataURL(file);
     });
   });
+
   body.querySelectorAll(".img-url-input").forEach(input => {
     input.addEventListener("input", () => {
       const fieldName = input.dataset.field;
@@ -629,8 +621,10 @@ function renderDashBody(){
       else { preview.classList.add("hidden"); }
     });
   });
+
   const cancelBtn = document.getElementById("cancelEdit");
   if(cancelBtn) cancelBtn.addEventListener("click", () => { editingId = null; renderDashBody(); });
+
   body.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => { editingId = b.dataset.edit; renderDashBody(); }));
   body.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => onDeleteItem(b.dataset.del)));
 }
@@ -641,60 +635,89 @@ async function onSubmitItem(e){
   const data = {};
   cfg.fields.forEach(f => {
     const el = e.target.querySelector(`[data-field="${f.name}"]`);
-    data[f.name] = el.value.trim();
+    if(el) data[f.name] = el.value.trim();
   });
+
   if(editingId){
     const idx = state[activeTab].findIndex(i => i.id === editingId);
     if(idx > -1) state[activeTab][idx] = {...state[activeTab][idx], ...data};
   } else {
     state[activeTab].push({id: uid(), ...data});
   }
-  await saveSection(activeTab);
+
   editingId = null;
-  renderDashBody();
   renderPublic(activeTab);
-  toast("บันทึกเรียบร้อย");
+  renderDashBody();
+  toast("บันทึกข้อมูลเรียบร้อย");
+  await saveSection(activeTab);
 }
 
 async function onDeleteItem(id){
-  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
+  if(!confirm("คุณต้องการลบรายการนี้ใช่หรือไม่?")) return;
   state[activeTab] = state[activeTab].filter(i => i.id !== id);
-  await saveSection(activeTab);
-  renderDashBody();
+  if(editingId === id) editingId = null;
   renderPublic(activeTab);
-  toast("ลบรายการแล้ว");
+  renderDashBody();
+  toast("ลบรายการเรียบร้อย");
+  await saveSection(activeTab);
 }
 
-// ---------- Login ----------
-function openLogin(){ document.getElementById("loginOverlay").classList.remove("hidden"); document.getElementById("pwInput").value=""; document.getElementById("loginError").textContent=""; }
-function closeLogin(){ document.getElementById("loginOverlay").classList.add("hidden"); }
+// ---------- Auth Handlers ----------
+function setupAuthEvents(){
+  const adminBtn = document.getElementById("adminEntryBtn");
+  const loginOverlay = document.getElementById("loginOverlay");
+  const closeLogin = document.getElementById("closeLogin");
+  const pwInput = document.getElementById("pwInput");
+  const pwSubmit = document.getElementById("pwSubmit");
+  const loginError = document.getElementById("loginError");
+  const openFab = document.getElementById("openDashboardFab");
+  const closeDashBtn = document.getElementById("closeDash");
 
-document.getElementById("adminEntryBtn").addEventListener("click", () => {
-  if(isAdmin){ openDash(); } else { openLogin(); }
-});
-document.getElementById("closeLogin").addEventListener("click", closeLogin);
-document.getElementById("pwSubmit").addEventListener("click", tryLogin);
-document.getElementById("pwInput").addEventListener("keydown", e => { if(e.key === "Enter") tryLogin(); });
-function tryLogin(){
-  const val = document.getElementById("pwInput").value;
-  if(val === ADMIN_PASSWORD){
-    isAdmin = true;
-    closeLogin();
-    document.getElementById("openDashboardFab").classList.remove("hidden");
-    openDash();
-  } else {
-    document.getElementById("loginError").textContent = "รหัสผ่านไม่ถูกต้อง";
+  adminBtn.addEventListener("click", () => {
+    if(isAdmin) { openDash(); }
+    else { loginOverlay.classList.remove("hidden"); pwInput.focus(); }
+  });
+
+  closeLogin.addEventListener("click", () => {
+    loginOverlay.classList.add("hidden");
+    loginError.textContent = "";
+    pwInput.value = "";
+  });
+
+  function handleLogin(){
+    if(pwInput.value === ADMIN_PASSWORD){
+      isAdmin = true;
+      loginOverlay.classList.add("hidden");
+      openFab.classList.remove("hidden");
+      pwInput.value = "";
+      loginError.textContent = "";
+      openDash();
+    } else {
+      loginError.textContent = "รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง";
+    }
   }
-}
-document.getElementById("closeDash").addEventListener("click", closeDash);
-document.getElementById("openDashboardFab").addEventListener("click", openDash);
-document.querySelectorAll(".admin-tab").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.type)));
 
-// ---------- Init ----------
-(async function init(){
-  for(const type of Object.keys(SECTIONS)) await loadSection(type);
+  pwSubmit.addEventListener("click", handleLogin);
+  pwInput.addEventListener("keypress", (e) => { if(e.key === "Enter") handleLogin(); });
+
+  openFab.addEventListener("click", openDash);
+  closeDashBtn.addEventListener("click", closeDash);
+
+  document.querySelectorAll(".admin-tab").forEach(tab => {
+    tab.addEventListener("click", (e) => switchTab(e.target.dataset.type));
+  });
+}
+
+// ---------- Initialization ----------
+async function init(){
+  setupAuthEvents();
+  for(const type of Object.keys(SECTIONS)){
+    await loadSection(type);
+  }
   renderAllPublic();
-})();
+}
+
+document.addEventListener("DOMContentLoaded", init);
 </script>
 </body>
 </html>
