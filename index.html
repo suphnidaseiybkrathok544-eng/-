@@ -384,7 +384,7 @@
 const ADMIN_PASSWORD = "dbt2569";
 const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwtMTHy5S2X2d08aB_mJ338E1m6o/exec"; 
 
-const SECTIONS = {
+ const SECTIONS = {
   calendar: {
     key: "dbt_site:calendar", grid: "calendarGrid", label: "ปฏิทินกิจกรรม",
     fields: [
@@ -392,11 +392,10 @@ const SECTIONS = {
       {name:"month", label:"เดือน/ปี (เช่น ส.ค. 69)", placeholder:"ส.ค. 69"},
       {name:"title", label:"ชื่อกิจกรรม / โครงการ"},
       {name:"time", label:"เวลา (เช่น 09:00 - 12:00 น.)", placeholder:"09:00 - 16:30 น."},
-      {name:"location", label:"สถานที่ (เช่น ห้องปฏิบัติการ DBT 1)", placeholder:"หอประชุมใหญ่"}
+      {name:"location", label:"สถานที่ (เช่น ห้องปฏิบัติการ DBT 1)", placeholder:"หอประชุมใหญ่"},
       {name:"detail", label:"รายละเอียดกิจกรรม / กำหนดการโดยย่อ", placeholder:"กรอกรายละเอียดเพิ่มเติม...", type:"textarea"}
-    
     ],
-   
+  },
     seed: [
       {id:"cal1", day:"18", month:"ส.ค. 69", title:"โครงการแข่งขันทักษะการพัฒนาเว็บแอปพลิเคชัน", time:"09:00 - 16:00 น.", location:"ห้องปฏิบัติการ DBT 2"},
       {id:"cal2", day:"25", month:"ส.ค. 69", title:"สัมมนาเทคโนโลยี AI กับธุรกิจยุคดิจิทัล", time:"13:00 - 16:30 น.", location:"หอประชุมใหญ่"}
