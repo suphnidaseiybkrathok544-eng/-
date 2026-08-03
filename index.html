@@ -467,12 +467,27 @@ function toast(msg){
 }
 
 // ---------- Storage ----------
-// หมายเหตุ: ใช้ localStorage ของเบราว์เซอร์ในการบันทึกข้อมูล ซึ่งจะช่วยให้ข้อมูล
-// ยังอยู่ครบเมื่อปิดหน้าแล้วเปิดใหม่ "บนเครื่อง/เบราว์เซอร์เดียวกัน" เท่านั้น
-// ถ้าต้องการให้ทุกคนที่เข้าเว็บเห็นข้อมูลชุดเดียวกัน (แก้ครั้งเดียวเห็นทุกคน)
-// ต้องมีระบบฐานข้อมูล/เซิร์ฟเวอร์เก็บข้อมูลจริง ซึ่ง localStorage ทำแบบนั้นไม่ได้
+// ใช้ Google Sheet (ผ่าน Google Apps Script Web App) เป็นที่เก็บข้อมูลกลาง
+// เพื่อให้ทุกอุปกรณ์/ทุกคนที่เข้าเว็บเห็นข้อมูลชุดเดียวกัน
+// ตั้งค่า SHEET_API_URL ด้านล่างเป็นลิงก์ Web App ที่ได้จากการ Deploy Apps Script
+// ถ้ายังไม่ได้ตั้งค่า (เว้นว่างไว้) ระบบจะใช้ localStorage ของเครื่องแทนไปก่อน
+const SHEET_API_URL = ""; // เช่น "https://script.google.com/macros/s/XXXXXXXX/exec"
+
 async function loadSection(type){
   const cfg = SECTIONS[type];
+  if(SHEET_API_URL){
+    try{
+      const res = await fetch(`${SHEET_API_URL}?key=${encodeURIComponent(cfg.key)}`);
+      const val = await res.json();
+      if(Array.isArray(val)){
+        state[type] = val;
+        try{ localStorage.setItem(cfg.key, JSON.stringify(val)); }catch(e){}
+        return;
+      }
+    }catch(e){
+      console.error("โหลดจาก Google Sheet ไม่สำเร็จ ใช้ข้อมูลสำรองในเครื่องแทน", e);
+    }
+  }
   try{
     const raw = localStorage.getItem(cfg.key);
     state[type] = raw ? JSON.parse(raw) : cfg.seed.slice();
@@ -482,13 +497,22 @@ async function loadSection(type){
 }
 async function saveSection(type){
   const cfg = SECTIONS[type];
-  try{
-    localStorage.setItem(cfg.key, JSON.stringify(state[type]));
-  }catch(e){
-    console.error("บันทึกไม่สำเร็จ", e);
-    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะรูปภาพมีขนาดใหญ่เกินไป ลองใช้รูปที่เล็กลงหรือใช้ลิงก์รูปภาพแทน");
+  const jsonStr = JSON.stringify(state[type]);
+  try{ localStorage.setItem(cfg.key, jsonStr); }catch(e){}
+  if(SHEET_API_URL){
+    try{
+      await fetch(SHEET_API_URL, {
+        method: "POST",
+        headers: {"Content-Type": "text/plain;charset=utf-8"},
+        body: JSON.stringify({key: cfg.key, value: jsonStr})
+      });
+    }catch(e){
+      console.error("บันทึกไป Google Sheet ไม่สำเร็จ", e);
+      alert("บันทึกไป Google Sheet ไม่สำเร็จ (เก็บไว้ในเครื่องนี้ชั่วคราวแล้ว) กรุณาตรวจสอบการเชื่อมต่อหรือลิงก์ Apps Script");
+    }
   }
 }
+
 
 // ---------- Public render ----------
 function renderPublic(type){
