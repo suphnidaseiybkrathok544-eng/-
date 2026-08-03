@@ -3,744 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สาขาเทคโนโลยีธุรกิจดิจิทัล | DBT</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Admin Dashboard | สาขา DBT</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --purple-deep:#2f0f5c;
-    --purple:#4a1680;
-    --purple-mid:#5e21a0;
-    --purple-light:#7b3fc4;
-    --gold:#d4af37;
-    --gold-light:#f3d878;
-    --ink:#241442;
-    --text-soft:#6b5c85;
-    --paper:#faf8fc;
-    --card:#ffffff;
-    --line:#ece4f7;
+  :root {
+    --purple-deep:#3a1264;
+    --purple-mid:#5a1f8f;
+    --gold:#d4a72c;
+    --bg:#f4f0f8;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Prompt','Kanit',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;}
-  a{color:inherit;}
-  ::-webkit-scrollbar{width:8px;}
-  ::-webkit-scrollbar-thumb{background:var(--purple-light);border-radius:10px;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Prompt', sans-serif; background: var(--bg); color: #333; }
 
-  /* ===== Nav ===== */
-  .navbar{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 24px;
-    background:linear-gradient(90deg,var(--purple-deep),var(--purple));
-    position:sticky;top:0;z-index:200;
-    box-shadow:0 2px 14px rgba(47,15,92,0.25);
+  /* Admin Header */
+  .admin-header {
+    background: var(--purple-deep);
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .brand{display:flex;align-items:center;gap:10px;}
-  .brand .mark{font-family:'Kanit',sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:1px;}
-  .brand .tagline{display:flex;flex-direction:column;line-height:1.2;font-size:9px;font-weight:600;color:var(--gold-light);letter-spacing:.5px;}
+  .admin-header h1 { font-size: 20px; font-family: 'Kanit'; }
+  .user-info { font-size: 14px; color: var(--gold); }
+
+  /* Layout */
+  .container { display: flex; min-height: calc(100vh - 60px); }
   
-  .nav-right{display:flex;align-items:center;gap:15px;}
-  .nav-links{display:flex;gap:18px;list-style:none;}
-  .nav-links li a{text-decoration:none;color:#fff;font-size:13.5px;font-weight:500;position:relative;padding-bottom:4px;}
-  .nav-links li a::after{content:"";position:absolute;left:0;bottom:0;width:0%;height:2px;background:var(--gold);transition:width .25s ease;}
-  .nav-links li a:hover::after{width:100%;}
-  
-  .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;}
-  
-  .admin-entry{
-    width:36px;height:36px;border-radius:50%;
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.25);
-    display:flex;align-items:center;justify-content:center;
-    color:var(--gold-light);font-size:15px;cursor:pointer;flex-shrink:0;
+  /* Sidebar */
+  .sidebar {
+    width: 240px;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px 0;
   }
-  .admin-entry:hover{background:rgba(255,255,255,0.22);}
-
-  /* ===== Hero ===== */
-  .hero{position:relative;overflow:hidden;background:#fff;padding-bottom:0;}
-  .hero-ribbons{position:absolute;inset:0;z-index:0;pointer-events:none;}
-  .hero-inner{
-    position:relative;z-index:2;
-    max-width:1180px;margin:0 auto;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:60px 24px 50px;gap:30px;
+  .sidebar ul { list-style: none; }
+  .sidebar li a {
+    display: block;
+    padding: 12px 25px;
+    color: #444;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
   }
-  .hero-title{font-family:'Kanit',sans-serif;font-weight:700;font-size:40px;line-height:1.25;color:var(--purple);}
-  .hero-title .line2{color:var(--ink);display:block;}
-  .hero-sub{margin-top:12px;font-size:14px;font-weight:600;letter-spacing:2.5px;color:var(--gold);}
-  .hero-desc{margin-top:16px;font-size:14px;color:var(--text-soft);max-width:420px;}
-  .hero-actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;}
-  .btn-primary{background:var(--purple);color:#fff;font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;text-decoration:none;box-shadow:0 8px 20px rgba(74,22,128,0.25);text-align:center;}
-  .btn-ghost{border:1.5px solid var(--gold);color:var(--purple);font-weight:600;font-size:13.5px;padding:12px 24px;border-radius:8px;text-decoration:none;text-align:center;}
-  .hero-photo{position:relative;flex-shrink:0;width:260px;height:260px;}
-  .hero-photo .ring{position:absolute;inset:-8px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold));}
-  .hero-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #fff;display:block;}
-
-  /* ===== Banner & Sections ===== */
-  .section-banner{background:linear-gradient(90deg,var(--purple-deep),var(--purple-mid));text-align:center;padding:14px 20px;}
-  .section-banner h2{font-family:'Kanit',sans-serif;color:#fff;font-size:19px;font-weight:600;letter-spacing:1px;}
-
-  .section-container{max-width:1180px;margin:0 auto;padding:45px 24px;}
-  .section-container.tight{padding-top:30px;}
-  .bg-alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .section-title-plain{font-family:'Kanit',sans-serif;font-size:22px;font-weight:700;color:var(--purple-deep);padding-bottom:6px;border-bottom:3px solid var(--gold);display:inline-block;margin-bottom:24px;}
-
-  .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
-
-  /* ===== Calendar ===== */
-  .calendar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
-  .calendar-card{
-    background:#fff;border-radius:12px;padding:18px;
-    border-left:5px solid var(--purple);box-shadow:0 4px 12px rgba(47,15,92,0.04);
-    display:flex;gap:16px;align-items:center;border-top:1px solid var(--line);
-    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  .sidebar li a.active, .sidebar li a:hover {
+    background: #f0e6fa;
+    color: var(--purple-mid);
+    border-left: 4px solid var(--purple-mid);
   }
-  .calendar-date-box{
-    background:linear-gradient(135deg,var(--purple-deep),var(--purple));
-    color:#fff;padding:10px;border-radius:10px;text-align:center;
-    min-width:70px;flex-shrink:0;
+
+  /* Main Content */
+  .content { flex: 1; padding: 30px; }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
   }
-  .calendar-date-box .day{font-size:18px;font-weight:700;line-height:1;color:var(--gold-light);}
-  .calendar-date-box .month{font-size:11px;font-weight:500;margin-top:2px;}
-  .calendar-info h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:4px;}
-  .calendar-info p{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
-
-  /* ===== Enhanced News Grid (เพิ่มเวลา/สถานที่/การแต่งกาย) ===== */
-  .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;}
-  .news-card{
-    background:var(--card);border-radius:14px;overflow:hidden;
-    box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);
-    display:flex;flex-direction:column;transition:transform .25s ease, box-shadow .25s ease;
-    position:relative;
+  .card h2 {
+    font-family: 'Kanit';
+    font-size: 18px;
+    color: var(--purple-deep);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 5px;
+    display: inline-block;
   }
-  .news-card.no-img::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:4px;
-    background:linear-gradient(90deg,var(--purple),var(--gold));
+
+  /* Form Elements */
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
   }
-  .news-card:hover{transform:translateY(-5px);box-shadow:0 10px 24px rgba(47,15,92,0.14);}
-  .news-img-box{width:100%;height:190px;overflow:hidden;background:#f2e9fb;position:relative;}
-  .news-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
-  .news-card:hover .news-img-box img{transform:scale(1.06);}
-  .news-card .body{padding:20px;display:flex;flex-direction:column;flex-grow:1;}
-  .news-card .date{font-size:11.5px;color:var(--gold);font-weight:700;margin-bottom:8px;display:block;}
-  .news-card h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.4;}
-  .news-card p{font-size:13px;color:var(--text-soft);line-height:1.55;margin-bottom:12px;}
-  
-  /* Details List Inside News Card */
-  .news-meta{
-    margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
-    display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink);
+  .btn-submit {
+    background: var(--purple-mid);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
   }
-  .news-meta-item{display:flex;align-items:center;gap:6px;}
-  .news-meta-item .icon{font-size:13px;}
+  .btn-submit:hover { background: var(--purple-deep); }
 
-  /* ===== Course ===== */
-  .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-  .course-card{background:#fff;padding:22px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
-  .course-card h3{font-size:16.5px;color:var(--purple-deep);margin-bottom:10px;}
-  .course-card p{font-size:13px;color:#555;margin-bottom:14px;}
-  .tags{display:flex;flex-wrap:wrap;gap:6px;}
-  .tag{background:#f2e9fb;color:var(--purple);font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 13.5px; }
+  th { background: #faf8fc; color: var(--purple-deep); }
+  .btn-edit { color: #2196F3; cursor: pointer; margin-right: 10px; text-decoration: none; font-weight: 600; }
+  .btn-delete { color: #f44336; cursor: pointer; text-decoration: none; font-weight: 600; }
 
-  /* ===== Works ===== */
-  .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-  .portfolio-card{position:relative;border-radius:14px;overflow:hidden;height:200px;}
-  .portfolio-card img{width:100%;height:100%;object-fit:cover;}
-  .portfolio-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(47,15,92,0.9),transparent 65%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#fff;}
-  .portfolio-overlay .cat{font-size:11px;color:var(--gold-light);letter-spacing:1px;margin-bottom:3px;}
-  .portfolio-overlay h4{font-size:15px;}
-
-  /* ===== Faculty ===== */
-  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));gap:20px 16px;justify-content:center;}
-  .faculty-card{text-align:center;display:flex;flex-direction:column;align-items:center;background:#fff;padding:18px 12px;border-radius:16px;box-shadow:0 4px 12px rgba(47,15,92,0.03);border:1px solid var(--line);}
-  .faculty-photo{position:relative;width:100px;height:100px;margin-bottom:12px;}
-  .faculty-photo .ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold));}
-  .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;display:block;}
-  .faculty-card h4{font-size:13.5px;color:var(--ink);font-weight:600;margin-bottom:6px;line-height:1.3;}
-  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10px;font-weight:600;padding:4px 8px;border-radius:20px;width:100%;margin-bottom:8px;}
-  .faculty-contact{margin-top:auto;font-size:11px;color:var(--text-soft);width:100%;border-top:1px dashed var(--line);padding-top:8px;}
-  .faculty-contact p{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:2px;word-break:break-all;}
-  .faculty-contact a{color:var(--purple-mid);text-decoration:none;}
-
-  /* ===== Downloads ===== */
-  .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
-  .dl-item{background:#fff;padding:14px 18px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;}
-  .dl-item .label{font-size:13px;display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;}
-  .dl-badge{font-size:10px;font-weight:700;background:var(--purple);color:#fff;padding:3px 7px;border-radius:4px;flex-shrink:0;}
-  .dl-item a{text-decoration:none;color:var(--purple);font-weight:600;font-size:12.5px;white-space:nowrap;}
-
-  /* ===== Footer ===== */
-  footer{background:var(--purple-deep);color:#fff;padding:40px 24px 20px;}
-  .footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,0.1);}
-  .footer-col h4{color:var(--gold-light);font-size:16px;margin-bottom:12px;}
-  .footer-col p,.footer-col li{font-size:12.5px;color:#d7c9ee;margin-bottom:8px;list-style:none;}
-  .footer-col li a{text-decoration:none;color:#d7c9ee;}
-  .footer-bottom{text-align:center;padding-top:18px;font-size:11.5px;color:#a898c8;}
-
-  /* ===== Admin Modals ===== */
-  .hidden{display:none !important;}
-  .admin-overlay{position:fixed;inset:0;background:rgba(36,20,66,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;}
-  .admin-modal{background:#fff;border-radius:16px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
-  .admin-modal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2;}
-  .admin-modal-head h3{font-family:'Kanit',sans-serif;font-size:16px;color:var(--purple-deep);}
-  .close-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-soft);}
-  .admin-modal-body{padding:20px;}
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;}
-  .field input,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:'Prompt',sans-serif;font-size:13px;background:var(--paper);}
-  .field textarea{min-height:70px;resize:vertical;}
-  .img-upload-box{border:1px dashed var(--line);border-radius:10px;padding:12px;background:var(--paper);}
-  .img-preview{display:block;width:100%;max-height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;}
-  .img-upload-box input[type="file"]{font-size:11.5px;width:100%;margin-bottom:8px;}
-  .img-url-input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:7px;font-size:12px;background:#fff;}
-  .form-actions{display:flex;gap:10px;margin-top:8px;}
-  .btn-save{background:var(--purple);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;flex:1;}
-  .btn-cancel{background:#eee;color:#555;border:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
-  
-  .admin-tabs{display:flex;gap:4px;padding:0 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;}
-  .admin-tab{background:none;border:none;padding:12px 12px;font-size:12.5px;font-weight:600;color:var(--text-soft);cursor:pointer;border-bottom:3px solid transparent;flex-shrink:0;}
-  .admin-tab.active{color:var(--purple);border-bottom-color:var(--gold);}
-  
-  .admin-list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;}
-  .admin-list-item .info{font-size:12.5px;overflow:hidden;}
-  .admin-list-item .info b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .admin-list-item .info span{color:var(--text-soft);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .row-actions{display:flex;gap:6px;flex-shrink:0;}
-  .row-actions button{border:none;border-radius:6px;padding:5px 9px;font-size:11.5px;cursor:pointer;}
-  .row-actions .edit-btn{background:#f2e9fb;color:var(--purple);}
-  .row-actions .del-btn{background:#fde7ea;color:#c62c47;}
-  
-  .login-box{padding:24px 20px;text-align:center;}
-  .login-box p{font-size:12px;color:var(--text-soft);margin-bottom:14px;}
-  .status-msg{font-size:12px;color:#c62c47;margin-top:8px;min-height:16px;}
-  .save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:30px;font-size:12.5px;z-index:1200;opacity:0;transition:opacity .3s ease;pointer-events:none;}
-  .save-toast.show{opacity:1;}
-  
-  .admin-fab{position:fixed;bottom:20px;right:20px;z-index:150;background:var(--purple);color:#fff;border:none;border-radius:30px;padding:10px 16px;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(74,22,128,0.35);display:flex;align-items:center;gap:6px;}
-
-  /* ===== Responsive Mobile ===== */
   @media (max-width: 768px) {
-    .menu-toggle { display: block; }
-    .nav-links {
-      display: none; position: absolute; top: 100%; left: 0; right: 0;
-      background: var(--purple-deep); flex-direction: column; padding: 16px 24px; gap: 14px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    .nav-links.show { display: flex; }
-    .nav-links li a::after { display: none; }
-    .hero-inner { flex-direction: column-reverse; text-align: center; padding: 36px 20px 40px; }
-    .hero-photo { width: 180px; height: 180px; }
-    .hero-title { font-size: 28px; }
-    .hero-desc { margin-left: auto; margin-right: auto; }
-    .hero-actions { justify-content: center; width: 100%; }
-    .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; min-width: 120px; }
-    .faculty-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 10px; }
-    .faculty-photo { width: 80px; height: 80px; }
-    .admin-modal { height: 100vh; max-height: 100vh; border-radius: 0; }
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; }
   }
 </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="brand">
-      <span class="mark">DBT</span>
-      <span class="tagline">DIGITAL BUSINESS<br>TECHNOLOGY</span>
-    </div>
-    <div class="nav-right">
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">หน้าแรก</a></li>
-        <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
-        <li><a href="#courses">หลักสูตร</a></li>
-        <li><a href="#news">ข่าวสาร</a></li>
-        <li><a href="#faculty">บุคลากร</a></li>
-        <li><a href="#works">ผลงาน</a></li>
-        <li><a href="#download">ดาวน์โหลด</a></li>
-        <li><a href="#contact">ติดต่อเรา</a></li>
-      </ul>
-      <div class="admin-entry" id="adminEntryBtn" title="สำหรับผู้ดูแลระบบ">🔒</div>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">☰</button>
-    </div>
-  </nav>
-
-  <header class="hero" id="home">
-    <svg class="hero-ribbons" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M-50,60 C150,-20 300,140 550,60 C750,0 900,120 1250,20" stroke="#d4af37" stroke-width="8" fill="none" opacity="0.5"/>
-      <path d="M-50,110 C150,30 320,190 560,110 C760,50 920,170 1250,70" stroke="#4a1680" stroke-width="10" fill="none" opacity="0.15"/>
-    </svg>
-    <div class="hero-inner">
-      <div class="hero-text">
-        <h1 class="hero-title">สาขาเทคโนโลยี<span class="line2">ธุรกิจดิจิทัล</span></h1>
-        <p class="hero-sub">DIGITAL BUSINESS TECHNOLOGY</p>
-        <p class="hero-desc">หลักสูตรที่หลอมรวมธุรกิจเข้ากับเทคโนโลยี ผลิตนักปฏิบัติที่พร้อมทำงานจริงตั้งแต่วันแรก</p>
-        <div class="hero-actions">
-          <a href="#courses" class="btn-primary">ดูหลักสูตร</a>
-          <a href="#contact" class="btn-ghost">สมัครเรียน</a>
-        </div>
-      </div>
-      <div class="hero-photo">
-        <div class="ring"></div>
-        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop" alt="นักศึกษา">
-      </div>
-    </div>
+  <header class="admin-header">
+    <h1>ระบบจัดการข้อมูล (DBT Admin Panel)</h1>
+    <div class="user-info">👤 ผู้ดูแลระบบ | <a href="#" style="color:#fff;">ออกจากระบบ</a></div>
   </header>
 
-  <section class="section-container" id="calendar">
-    <h2 class="section-title-plain">📅 ปฏิทินกิจกรรม / กำหนดการ</h2>
-    <div class="calendar-grid" id="calendarGrid"></div>
-  </section>
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#" class="active">จัดการข่าวสาร</a></li>
+        <li><a href="#">จัดการหลักสูตร</a></li>
+        <li><a href="#">จัดการบุคลากร</a></li>
+        <li><a href="#">จัดการผลงานนักศึกษา</a></li>
+        <li><a href="#">จัดการเอกสารดาวน์โหลด</a></li>
+      </ul>
+    </nav>
 
-  <div class="section-banner"><h2>ข่าวประชาสัมพันธ์</h2></div>
-  <section class="section-container tight" id="news">
-    <div class="news-grid" id="newsGrid"></div>
-  </section>
-
-  <section class="bg-alt" id="courses">
-    <div class="section-container">
-      <h2 class="section-title-plain">หลักสูตรที่เปิดสอน</h2>
-      <div class="course-grid" id="courseGrid"></div>
-    </div>
-  </section>
-
-  <section class="section-container" id="works">
-    <h2 class="section-title-plain">ผลงานนักศึกษา</h2>
-    <div class="portfolio-grid" id="worksGrid"></div>
-  </section>
-
-  <section class="bg-alt" id="faculty">
-    <div class="section-container">
-      <h2 class="section-title-plain">คณะอาจารย์ประจำสาขา</h2>
-      <div class="faculty-grid" id="staffGrid"></div>
-    </div>
-  </section>
-
-  <section class="section-container" id="download">
-    <h2 class="section-title-plain">ดาวน์โหลดเอกสาร</h2>
-    <ul class="dl-list" id="dlGrid"></ul>
-  </section>
-
-  <footer id="contact">
-    <div class="footer-inner">
-      <div class="footer-col">
-        <h4>สาขาเทคโนโลยีธุรกิจดิจิทัล (DBT)</h4>
-        <p>มุ่งมั่นผลิตบุคลากรคุณภาพ ด้านนวัตกรรม และเทคโนโลยีธุรกิจดิจิทัล เพื่อตอบสนองตลาดงานยุคใหม่</p>
-      </div>
-      <div class="footer-col">
-        <h4>ลิงก์ด่วน</h4>
-        <ul>
-          <li><a href="#home">หน้าแรก</a></li>
-          <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
-          <li><a href="#courses">หลักสูตร</a></li>
-          <li><a href="#news">ข่าวสาร</a></li>
-          <li><a href="#download">ดาวน์โหลดเอกสาร</a></li>
-          <li><a href="#contact">ติดต่อสอบถาม</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>ติดต่อเรา</h4>
-        <p>📍 อาคารเรียนปฏิบัติการเทคโนโลยีสารสนเทศ ชั้น 3</p>
-        <p>📞 โทรศัพท์: 02-xxx-xxxx</p>
-        <p>✉️ อีเมล: dbt@institution.ac.th</p>
-      </div>
-    </div>
-    <div class="footer-bottom"><p>&copy; 2026 Digital Business Technology. All Rights Reserved.</p></div>
-  </footer>
-
-  <button class="admin-fab hidden" id="openDashboardFab">⚙️ จัดการเนื้อหา</button>
-
-  <div class="admin-overlay hidden" id="loginOverlay">
-    <div class="admin-modal" style="max-width:360px;">
-      <div class="admin-modal-head"><h3>เข้าสู่ระบบแอดมิน</h3><button class="close-x" id="closeLogin">✕</button></div>
-      <div class="login-box">
-        <p>กรอกรหัสผ่านผู้ดูแลระบบเพื่อจัดการเนื้อหา</p>
-        <div class="field"><input type="password" id="pwInput" placeholder="รหัสผ่าน"></div>
-        <button class="btn-save" style="width:100%" id="pwSubmit">เข้าสู่ระบบ</button>
-        <div class="status-msg" id="loginError"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="admin-overlay hidden" id="dashOverlay">
-    <div class="admin-modal">
-      <div class="admin-modal-head">
-        <h3>แผงจัดการเนื้อหา</h3>
-        <button class="close-x" id="closeDash">✕</button>
-      </div>
-      <div class="admin-tabs">
-        <button class="admin-tab" data-type="calendar">ปฏิทินกิจกรรม</button>
-        <button class="admin-tab" data-type="news">ข่าวประชาสัมพันธ์</button>
-        <button class="admin-tab" data-type="courses">หลักสูตร</button>
-        <button class="admin-tab" data-type="works">ผลงาน</button>
-        <button class="admin-tab" data-type="staff">บุคลากร</button>
-        <button class="admin-tab" data-type="downloads">ไฟล์ดาวน์โหลด</button>
-      </div>
-      <div class="admin-modal-body" id="dashBody"></div>
-    </div>
-  </div>
-
-  <div class="save-toast" id="saveToast">บันทึกเรียบร้อย</div>
-
-<script>
-// ---------- CONFIG ----------
-const ADMIN_PASSWORD = "dbt2569";
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwtMTHy5S2X2d08aB_mJ338E1m6o/exec"; 
-
- const SECTIONS = {
-  calendar: {
-    key: "dbt_site:calendar", grid: "calendarGrid", label: "ปฏิทินกิจกรรม",
-    fields: [
-      {name:"day", label:"วันที่ (เช่น 18)", placeholder:"18"},
-      {name:"month", label:"เดือน/ปี (เช่น ส.ค. 69)", placeholder:"ส.ค. 69"},
-      {name:"title", label:"ชื่อกิจกรรม / โครงการ"},
-      {name:"time", label:"เวลา (เช่น 09:00 - 12:00 น.)", placeholder:"09:00 - 16:30 น."},
-      {name:"location", label:"สถานที่ (เช่น ห้องปฏิบัติการ DBT 1)", placeholder:"หอประชุมใหญ่"},
-      {name:"detail", label:"รายละเอียดกิจกรรม / กำหนดการโดยย่อ", placeholder:"กรอกรายละเอียดเพิ่มเติม...", type:"textarea"}
-    ],
-  },
-    seed: [
-      {id:"cal1", day:"18", month:"ส.ค. 69", title:"โครงการแข่งขันทักษะการพัฒนาเว็บแอปพลิเคชัน", time:"09:00 - 16:00 น.", location:"ห้องปฏิบัติการ DBT 2"},
-      {id:"cal2", day:"25", month:"ส.ค. 69", title:"สัมมนาเทคโนโลยี AI กับธุรกิจยุคดิจิทัล", time:"13:00 - 16:30 น.", location:"หอประชุมใหญ่"}
-    ],
-    render: (item) => `
-      <div class="calendar-date-box">
-        <div class="day">${esc(item.day)}</div>
-        <div class="month">${esc(item.month)}</div>
-      </div>
-      <div class="calendar-info">
-        <h4>${esc(item.title)}</h4>
-        <p>⏰ ${esc(item.time || 'ไม่ระบุเวลา')}</p>
-        <p>📍 ${esc(item.location || 'ไม่ระบุสถานที่')}</p>
-      </div>`,
-    wrapClass: "calendar-card"
-  },
-  news: {
-    key: "dbt_site:news", grid: "newsGrid", label: "ข่าวประชาสัมพันธ์",
-    fields: [
-      {name:"date", label:"วันที่", placeholder:"15 ม.ค. 2026"},
-      {name:"title", label:"หัวข้อข่าว"},
-      {name:"desc", label:"รายละเอียดย่อ", area:true},
-      {name:"time", label:"เวลา (ถ้ามี)", placeholder:"09:00 - 16:00 น."},
-      {name:"location", label:"สถานที่ (ถ้ามี)", placeholder:"หอประชุมใหญ่ ชั้น 2"},
-      {name:"dressCode", label:"การแต่งกาย (ถ้ามี)", placeholder:"ชุดนักศึกษาเรียบร้อย"},
-      {name:"img", label:"รูปภาพข่าว (อัปโหลด หรือ วาง URL)", image:true}
-    ],
-    seed: [
-      {id:"n1", date:"15 ม.ค. 2026", title:"รับสมัครนักศึกษาใหม่ 2569", desc:"เปิดรับสมัครนักศึกษาใหม่ โควตาพิเศษและรอบทั่วไป", time:"08:30 - 16:30 น.", location:"อาคารเรียน IT ชั้น 3", dressCode:"ชุดนักศึกษาเรียบร้อย", img:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop"},
-      {id:"n2", date:"10 ม.ค. 2026", title:"กิจกรรมปฐมนิเทศนักศึกษา", desc:"กำหนดการปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 1/2569", time:"09:00 - 12:00 น.", location:"หอประชุมใหญ่", dressCode:"ชุดนักเรียน/นักศึกษาเดิม", img:""}
-    ],
-    render: (item) => `
-      ${item.img ? `<div class="news-img-box"><img src="${esc(item.img)}" alt=""></div>` : ''}
-      <div class="body">
-        <span class="date">📅 ${esc(item.date)}</span>
-        <h3>${esc(item.title)}</h3>
-        <p>${esc(item.desc)}</p>
-        ${(item.time || item.location || item.dressCode) ? `
-          <div class="news-meta">
-            ${item.time ? `<div class="news-meta-item"><span class="icon">⏰</span> <span><b>เวลา:</b> ${esc(item.time)}</span></div>` : ''}
-            ${item.location ? `<div class="news-meta-item"><span class="icon">📍</span> <span><b>สถานที่:</b> ${esc(item.location)}</span></div>` : ''}
-            ${item.dressCode ? `<div class="news-meta-item"><span class="icon">👔</span> <span><b>การแต่งกาย:</b> ${esc(item.dressCode)}</span></div>` : ''}
+    <main class="content">
+      
+      <div class="card">
+        <h2>เพิ่ม / แก้ไขข่าวประชาสัมพันธ์</h2>
+        <form>
+          <div class="form-group">
+            <label>หัวข้อข่าวสาร</label>
+            <input type="text" placeholder="กรอกหัวข้อข่าว...">
           </div>
-        ` : ''}
-      </div>`,
-    getWrapClass: (item) => `news-card ${!item.img ? 'no-img' : ''}`
-  },
-  courses: {
-    key: "dbt_site:courses", grid: "courseGrid", label: "หลักสูตรที่เปิดสอน",
-    fields: [
-      {name:"title", label:"ชื่อระดับหลักสูตร"},
-      {name:"desc", label:"รายละเอียดหลักสูตร", area:true},
-      {name:"tags", label:"แท็ก/ทักษะ (คั่นด้วย ,)"}
-    ],
-    seed: [
-      {id:"c1", title:"ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)", desc:"ปูพื้นฐานเทคโนโลยี การตลาดดิจิทัล และการใช้งานโปรแกรมประยุกต์พื้นฐาน", tags:"คอมพิวเตอร์พื้นฐาน, การสร้างสื่อดิจิทัล"},
-      {id:"c2", title:"ระดับ ปวส. (ประกาศนียบัตรวิชาชีพชั้นสูง)", desc:"เจาะลึกการพัฒนาเว็บ การวิเคราะห์ข้อมูลธุรกิจ และการจัดการอีคอมเมิร์ซ", tags:"Web Dev, Data Analytics"}
-    ],
-    render: (item) => {
-      const tags = item.tags ? item.tags.split(',').map(t => `<span class="tag">${esc(t.trim())}</span>`).join('') : '';
-      return `<h3>${esc(item.title)}</h3><p>${esc(item.desc)}</p><div class="tags">${tags}</div>`;
-    },
-    wrapClass: "course-card"
-  },
-  works: {
-    key: "dbt_site:works", grid: "worksGrid", label: "ผลงานนักศึกษา",
-    fields: [
-      {name:"category", label:"หมวดหมู่ผลงาน"},
-      {name:"title", label:"ชื่อผลงาน"},
-      {name:"img", label:"รูปภาพ", image:true}
-    ],
-    seed: [
-      {id:"w1", category:"แอปพลิเคชันชุมชน", title:"Smart Local Shop", img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=500&auto=format&fit=crop"}
-    ],
-    render: (item) => `<img src="${esc(item.img)}" alt=""><div class="portfolio-overlay"><div class="cat">${esc(item.category)}</div><h4>${esc(item.title)}</h4></div>`,
-    wrapClass: "portfolio-card"
-  },
-  staff: {
-    key: "dbt_site:staff", grid: "staffGrid", label: "บุคลากร",
-    fields: [
-      {name:"name", label:"ชื่อ-นามสกุล"},
-      {name:"role", label:"ตำแหน่ง"},
-      {name:"phone", label:"เบอร์โทรศัพท์ (ถ้ามี)", placeholder:"08X-XXX-XXXX"},
-      {name:"email", label:"อีเมล (ถ้ามี)", placeholder:"teacher@institution.ac.th"},
-      {name:"img", label:"รูปภาพ", image:true}
-    ],
-    seed: [
-      {id:"s1", name:"นางสาวชกานต์ รอดสการ", role:"หัวหน้าแผนกวิชาคอมพิวเตอร์ธุรกิจ", phone:"081-234-5678", email:"chakan@institution.ac.th", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
-      {id:"s2", name:"นางสาวดาวพระศุกร์ ฤทธิ์บัณฑิตย์", role:"ครูชำนาญการพิเศษ", phone:"089-876-5432", email:"daowprasuk@institution.ac.th", img:"https://images.unsplash.com/photo-1580894732413-a7235a909247?q=80&w=200&auto=format&fit=crop"}
-    ],
-    render: (item) => `
-      <div class="faculty-photo"><div class="ring"></div><img src="${esc(item.img)}" alt=""></div>
-      <h4>${esc(item.name)}</h4>
-      <div class="faculty-badge">${esc(item.role)}</div>
-      <div class="faculty-contact">
-        ${item.phone ? `<p>📞 <a href="tel:${esc(item.phone)}">${esc(item.phone)}</a></p>` : ''}
-        ${item.email ? `<p>✉️ <a href="mailto:${esc(item.email)}">${esc(item.email)}</a></p>` : ''}
-      </div>`,
-    wrapClass: "faculty-card"
-  },
-  downloads: {
-    key: "dbt_site:downloads", grid: "dlGrid", label: "ไฟล์ดาวน์โหลด",
-    fields: [
-      {name:"badge", label:"ประเภทไฟล์"},
-      {name:"label", label:"ชื่อรายการ"},
-      {name:"url", label:"ลิงก์ดาวน์โหลด (URL)"}
-    ],
-    seed: [
-      {id:"d1", badge:"PDF", label:"แผนการเรียนสาขา DBT", url:"#"}
-    ],
-    render: (item) => `<span class="label"><span class="dl-badge">${esc(item.badge)}</span>${esc(item.label)}</span><a href="${esc(item.url)}" target="_blank">ดาวน์โหลด</a>`,
-    wrapClass: "dl-item"
-  }
-};
-
-const state = {};
-let isAdmin = false;
-let activeTab = "calendar";
-let editingId = null;
-
-function esc(str){ return String(str ?? "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s])); }
-function uid(){ return "id" + Date.now() + Math.floor(Math.random()*1000); }
-function toast(msg){ const t = document.getElementById("saveToast"); if(t){ t.textContent = msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 1800); } }
-
-// ---------- STORAGE API ----------
-async function loadSection(type){
-  const cfg = SECTIONS[type];
-  if(SHEET_API_URL && !SHEET_API_URL.includes("นำ URL")){
-    try{
-      const res = await fetch(`${SHEET_API_URL}?key=${encodeURIComponent(cfg.key)}`);
-      if(res.ok){
-        const val = await res.json();
-        if(Array.isArray(val) && val.length > 0){
-          state[type] = val;
-          try{ localStorage.setItem(cfg.key, JSON.stringify(val)); }catch(e){}
-          return;
-        }
-      }
-    }catch(e){ console.warn(`ดึงข้อมูล ${type} จาก Google Sheet ไม่สำเร็จ ใช้ข้อมูลสำรองแทน`, e); }
-  }
-  try{ const raw = localStorage.getItem(cfg.key); state[type] = raw ? JSON.parse(raw) : cfg.seed.slice(); }
-  catch(e){ state[type] = cfg.seed.slice(); }
-}
-
-async function saveSection(type){
-  const cfg = SECTIONS[type];
-  const jsonStr = JSON.stringify(state[type]);
-  try{ localStorage.setItem(cfg.key, jsonStr); }catch(e){}
-  if(SHEET_API_URL && !SHEET_API_URL.includes("นำ URL")){
-    try{
-      await fetch(SHEET_API_URL, {
-        method: "POST", mode: "no-cors",
-        headers: {"Content-Type": "text/plain;charset=utf-8"},
-        body: JSON.stringify({key: cfg.key, value: jsonStr})
-      });
-    }catch(e){ console.error("บันทึกข้อมูลไป Google Sheet ไม่สำเร็จ", e); }
-  }
-}
-
-// ---------- RENDER ----------
-function renderPublic(type){
-  const cfg = SECTIONS[type];
-  const grid = document.getElementById(cfg.grid);
-  if(!grid) return;
-  const items = state[type] || [];
-  if(items.length === 0){
-    grid.innerHTML = `<div class="empty-note">ยังไม่มีรายการข้อมูล</div>`;
-    return;
-  }
-  grid.innerHTML = items.map(item => {
-    const wrapClass = cfg.getWrapClass ? cfg.getWrapClass(item) : (cfg.wrapClass || "news-card");
-    return `<div class="${wrapClass}">${cfg.render(item)}</div>`;
-  }).join("");
-}
-
-function renderAll(){ Object.keys(SECTIONS).forEach(renderPublic); }
-
-// ---------- DASHBOARD ----------
-function openDash(){ document.getElementById("dashOverlay").classList.remove("hidden"); switchTab(activeTab); }
-function closeDash(){ document.getElementById("dashOverlay").classList.add("hidden"); }
-
-function switchTab(type){
-  activeTab = type; editingId = null;
-  document.querySelectorAll(".admin-tab").forEach(b => b.classList.toggle("active", b.dataset.type === type));
-  renderDashBody();
-}
-
-function renderDashBody(){
-  const cfg = SECTIONS[activeTab];
-  const items = state[activeTab] || [];
-  const body = document.getElementById("dashBody");
-  const editingItem = editingId ? items.find(i => i.id === editingId) : null;
-
-  const formFields = cfg.fields.map(f => {
-    if(f.image){
-      const current = editingItem ? (editingItem[f.name] || "") : "";
-      return `<div class="field"><label>${esc(f.label)}</label><div class="img-upload-box">
-        <img class="img-preview ${current ? "" : "hidden"}" data-preview="${f.name}" src="${esc(current)}">
-        <input type="file" accept="image/*" data-imgfile="${f.name}">
-        <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือ วาง URL รูปภาพ" value="${esc(current)}">
-      </div></div>`;
-    }
-    return `<div class="field"><label>${esc(f.label)}</label>${f.area 
-      ? `<textarea data-field="${f.name}">${editingItem ? esc(editingItem[f.name]) : ""}</textarea>`
-      : `<input type="text" data-field="${f.name}" placeholder="${esc(f.placeholder||'')}" value="${editingItem ? esc(editingItem[f.name]) : ""}">`}</div>`;
-  }).join("");
-
-  const listHtml = items.map(item => `
-    <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[1]?.name || cfg.fields[0].name])}</b><span>${esc(item[cfg.fields[0].name])}</span></div>
-      <div class="row-actions">
-        <button class="edit-btn" data-edit="${item.id}">แก้ไข</button>
-        <button class="del-btn" data-del="${item.id}">ลบ</button>
+          <div class="form-group">
+            <label>รายละเอียดอย่างย่อ</label>
+            <textarea rows="3" placeholder="กรอกเนื้อหาข่าวโดยย่อ..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>รูปภาพประกอบ (URL หรือ อัปโหลด)</label>
+            <input type="file">
+          </div>
+          <button type="button" class="btn-submit">บันทึกข้อมูล</button>
+        </form>
       </div>
-    </div>`).join("") || `<p style="font-size:12px;color:var(--text-soft);">ไม่มีข้อมูล</p>`;
 
-  body.innerHTML = `
-    <h4 style="font-size:13.5px;margin-bottom:10px;color:var(--purple-deep);">${editingItem ? "แก้ไข" : "เพิ่มใหม่"} — ${cfg.label}</h4>
-    <form id="itemForm">${formFields}
-      <div class="form-actions">
-        <button type="submit" class="btn-save">${editingItem ? "บันทึก" : "เพิ่มรายการ"}</button>
-        ${editingItem ? `<button type="button" class="btn-cancel" id="cancelEdit">ยกเลิก</button>` : ""}
+      <div class="card">
+        <h2>รายการข่าวสารทั้งหมด</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>วันที่</th>
+              <th>หัวข้อข่าว</th>
+              <th>การจัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15 ม.ค. 2026</td>
+              <td>ประกาศรับสมัครนักศึกษาใหม่ 2569</td>
+              <td>
+                <a href="#" class="btn-edit">แก้ไข</a>
+                <a href="#" class="btn-delete">ลบ</a>
+              </td>
+            </tr>
+            <tr>
+              <td>10 ม.ค. 2026</td>
+              <td>กิจกรรมปฐมนิเทศนักศึกษาใหม่</td>
+              <td>
+                <a href="#" class="btn-edit">แก้ไข</a>
+                <a href="#" class="btn-delete">ลบ</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </form>
-    <hr style="margin:18px 0;border:none;border-top:1px solid var(--line);">
-    <h4 style="font-size:13.5px;margin-bottom:10px;color:var(--purple-deep);">รายการทั้งหมด (${items.length})</h4>
-    ${listHtml}`;
 
-  document.getElementById("itemForm").addEventListener("submit", onSubmitItem);
-  const cancelBtn = document.getElementById("cancelEdit");
-  if(cancelBtn) cancelBtn.addEventListener("click", () => { editingId = null; renderDashBody(); });
+    </main>
+  </div>
 
-  body.querySelectorAll("[data-imgfile]").forEach(input => {
-    input.addEventListener("change", () => {
-      const file = input.files[0];
-      if(file){
-        if(file.size > 2 * 1024 * 1024){
-          alert("ขนาดไฟล์ภาพใหญ่เกินไป (กรุณาใช้ภาพขนาดไม่เกิน 2MB)");
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = () => {
-          body.querySelector(`[data-field="${input.dataset.imgfile}"]`).value = reader.result;
-          const prev = body.querySelector(`[data-preview="${input.dataset.imgfile}"]`);
-          prev.src = reader.result; prev.classList.remove("hidden");
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  });
-
-  body.querySelectorAll(".img-url-input").forEach(input => {
-    input.addEventListener("input", () => {
-      const prev = body.querySelector(`[data-preview="${input.dataset.field}"]`);
-      if(input.value.trim()){
-        prev.src = input.value.trim();
-        prev.classList.remove("hidden");
-      } else {
-        prev.classList.add("hidden");
-      }
-    });
-  });
-
-  body.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => { editingId = b.dataset.edit; renderDashBody(); }));
-  body.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => onDeleteItem(b.dataset.del)));
-}
-
-async function onSubmitItem(e){
-  e.preventDefault();
-  const cfg = SECTIONS[activeTab];
-  const data = {};
-  cfg.fields.forEach(f => {
-    const el = e.target.querySelector(`[data-field="${f.name}"]`);
-    if(el) data[f.name] = el.value.trim();
-  });
-
-  if(editingId){
-    const idx = state[activeTab].findIndex(i => i.id === editingId);
-    if(idx > -1) state[activeTab][idx] = {...state[activeTab][idx], ...data};
-  } else {
-    state[activeTab].push({id: uid(), ...data});
-  }
-
-  editingId = null;
-  renderPublic(activeTab);
-  renderDashBody();
-  toast("บันทึกข้อมูลเรียบร้อย");
-  await saveSection(activeTab);
-}
-
-async function onDeleteItem(id){
-  if(!confirm("ยืนยันการลบ?")) return;
-  state[activeTab] = state[activeTab].filter(i => i.id !== id);
-  if(editingId === id) editingId = null;
-  renderPublic(activeTab);
-  renderDashBody();
-  toast("ลบเรียบร้อย");
-  await saveSection(activeTab);
-}
-
-// ---------- EVENT HANDLERS ----------
-function setupEvents(){
-  const navLinks = document.getElementById("navLinks");
-  const menuToggle = document.getElementById("menuToggle");
-  if(menuToggle && navLinks){
-    menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
-    navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("show")));
-  }
-
-  document.getElementById("adminEntryBtn").addEventListener("click", () => {
-    if(isAdmin) openDash();
-    else document.getElementById("loginOverlay").classList.remove("hidden");
-  });
-
-  document.getElementById("closeLogin").addEventListener("click", () => document.getElementById("loginOverlay").classList.add("hidden"));
-  document.getElementById("closeDash").addEventListener("click", closeDash);
-  document.getElementById("openDashboardFab").addEventListener("click", openDash);
-
-  document.getElementById("pwSubmit").addEventListener("click", () => {
-    if(document.getElementById("pwInput").value === ADMIN_PASSWORD){
-      isAdmin = true;
-      document.getElementById("loginOverlay").classList.add("hidden");
-      document.getElementById("openDashboardFab").classList.remove("hidden");
-      openDash();
-    } else {
-      document.getElementById("loginError").textContent = "รหัสผ่านไม่ถูกต้อง";
-    }
-  });
-
-  document.querySelectorAll(".admin-tab").forEach(t => t.addEventListener("click", (e) => switchTab(e.target.dataset.type)));
-}
-
-async function init(){
-  try {
-    setupEvents();
-    for(const type of Object.keys(SECTIONS)){ 
-      await loadSection(type); 
-    }
-    renderAll();
-  } catch(err) {
-    console.error("เกิดข้อผิดพลาดในการเริ่มต้นระบบ:", err);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", init);
-</script>
 </body>
 </html>
