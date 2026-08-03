@@ -62,7 +62,7 @@
   .nav-right{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:24px;
   }
   .nav-links{
     display:flex;
@@ -90,18 +90,19 @@
   .nav-links li a:hover{color:var(--purple-mid);}
   .nav-links li a:hover::after{width:100%;}
   
-  /* Admin Toggle Button (Gear) */
-  .admin-gear{
-    width:38px;height:38px;
+  /* Admin Lock Button */
+  .admin-lock-btn{
+    width:36px; height:36px;
     border-radius:50%;
-    background:linear-gradient(145deg,var(--purple-light),var(--purple-deep));
-    display:flex;align-items:center;justify-content:center;
-    color:#fff;font-size:16px;
+    background:var(--purple-mid);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:15px;
     cursor:pointer;
     box-shadow: 0 2px 6px rgba(58,18,100,0.2);
-    transition: transform 0.2s;
+    transition: transform 0.2s, background 0.2s;
+    border: none;
   }
-  .admin-gear:hover{transform: scale(1.08);}
+  .admin-lock-btn:hover{transform: scale(1.08); background: var(--purple-light);}
 
   /* ===== Hero ===== */
   .hero{
@@ -148,27 +149,47 @@
   .hero-title{
     font-family:'Kanit',sans-serif;
     font-weight:700;
-    font-size:44px;
+    font-size:42px;
     line-height:1.25;
-    position:relative;
-    display:inline-block;
   }
   .hero-title .accent{color:var(--gold-light);}
-  .hero-title::after{
-    content:"";
-    display:block;
-    width:78%;
-    height:3px;
-    background:var(--gold);
-    margin-top:6px;
-    border-radius:2px;
-  }
   .hero-sub{
-    margin-top:18px;
-    font-size:16px;
+    margin-top:12px;
+    font-size:14px;
     font-weight:500;
-    letter-spacing:4px;
+    letter-spacing:2px;
     color:var(--gold-light);
+  }
+  .hero-desc {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #e2d9ed;
+    max-width: 480px;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .btn-primary {
+    background: var(--purple-deep);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13.5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid var(--gold-light);
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13.5px;
   }
   .hero-photo{
     position:relative;
@@ -193,33 +214,6 @@
     display:block;
   }
 
-  /* ===== Stats Counter Banner ===== */
-  .stats-banner {
-    background: #fff;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    margin-top: -30px;
-    position: relative;
-    z-index: 5;
-    border-radius: 12px;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #eee;
-  }
-  .stat-item h3 {
-    font-size: 28px;
-    color: var(--purple-mid);
-    font-weight: 700;
-  }
-  .stat-item p {
-    font-size: 13px;
-    color: #666;
-  }
-
   /* ===== Shared Section Styles ===== */
   .section-container{
     max-width:1180px;
@@ -228,13 +222,13 @@
   }
   .section-title{
     font-family:'Kanit',sans-serif;
-    font-size:26px;
+    font-size:24px;
     font-weight:700;
     color:var(--purple-deep);
-    padding-bottom:8px;
+    padding-bottom:6px;
     border-bottom:3px solid var(--gold);
     display:inline-block;
-    margin-bottom:30px;
+    margin-bottom:25px;
   }
   .bg-alt {background-color: var(--gray-bg);}
 
@@ -255,7 +249,7 @@
   }
   .news-card:hover {transform: translateY(-5px);}
   .news-card .thumb{
-    height:140px;
+    height:130px;
     background:linear-gradient(135deg,var(--purple-light),var(--purple-mid));
     display: flex;
     align-items: center;
@@ -296,7 +290,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   }
   .course-card h3 {
-    font-size: 18px;
+    font-size: 17px;
     color: var(--purple-deep);
     margin-bottom: 10px;
   }
@@ -514,11 +508,6 @@
     .hero-inner{flex-direction:column;text-align:center;padding:40px 24px;}
     .hero-title{font-size:32px;}
     .hero-photo{width:200px;height:200px;}
-    .stats-banner {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin: 20px;
-    }
   }
 </style>
 </head>
@@ -539,7 +528,7 @@
         <li><a href="#download">ดาวน์โหลด</a></li>
         <li><a href="#contact">ติดต่อเรา</a></li>
       </ul>
-      <div class="admin-gear" onclick="toggleAdminMode()" title="สลับโหมดผู้ดูแลระบบ">⚙️</div>
+      <button class="admin-lock-btn" onclick="toggleAdminMode()" title="โหมดผู้ดูแลระบบ">🔒</button>
     </div>
   </nav>
 
@@ -548,6 +537,11 @@
       <div class="hero-text">
         <h1 class="hero-title">สาขาเทคโนโลยี<br><span class="accent">ธุรกิจดิจิทัล</span></h1>
         <p class="hero-sub">DIGITAL BUSINESS TECHNOLOGY</p>
+        <p class="hero-desc">หลักสูตรที่หลอมรวมธุรกิจเข้ากับเทคโนโลยี ผลิตนักปฏิบัติที่พร้อมทำงานจริงตั้งแต่วันแรก</p>
+        <div class="hero-btns">
+          <a href="#courses" class="btn-primary">ดูหลักสูตร</a>
+          <a href="#contact" class="btn-outline">สมัครเรียน</a>
+        </div>
       </div>
       <div class="hero-photo">
         <div class="ring"></div>
@@ -555,25 +549,6 @@
       </div>
     </div>
   </header>
-
-  <div class="stats-banner">
-    <div class="stat-item">
-      <h3>100%</h3>
-      <p>อัตราการได้งานทำ</p>
-    </div>
-    <div class="stat-item">
-      <h3>15+</h3>
-      <p>พันธมิตรภาคธุรกิจ</p>
-    </div>
-    <div class="stat-item">
-      <h3>3</h3>
-      <p>ระดับหลักสูตรที่เปิดสอน</p>
-    </div>
-    <div class="stat-item">
-      <h3>50+</h3>
-      <p>รางวัลและผลงานแข่งขัน</p>
-    </div>
-  </div>
 
   <section class="section-container" id="news">
     <h2 class="section-title">ข่าวประชาสัมพันธ์ & กิจกรรม</h2>
@@ -706,14 +681,13 @@
     let currentSection = '';
     let currentEditId = null;
 
-    // เปิดปิดโหมดแอดมิน
     function toggleAdminMode() {
       document.body.classList.toggle('admin-mode');
       const active = document.body.classList.contains('admin-mode');
-      alert(active ? "เปิดโหมดผู้ดูแลระบบแล้ว! คุณสามารถกดปุ่มแก้ไข ✏️ หรือลบ 🗑️ บนการ์ดต่างๆ ได้" : "ปิดโหมดผู้ดูแลระบบเรียบร้อย");
+      const btn = document.querySelector('.admin-lock-btn');
+      btn.innerHTML = active ? '🔓' : '🔒';
     }
 
-    // แสดงผลข้อมูลทั้งหมด
     function renderAll() {
       renderNews();
       renderPortfolio();
@@ -721,7 +695,6 @@
       renderDownloads();
     }
 
-    // เรนเดอร์ข่าวสาร
     function renderNews() {
       const grid = document.getElementById('newsGrid');
       grid.innerHTML = '';
@@ -743,7 +716,6 @@
       grid.innerHTML += `<div class="add-tile" onclick="openAddModal('news')">+ เพิ่มข่าวสาร</div>`;
     }
 
-    // เรนเดอร์ผลงานนักศึกษา
     function renderPortfolio() {
       const grid = document.getElementById('portfolioGrid');
       grid.innerHTML = '';
@@ -764,7 +736,6 @@
       grid.innerHTML += `<div class="add-tile" style="height:200px;" onclick="openAddModal('portfolio')">+ เพิ่มผลงาน</div>`;
     }
 
-    // เรนเดอร์คณาจารย์
     function renderFaculty() {
       const grid = document.getElementById('facultyGrid');
       grid.innerHTML = '';
@@ -783,7 +754,6 @@
       grid.innerHTML += `<div class="add-tile" style="min-height:180px;" onclick="openAddModal('faculty')">+ เพิ่มบุคลากร</div>`;
     }
 
-    // เรนเดอร์เอกสาร
     function renderDownloads() {
       const grid = document.getElementById('downloadGrid');
       grid.innerHTML = '';
@@ -801,7 +771,6 @@
       grid.innerHTML += `<div class="add-tile" style="grid-column:1/-1;min-height:55px;" onclick="openAddModal('downloads')">+ เพิ่มเอกสารดาวน์โหลด</div>`;
     }
 
-    // จัดการเปิด-ปิด Modal ฟอร์ม
     function openAddModal(section) {
       currentSection = section;
       currentEditId = null;
@@ -823,7 +792,6 @@
       document.getElementById('adminModal').classList.add('hidden');
     }
 
-    // สร้างช่องกรอกฟอร์มตามหมวดหมู่
     function buildFields(section, data) {
       const fields = document.getElementById('modalFields');
       fields.innerHTML = '';
@@ -854,7 +822,6 @@
       }
     }
 
-    // บันทึกฟอร์ม
     function handleFormSubmit(e) {
       e.preventDefault();
       let item = {};
@@ -897,7 +864,6 @@
       renderAll();
     }
 
-    // ลบข้อมูล
     function deleteItem(section, id) {
       if(confirm("คุณต้องการลบข้อมูลนี้ใช่หรือไม่?")) {
         siteData[section] = siteData[section].filter(x => x.id !== id);
@@ -905,7 +871,6 @@
       }
     }
 
-    // เริ่มต้นแสดงผลหน้าเว็บ
     renderAll();
   </script>
 </body>
