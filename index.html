@@ -70,7 +70,7 @@
   .hero-photo .ring{position:absolute;inset:-10px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold),var(--gold-light));}
   .hero-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:6px solid #fff;display:block;}
 
-  /* ===== Section banner (purple) ===== */
+  /* ===== Section banner ===== */
   .section-banner{background:linear-gradient(90deg,var(--purple-deep),var(--purple-mid));text-align:center;padding:16px 20px;}
   .section-banner h2{font-family:'Kanit',sans-serif;color:#fff;font-size:20px;font-weight:600;letter-spacing:1px;}
 
@@ -78,19 +78,10 @@
   .section-container.tight{padding-top:36px;}
   .bg-alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .section-title-plain{font-family:'Kanit',sans-serif;font-size:24px;font-weight:700;color:var(--purple-deep);padding-bottom:8px;border-bottom:3px solid var(--gold);display:inline-block;margin-bottom:28px;}
-  .section-toprow{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
 
   .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
 
-  /* ===== News ===== */
-  .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-  .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);position:relative;}
-  .news-card .body{padding:18px;}
-  .news-card .date{font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
-  .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
-  .news-card p{font-size:12.5px;color:var(--text-soft);}
-
-  /* ===== Calendar Section ===== */
+  /* ===== Components Grids ===== */
   .calendar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
   .calendar-card{
     background:#fff;border-radius:14px;padding:18px 20px;
@@ -112,15 +103,20 @@
   .cal-info h3{font-size:15px;color:var(--ink);margin-bottom:4px;font-weight:600;}
   .cal-info p{font-size:12.5px;color:var(--text-soft);}
 
-  /* ===== Course (kept static) ===== */
+  .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+  .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);position:relative;}
+  .news-card .body{padding:18px;}
+  .news-card .date{font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
+  .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .news-card p{font-size:12.5px;color:var(--text-soft);}
+
   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
-  .course-card{background:#fff;padding:24px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
+  .course-card{background:#fff;padding:24px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);position:relative;}
   .course-card h3{font-size:17px;color:var(--purple-deep);margin-bottom:10px;}
   .course-card p{font-size:13px;color:#555;margin-bottom:14px;}
   .tags{display:flex;flex-wrap:wrap;gap:6px;}
   .tag{background:#f2e9fb;color:var(--purple);font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
 
-  /* ===== Works ===== */
   .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;}
   .portfolio-card{position:relative;border-radius:14px;overflow:hidden;height:200px;}
   .portfolio-card img{width:100%;height:100%;object-fit:cover;}
@@ -128,7 +124,6 @@
   .portfolio-overlay .cat{font-size:11px;color:var(--gold-light);letter-spacing:1px;margin-bottom:3px;}
   .portfolio-overlay h4{font-size:16px;}
 
-  /* ===== Staff ===== */
   .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;}
   .faculty-card{text-align:center;position:relative;}
   .faculty-photo{position:relative;width:130px;height:130px;margin:0 auto 14px;}
@@ -137,7 +132,6 @@
   .faculty-card h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:8px;}
   .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;}
 
-  /* ===== Downloads ===== */
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
   .dl-item{background:#fff;padding:14px 20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;position:relative;}
   .dl-item .label{font-size:13px;display:flex;align-items:center;gap:8px;}
@@ -152,7 +146,7 @@
   .footer-col li a{text-decoration:none;color:#d7c9ee;}
   .footer-bottom{text-align:center;padding-top:20px;font-size:12px;color:#a898c8;}
 
-  /* ===== Admin: floating card controls ===== */
+  /* ===== Admin Card Tools ===== */
   .admin-live .card-tools{display:flex;position:absolute;top:8px;right:8px;gap:6px;z-index:5;}
   .card-tools button{
     width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;
@@ -161,7 +155,7 @@
   .card-tools .edit-btn{background:#fff;color:var(--purple);box-shadow:0 2px 6px rgba(0,0,0,0.15);}
   .card-tools .del-btn{background:#e0405c;color:#fff;}
 
-  /* ===== Admin overlay/modal ===== */
+  /* ===== Admin Modal ===== */
   .hidden{display:none !important;}
   .admin-overlay{
     position:fixed;inset:0;background:rgba(36,20,66,0.55);
@@ -195,7 +189,7 @@
   .btn-cancel{background:#eee;color:#555;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
   .admin-tabs{display:flex;gap:4px;padding:0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
   .admin-tab{
-    background:none;border:none;padding:12px 10px;font-size:12px;font-weight:600;
+    background:none;border:none;padding:12px 10px;font-size:11.5px;font-weight:600;
     color:var(--text-soft);cursor:pointer;border-bottom:3px solid transparent;
   }
   .admin-tab.active{color:var(--purple);border-bottom-color:var(--gold);}
@@ -287,26 +281,10 @@
     <div class="news-grid" id="newsGrid"></div>
   </section>
 
-  <section class="bg-alt" id="courses">
+  <section class="bg-alt admin-live" id="courses">
     <div class="section-container">
       <h2 class="section-title-plain">หลักสูตรที่เปิดสอน</h2>
-      <div class="course-grid">
-        <div class="course-card">
-          <h3>ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)</h3>
-          <p>ปูพื้นฐานเทคโนโลยี การตลาดดิจิทัล และการใช้งานโปรแกรมประยุกต์พื้นฐานสำหรับธุรกิจ</p>
-          <div class="tags"><span class="tag">คอมพิวเตอร์พื้นฐาน</span><span class="tag">การสร้างสื่อดิจิทัล</span><span class="tag">การขายออนไลน์</span></div>
-        </div>
-        <div class="course-card">
-          <h3>ระดับ ปวส. (ประกาศนียบัตรวิชาชีพชั้นสูง)</h3>
-          <p>เจาะลึกการพัฒนาเว็บ การวิเคราะห์ข้อมูลธุรกิจ (Data Analytics) และการจัดการอีคอมเมิร์ซ</p>
-          <div class="tags"><span class="tag">Web Development</span><span class="tag">E-Commerce</span><span class="tag">UX/UI Design</span></div>
-        </div>
-        <div class="course-card">
-          <h3>ระดับ ปริญญาตรี (เทคโนโลยีบัณฑิต)</h3>
-          <p>เน้นการบริหารจัดการนวัตกรรมดิจิทัล การวิเคราะห์ข้อมูลขั้นสูง และการเป็นผู้ประกอบการดิจิทัล</p>
-          <div class="tags"><span class="tag">Digital Marketing</span><span class="tag">Business Intelligence</span><span class="tag">Startup</span></div>
-        </div>
-      </div>
+      <div class="course-grid" id="coursesGrid"></div>
     </div>
   </section>
 
@@ -375,11 +353,12 @@
         <button class="close-x" id="closeDash">✕</button>
       </div>
       <div class="admin-tabs">
-        <button class="admin-tab" data-type="calendar">ปฏิทินกิจกรรม</button>
-        <button class="admin-tab" data-type="news">ข่าวประชาสัมพันธ์</button>
-        <button class="admin-tab" data-type="works">ผลงานนักศึกษา</button>
+        <button class="admin-tab" data-type="calendar">ปฏิทิน</button>
+        <button class="admin-tab" data-type="news">ข่าวสาร</button>
+        <button class="admin-tab" data-type="courses">หลักสูตร</button>
+        <button class="admin-tab" data-type="works">ผลงาน</button>
         <button class="admin-tab" data-type="staff">บุคลากร</button>
-        <button class="admin-tab" data-type="downloads">ไฟล์ดาวน์โหลด</button>
+        <button class="admin-tab" data-type="downloads">ดาวน์โหลด</button>
       </div>
       <div class="admin-modal-body" id="dashBody"></div>
     </div>
@@ -435,6 +414,27 @@ const SECTIONS = {
         <p>${esc(item.desc)}</p>
       </div>`,
     wrapClass: "news-card"
+  },
+  courses: {
+    key: "dbt_site:courses", grid: "coursesGrid", label: "หลักสูตรที่เปิดสอน",
+    fields: [
+      {name:"title", label:"ชื่อหลักสูตร (เช่น ระดับ ปวช.)"},
+      {name:"desc", label:"คำอธิบายหลักสูตร", area:true},
+      {name:"tags", label:"ป้ายแท็ก (คั่นด้วยเครื่องหมายจุลภาค ,)", placeholder:"คอมพิวเตอร์พื้นฐาน, การขายออนไลน์"}
+    ],
+    seed: [
+      {id:"cs1", title:"ระดับ ปวช. (ประกาศนียบัตรวิชาชีพ)", desc:"ปูพื้นฐานเทคโนโลยี การตลาดดิจิทัล และการใช้งานโปรแกรมประยุกต์พื้นฐานสำหรับธุรกิจ", tags:"คอมพิวเตอร์พื้นฐาน, การสร้างสื่อดิจิทัล, การขายออนไลน์"},
+      {id:"cs2", title:"ระดับ ปวส. (ประกาศนียบัตรวิชาชีพชั้นสูง)", desc:"เจาะลึกการพัฒนาเว็บ การวิเคราะห์ข้อมูลธุรกิจ (Data Analytics) และการจัดการอีคอมเมิร์ซ", tags:"Web Development, E-Commerce, UX/UI Design"},
+      {id:"cs3", title:"ระดับ ปริญญาตรี (เทคโนโลยีบัณฑิต)", desc:"เน้นการบริหารจัดการนวัตกรรมดิจิทัล การวิเคราะห์ข้อมูลขั้นสูง และการเป็นผู้ประกอบการดิจิทัล", tags:"Digital Marketing, Business Intelligence, Startup"}
+    ],
+    render: (item) => {
+      const tagList = item.tags ? item.tags.split(',').map(t => `<span class="tag">${esc(t.trim())}</span>`).join('') : '';
+      return `
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.desc)}</p>
+        <div class="tags">${tagList}</div>`;
+    },
+    wrapClass: "course-card"
   },
   works: {
     key: "dbt_site:works", grid: "worksGrid", label: "ผลงานนักศึกษา",
@@ -525,7 +525,7 @@ function saveSection(type){
     localStorage.setItem(cfg.key, JSON.stringify(state[type]));
   }catch(e){
     console.error("บันทึกไม่สำเร็จ", e);
-    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะไฟล์รูปภาพใหญ่เกินไป");
+    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะขนาดไฟล์ใหญ่เกินไป");
   }
 }
 
@@ -604,7 +604,7 @@ function renderDashBody(){
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[2]?.name || cfg.fields[1].name])}</b>
+      <div class="info"><b>${esc(item[cfg.fields[1]?.name || cfg.fields[0].name])}</b>
         <span>${esc(item[cfg.fields[0].name])}</span></div>
       <div class="row-actions">
         <button class="edit-btn" onclick="editItemFromDash('${item.id}')">แก้ไข</button>
