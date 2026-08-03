@@ -104,21 +104,34 @@
   .calendar-info h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:4px;}
   .calendar-info p{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
 
-  /* ===== News Section (ปรับปรุงให้รองรับรูปภาพ) ===== */
-  .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+  /* ===== Enhanced News Grid (เพิ่มเวลา/สถานที่/การแต่งกาย) ===== */
+  .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;}
   .news-card{
     background:var(--card);border-radius:14px;overflow:hidden;
     box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);
-    display:flex;flex-direction:column;transition:transform .2s ease, box-shadow .2s ease;
+    display:flex;flex-direction:column;transition:transform .25s ease, box-shadow .25s ease;
+    position:relative;
   }
-  .news-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(47,15,92,0.12);}
-  .news-img-box{width:100%;height:180px;overflow:hidden;background:#f2e9fb;position:relative;}
-  .news-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
-  .news-card:hover .news-img-box img{transform:scale(1.05);}
-  .news-card .body{padding:18px;display:flex;flex-direction:column;flex-grow:1;}
-  .news-card .date{font-size:11.5px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
-  .news-card h3{font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4;}
-  .news-card p{font-size:13px;color:var(--text-soft);line-height:1.5;margin-top:auto;}
+  .news-card.no-img::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--purple),var(--gold));
+  }
+  .news-card:hover{transform:translateY(-5px);box-shadow:0 10px 24px rgba(47,15,92,0.14);}
+  .news-img-box{width:100%;height:190px;overflow:hidden;background:#f2e9fb;position:relative;}
+  .news-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .news-card:hover .news-img-box img{transform:scale(1.06);}
+  .news-card .body{padding:20px;display:flex;flex-direction:column;flex-grow:1;}
+  .news-card .date{font-size:11.5px;color:var(--gold);font-weight:700;margin-bottom:8px;display:block;}
+  .news-card h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.4;}
+  .news-card p{font-size:13px;color:var(--text-soft);line-height:1.55;margin-bottom:12px;}
+  
+  /* Details List Inside News Card */
+  .news-meta{
+    margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
+    display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink);
+  }
+  .news-meta-item{display:flex;align-items:center;gap:6px;}
+  .news-meta-item .icon{font-size:13px;}
 
   /* ===== Course ===== */
   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
@@ -403,20 +416,30 @@ const SECTIONS = {
       {name:"date", label:"วันที่", placeholder:"15 ม.ค. 2026"},
       {name:"title", label:"หัวข้อข่าว"},
       {name:"desc", label:"รายละเอียดย่อ", area:true},
-      {name:"img", label:"รูปภาพข่าว (ไม่ใส่ก็ได้)", image:true}
+      {name:"time", label:"เวลา (ถ้ามี)", placeholder:"09:00 - 16:00 น."},
+      {name:"location", label:"สถานที่ (ถ้ามี)", placeholder:"หอประชุมใหญ่ ชั้น 2"},
+      {name:"dressCode", label:"การแต่งกาย (ถ้ามี)", placeholder:"ชุดนักศึกษาเรียบร้อย"},
+      {name:"img", label:"รูปภาพข่าว (อัปโหลด หรือ วาง URL)", image:true}
     ],
     seed: [
-      {id:"n1", date:"15 ม.ค. 2026", title:"รับสมัครนักศึกษาใหม่ 2569", desc:"เปิดรับสมัครนักศึกษาใหม่ โควตาพิเศษและรอบทั่วไป", img:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop"},
-      {id:"n2", date:"10 ม.ค. 2026", title:"กิจกรรมปฐมนิเทศนักศึกษา", desc:"กำหนดการปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 1/2569", img:""}
+      {id:"n1", date:"15 ม.ค. 2026", title:"รับสมัครนักศึกษาใหม่ 2569", desc:"เปิดรับสมัครนักศึกษาใหม่ โควตาพิเศษและรอบทั่วไป", time:"08:30 - 16:30 น.", location:"อาคารเรียน IT ชั้น 3", dressCode:"ชุดนักศึกษาเรียบร้อย", img:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop"},
+      {id:"n2", date:"10 ม.ค. 2026", title:"กิจกรรมปฐมนิเทศนักศึกษา", desc:"กำหนดการปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 1/2569", time:"09:00 - 12:00 น.", location:"หอประชุมใหญ่", dressCode:"ชุดนักเรียน/นักศึกษาเดิม", img:""}
     ],
     render: (item) => `
       ${item.img ? `<div class="news-img-box"><img src="${esc(item.img)}" alt=""></div>` : ''}
       <div class="body">
-        <span class="date">${esc(item.date)}</span>
+        <span class="date">📅 ${esc(item.date)}</span>
         <h3>${esc(item.title)}</h3>
         <p>${esc(item.desc)}</p>
+        ${(item.time || item.location || item.dressCode) ? `
+          <div class="news-meta">
+            ${item.time ? `<div class="news-meta-item"><span class="icon">⏰</span> <span><b>เวลา:</b> ${esc(item.time)}</span></div>` : ''}
+            ${item.location ? `<div class="news-meta-item"><span class="icon">📍</span> <span><b>สถานที่:</b> ${esc(item.location)}</span></div>` : ''}
+            ${item.dressCode ? `<div class="news-meta-item"><span class="icon">👔</span> <span><b>การแต่งกาย:</b> ${esc(item.dressCode)}</span></div>` : ''}
+          </div>
+        ` : ''}
       </div>`,
-    wrapClass: "news-card"
+    getWrapClass: (item) => `news-card ${!item.img ? 'no-img' : ''}`
   },
   courses: {
     key: "dbt_site:courses", grid: "courseGrid", label: "หลักสูตรที่เปิดสอน",
@@ -540,7 +563,10 @@ function renderPublic(type){
     grid.innerHTML = `<div class="empty-note">ยังไม่มีรายการข้อมูล</div>`;
     return;
   }
-  grid.innerHTML = items.map(item => `<div class="${cfg.wrapClass || "news-card"}">${cfg.render(item)}</div>`).join("");
+  grid.innerHTML = items.map(item => {
+    const wrapClass = cfg.getWrapClass ? cfg.getWrapClass(item) : (cfg.wrapClass || "news-card");
+    return `<div class="${wrapClass}">${cfg.render(item)}</div>`;
+  }).join("");
 }
 
 function renderAll(){ Object.keys(SECTIONS).forEach(renderPublic); }
@@ -567,7 +593,7 @@ function renderDashBody(){
       return `<div class="field"><label>${esc(f.label)}</label><div class="img-upload-box">
         <img class="img-preview ${current ? "" : "hidden"}" data-preview="${f.name}" src="${esc(current)}">
         <input type="file" accept="image/*" data-imgfile="${f.name}">
-        <input type="text" data-field="${f.name}" class="img-url-input" placeholder="วาง URL รูปภาพ" value="${esc(current)}">
+        <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือ วาง URL รูปภาพ" value="${esc(current)}">
       </div></div>`;
     }
     return `<div class="field"><label>${esc(f.label)}</label>${f.area 
