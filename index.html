@@ -39,7 +39,7 @@
   .brand .tagline{display:flex;flex-direction:column;line-height:1.2;font-size:9px;font-weight:600;color:var(--gold-light);letter-spacing:.5px;}
   
   .nav-right{display:flex;align-items:center;gap:15px;}
-  .nav-links{display:flex;gap:20px;list-style:none;}
+  .nav-links{display:flex;gap:18px;list-style:none;}
   .nav-links li a{text-decoration:none;color:#fff;font-size:13.5px;font-weight:500;position:relative;padding-bottom:4px;}
   .nav-links li a::after{content:"";position:absolute;left:0;bottom:0;width:0%;height:2px;background:var(--gold);transition:width .25s ease;}
   .nav-links li a:hover::after{width:100%;}
@@ -86,6 +86,24 @@
 
   .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
 
+  /* ===== Calendar Section ===== */
+  .calendar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .calendar-card{
+    background:#fff;border-radius:12px;padding:18px;
+    border-left:5px solid var(--purple);box-shadow:0 4px 12px rgba(47,15,92,0.04);
+    display:flex;gap:16px;align-items:center;border-top:1px solid var(--line);
+    border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .calendar-date-box{
+    background:linear-gradient(135deg,var(--purple-deep),var(--purple));
+    color:#fff;padding:10px;border-radius:10px;text-align:center;
+    min-width:70px;flex-shrink:0;
+  }
+  .calendar-date-box .day{font-size:18px;font-weight:700;line-height:1;color:var(--gold-light);}
+  .calendar-date-box .month{font-size:11px;font-weight:500;margin-top:2px;}
+  .calendar-info h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:4px;}
+  .calendar-info p{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
+
   /* ===== News ===== */
   .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
   .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);position:relative;}
@@ -111,64 +129,18 @@
   .portfolio-overlay h4{font-size:15px;}
 
   /* ===== Faculty ===== */
-  .faculty-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
-    gap:24px 16px;
-    justify-content:center;
-  }
-  .faculty-card{
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    background:#fff;
-    padding:18px 12px;
-    border-radius:16px;
-    box-shadow:0 4px 12px rgba(47,15,92,0.03);
-    border:1px solid var(--line);
-    transition:transform .2s ease;
-  }
+  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:24px 16px;justify-content:center;}
+  .faculty-card{text-align:center;display:flex;flex-direction:column;align-items:center;background:#fff;padding:18px 12px;border-radius:16px;box-shadow:0 4px 12px rgba(47,15,92,0.03);border:1px solid var(--line);transition:transform .2s ease;}
   .faculty-card:hover{transform:translateY(-3px);}
   .faculty-photo{position:relative;width:110px;height:110px;margin-bottom:12px;}
   .faculty-photo .ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold));}
   .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;display:block;}
   .faculty-card h4{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:6px;line-height:1.3;}
-  .faculty-badge{
-    display:inline-block;
-    background:linear-gradient(90deg,var(--gold),var(--gold-light));
-    color:var(--purple-deep);
-    font-size:10.5px;
-    font-weight:600;
-    padding:4px 10px;
-    border-radius:20px;
-    width:100%;
-    word-wrap:break-word;
-    margin-bottom:8px;
-  }
-  .faculty-contact{
-    margin-top:auto;
-    font-size:11.5px;
-    color:var(--text-soft);
-    width:100%;
-    border-top:1px dashed var(--line);
-    padding-top:8px;
-  }
-  .faculty-contact p{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    margin-top:2px;
-    word-break:break-all;
-  }
-  .faculty-contact a{
-    color:var(--purple-mid);
-    text-decoration:none;
-  }
-  .faculty-contact a:hover{
-    text-decoration:underline;
-  }
+  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;width:100%;word-wrap:break-word;margin-bottom:8px;}
+  .faculty-contact{margin-top:auto;font-size:11.5px;color:var(--text-soft);width:100%;border-top:1px dashed var(--line);padding-top:8px;}
+  .faculty-contact p{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:2px;word-break:break-all;}
+  .faculty-contact a{color:var(--purple-mid);text-decoration:none;}
+  .faculty-contact a:hover{text-decoration:underline;}
 
   /* ===== Downloads ===== */
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
@@ -187,28 +159,15 @@
 
   /* ===== Admin Modals ===== */
   .hidden{display:none !important;}
-  .admin-overlay{
-    position:fixed;inset:0;background:rgba(36,20,66,0.6);
-    z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;
-  }
-  .admin-modal{
-    background:#fff;border-radius:16px;max-width:620px;width:100%;
-    max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);
-  }
-  .admin-modal-head{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:16px 20px;border-bottom:1px solid var(--line);
-    position:sticky;top:0;background:#fff;z-index:2;
-  }
+  .admin-overlay{position:fixed;inset:0;background:rgba(36,20,66,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;}
+  .admin-modal{background:#fff;border-radius:16px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+  .admin-modal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2;}
   .admin-modal-head h3{font-family:'Kanit',sans-serif;font-size:16px;color:var(--purple-deep);}
   .close-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-soft);}
   .admin-modal-body{padding:20px;}
   .field{margin-bottom:14px;}
   .field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;}
-  .field input,.field textarea{
-    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;
-    font-family:'Prompt',sans-serif;font-size:13px;background:var(--paper);
-  }
+  .field input,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:'Prompt',sans-serif;font-size:13px;background:var(--paper);}
   .field textarea{min-height:70px;resize:vertical;}
   .img-upload-box{border:1px dashed var(--line);border-radius:10px;padding:12px;background:var(--paper);}
   .img-preview{display:block;width:100%;max-height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px;}
@@ -219,16 +178,10 @@
   .btn-cancel{background:#eee;color:#555;border:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
   
   .admin-tabs{display:flex;gap:4px;padding:0 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;}
-  .admin-tab{
-    background:none;border:none;padding:12px 12px;font-size:12.5px;font-weight:600;
-    color:var(--text-soft);cursor:pointer;border-bottom:3px solid transparent;flex-shrink:0;
-  }
+  .admin-tab{background:none;border:none;padding:12px 12px;font-size:12.5px;font-weight:600;color:var(--text-soft);cursor:pointer;border-bottom:3px solid transparent;flex-shrink:0;}
   .admin-tab.active{color:var(--purple);border-bottom-color:var(--gold);}
   
-  .admin-list-item{
-    display:flex;justify-content:space-between;align-items:center;gap:10px;
-    padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;
-  }
+  .admin-list-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;}
   .admin-list-item .info{font-size:12.5px;overflow:hidden;}
   .admin-list-item .info b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .admin-list-item .info span{color:var(--text-soft);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -240,60 +193,31 @@
   .login-box{padding:24px 20px;text-align:center;}
   .login-box p{font-size:12px;color:var(--text-soft);margin-bottom:14px;}
   .status-msg{font-size:12px;color:#c62c47;margin-top:8px;min-height:16px;}
-  .save-toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-    background:var(--ink);color:#fff;padding:10px 20px;border-radius:30px;
-    font-size:12.5px;z-index:1200;opacity:0;transition:opacity .3s ease;pointer-events:none;
-  }
+  .save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:30px;font-size:12.5px;z-index:1200;opacity:0;transition:opacity .3s ease;pointer-events:none;}
   .save-toast.show{opacity:1;}
   
-  .admin-fab{
-    position:fixed;bottom:20px;right:20px;z-index:150;
-    background:var(--purple);color:#fff;border:none;border-radius:30px;
-    padding:10px 16px;font-size:12.5px;font-weight:600;cursor:pointer;
-    box-shadow:0 6px 20px rgba(74,22,128,0.35);display:flex;align-items:center;gap:6px;
-  }
+  .admin-fab{position:fixed;bottom:20px;right:20px;z-index:150;background:var(--purple);color:#fff;border:none;border-radius:30px;padding:10px 16px;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(74,22,128,0.35);display:flex;align-items:center;gap:6px;}
 
   /* ===== Responsive ===== */
   @media (max-width: 768px) {
     .menu-toggle { display: block; }
     .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%; left: 0; right: 0;
-      background: var(--purple-deep);
-      flex-direction: column;
-      padding: 16px 24px;
-      gap: 14px;
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--purple-deep); flex-direction: column; padding: 16px 24px; gap: 14px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
     .nav-links.show { display: flex; }
     .nav-links li a::after { display: none; }
-    
-    .hero-inner {
-      flex-direction: column-reverse;
-      text-align: center;
-      padding: 36px 20px 40px;
-    }
+    .hero-inner { flex-direction: column-reverse; text-align: center; padding: 36px 20px 40px; }
     .hero-photo { width: 180px; height: 180px; }
     .hero-title { font-size: 30px; }
     .hero-desc { margin-left: auto; margin-right: auto; }
     .hero-actions { justify-content: center; width: 100%; }
     .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; min-width: 130px; }
-
-    .faculty-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px 12px;
-    }
+    .faculty-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
     .faculty-photo { width: 85px; height: 85px; }
     .faculty-card h4 { font-size: 12.5px; }
-
     .admin-modal { height: 100vh; max-height: 100vh; border-radius: 0; }
-  }
-
-  @media (max-width: 400px) {
-    .faculty-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-title { font-size: 26px; }
   }
 </style>
 </head>
@@ -307,6 +231,7 @@
     <div class="nav-right">
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">หน้าแรก</a></li>
+        <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
         <li><a href="#courses">หลักสูตร</a></li>
         <li><a href="#news">ข่าวสาร</a></li>
         <li><a href="#faculty">บุคลากร</a></li>
@@ -340,6 +265,11 @@
       </div>
     </div>
   </header>
+
+  <section class="section-container" id="calendar">
+    <h2 class="section-title-plain">📅 ปฏิทินกิจกรรม / กำหนดการ</h2>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </section>
 
   <div class="section-banner"><h2>ข่าวประชาสัมพันธ์</h2></div>
   <section class="section-container tight" id="news">
@@ -380,6 +310,7 @@
         <h4>ลิงก์ด่วน</h4>
         <ul>
           <li><a href="#home">หน้าแรก</a></li>
+          <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
           <li><a href="#courses">หลักสูตร</a></li>
           <li><a href="#news">ข่าวสาร</a></li>
           <li><a href="#download">ดาวน์โหลดเอกสาร</a></li>
@@ -417,6 +348,7 @@
         <button class="close-x" id="closeDash">✕</button>
       </div>
       <div class="admin-tabs">
+        <button class="admin-tab" data-type="calendar">ปฏิทินกิจกรรม</button>
         <button class="admin-tab" data-type="news">ข่าวประชาสัมพันธ์</button>
         <button class="admin-tab" data-type="courses">หลักสูตร</button>
         <button class="admin-tab" data-type="works">ผลงาน</button>
@@ -435,6 +367,32 @@ const ADMIN_PASSWORD = "dbt2569";
 const SHEET_API_URL = "นำ URL ล่าสุดที่ก๊อบปี้มาจาก Google Apps Script มาวางตรงนี้";
 
 const SECTIONS = {
+  calendar: {
+    key: "dbt_site:calendar", grid: "calendarGrid", label: "ปฏิทินกิจกรรม",
+    fields: [
+      {name:"day", label:"วันที่ (เช่น 18)", placeholder:"18"},
+      {name:"month", label:"เดือน/ปี (เช่น ส.ค. 69)", placeholder:"ส.ค. 69"},
+      {name:"title", label:"ชื่อกิจกรรม / โครงการ"},
+      {name:"time", label:"เวลา (เช่น 09:00 - 12:00 น.)", placeholder:"09:00 - 16:30 น."},
+      {name:"location", label:"สถานที่ (เช่น ห้องปฏิบัติการ DBT 1)", placeholder:"หอประชุมใหญ่"}
+    ],
+    seed: [
+      {id:"cal1", day:"18", month:"ส.ค. 69", title:"โครงการแข่งขันทักษะการพัฒนาเว็บแอปพลิเคชัน", time:"09:00 - 16:00 น.", location:"ห้องปฏิบัติการ DBT 2"},
+      {id:"cal2", day:"25", month:"ส.ค. 69", title:"สัมมนาเทคโนโลยี AI กับธุรกิจยุคดิจิทัล", time:"13:00 - 16:30 น.", location:"หอประชุมใหญ่"},
+      {id:"cal3", day:"05", month:"ก.ย. 69", title:"กิจกรรมปฐมนิเทศและเตรียมความพร้อมนักศึกษา", time:"08:30 - 12:00 น.", location:"อาคารเรียนชั้น 3"}
+    ],
+    render: (item) => `
+      <div class="calendar-date-box">
+        <div class="day">${esc(item.day)}</div>
+        <div class="month">${esc(item.month)}</div>
+      </div>
+      <div class="calendar-info">
+        <h4>${esc(item.title)}</h4>
+        <p>⏰ ${esc(item.time || 'ไม่ระบุเวลา')}</p>
+        <p>📍 ${esc(item.location || 'ไม่ระบุสถานที่')}</p>
+      </div>`,
+    wrapClass: "calendar-card"
+  },
   news: {
     key: "dbt_site:news", grid: "newsGrid", label: "ข่าวประชาสัมพันธ์",
     fields: [
@@ -518,7 +476,7 @@ const SECTIONS = {
 
 const state = {};
 let isAdmin = false;
-let activeTab = "news";
+let activeTab = "calendar";
 let editingId = null;
 
 function esc(str){ return String(str ?? "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s])); }
@@ -607,7 +565,7 @@ function renderDashBody(){
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[0].name])}</b><span>${esc(item[cfg.fields[1]?.name || cfg.fields[0].name])}</span></div>
+      <div class="info"><b>${esc(item[cfg.fields[2]?.name || cfg.fields[0].name])}</b><span>${esc(item[cfg.fields[0].name])} ${esc(item[cfg.fields[1]?.name || ''])}</span></div>
       <div class="row-actions">
         <button class="edit-btn" data-edit="${item.id}">แก้ไข</button>
         <button class="del-btn" data-del="${item.id}">ลบ</button>
