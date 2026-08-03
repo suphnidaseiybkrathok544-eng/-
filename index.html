@@ -37,8 +37,8 @@
   .brand{display:flex;align-items:center;gap:10px;}
   .brand .mark{font-family:'Kanit',sans-serif;font-weight:800;font-size:24px;color:#fff;letter-spacing:1px;}
   .brand .tagline{display:flex;flex-direction:column;line-height:1.2;font-size:9.5px;font-weight:600;color:var(--gold-light);letter-spacing:.5px;}
-  .nav-links{display:flex;gap:22px;list-style:none;}
-  .nav-links li a{text-decoration:none;color:#fff;font-size:13.5px;font-weight:500;position:relative;padding-bottom:4px;}
+  .nav-links{display:flex;gap:18px;list-style:none;}
+  .nav-links li a{text-decoration:none;color:#fff;font-size:13px;font-weight:500;position:relative;padding-bottom:4px;}
   .nav-links li a::after{content:"";position:absolute;left:0;bottom:0;width:0%;height:2px;background:var(--gold);transition:width .25s ease;}
   .nav-links li a:hover::after{width:100%;}
   .admin-entry{
@@ -90,6 +90,28 @@
   .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
   .news-card p{font-size:12.5px;color:var(--text-soft);}
 
+  /* ===== Calendar Section ===== */
+  .calendar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+  .calendar-card{
+    background:#fff;border-radius:14px;padding:18px 20px;
+    display:flex;align-items:center;gap:18px;
+    box-shadow:0 4px 16px rgba(47,15,92,0.06);
+    border:1px solid var(--line);
+    position:relative;
+    transition:transform 0.2s ease;
+  }
+  .calendar-card:hover{transform:translateY(-3px);}
+  .cal-date{
+    background:linear-gradient(135deg, var(--purple), var(--purple-deep));
+    color:#fff;min-width:70px;height:70px;border-radius:10px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    flex-shrink:0;box-shadow:0 4px 10px rgba(74,22,128,0.2);
+  }
+  .cal-day{font-family:'Kanit',sans-serif;font-size:22px;font-weight:700;line-height:1;}
+  .cal-month{font-size:11px;font-weight:500;color:var(--gold-light);margin-top:2px;}
+  .cal-info h3{font-size:15px;color:var(--ink);margin-bottom:4px;font-weight:600;}
+  .cal-info p{font-size:12.5px;color:var(--text-soft);}
+
   /* ===== Course (kept static) ===== */
   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
   .course-card{background:#fff;padding:24px;border-radius:12px;border-top:4px solid var(--purple);box-shadow:0 4px 12px rgba(0,0,0,0.04);}
@@ -108,7 +130,7 @@
 
   /* ===== Staff ===== */
   .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;}
-  .faculty-card{text-align:center;}
+  .faculty-card{text-align:center;position:relative;}
   .faculty-photo{position:relative;width:130px;height:130px;margin:0 auto 14px;}
   .faculty-photo .ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold),var(--gold-light));}
   .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #fff;display:block;}
@@ -117,7 +139,7 @@
 
   /* ===== Downloads ===== */
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
-  .dl-item{background:#fff;padding:14px 20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;}
+  .dl-item{background:#fff;padding:14px 20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;position:relative;}
   .dl-item .label{font-size:13px;display:flex;align-items:center;gap:8px;}
   .dl-badge{font-size:10px;font-weight:700;background:var(--purple);color:#fff;padding:3px 8px;border-radius:5px;}
   .dl-item a{text-decoration:none;color:var(--purple);font-weight:600;font-size:13px;white-space:nowrap;}
@@ -138,13 +160,6 @@
   }
   .card-tools .edit-btn{background:#fff;color:var(--purple);box-shadow:0 2px 6px rgba(0,0,0,0.15);}
   .card-tools .del-btn{background:#e0405c;color:#fff;}
-  .add-tile{
-    border:2px dashed var(--gold);border-radius:14px;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--purple);font-weight:600;font-size:13px;cursor:pointer;
-    min-height:130px;background:#fdfaff;
-  }
-  .add-tile:hover{background:#f6edff;}
 
   /* ===== Admin overlay/modal ===== */
   .hidden{display:none !important;}
@@ -178,9 +193,9 @@
   .form-actions{display:flex;gap:10px;margin-top:6px;}
   .btn-save{background:var(--purple);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
   .btn-cancel{background:#eee;color:#555;border:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;}
-  .admin-tabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .admin-tabs{display:flex;gap:4px;padding:0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
   .admin-tab{
-    background:none;border:none;padding:12px 14px;font-size:13px;font-weight:600;
+    background:none;border:none;padding:12px 10px;font-size:12px;font-weight:600;
     color:var(--text-soft);cursor:pointer;border-bottom:3px solid transparent;
   }
   .admin-tab.active{color:var(--purple);border-bottom-color:var(--gold);}
@@ -228,6 +243,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="#home">หน้าแรก</a></li>
+      <li><a href="#calendar">ปฏิทิน</a></li>
       <li><a href="#courses">หลักสูตร</a></li>
       <li><a href="#news">ข่าวสาร</a></li>
       <li><a href="#faculty">บุคลากร</a></li>
@@ -261,11 +277,13 @@
     </div>
   </header>
 
+  <section class="section-container admin-live" id="calendar">
+    <h2 class="section-title-plain">ปฏิทินกิจกรรมสาขา</h2>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </section>
+
   <div class="section-banner"><h2>ข่าวประชาสัมพันธ์</h2></div>
   <section class="section-container tight admin-live" id="news">
-    <div class="section-toprow">
-      <div></div>
-    </div>
     <div class="news-grid" id="newsGrid"></div>
   </section>
 
@@ -319,6 +337,7 @@
         <h4>ลิงก์ด่วน</h4>
         <ul>
           <li><a href="#home">หน้าแรก</a></li>
+          <li><a href="#calendar">ปฏิทินกิจกรรม</a></li>
           <li><a href="#courses">หลักสูตร</a></li>
           <li><a href="#news">ข่าวสาร</a></li>
           <li><a href="#contact">ติดต่อสอบถาม</a></li>
@@ -337,7 +356,6 @@
 
   <button class="admin-fab hidden" id="openDashboardFab">⚙️ จัดการเนื้อหา</button>
 
-  <!-- Login overlay -->
   <div class="admin-overlay hidden" id="loginOverlay">
     <div class="admin-modal" style="max-width:360px;">
       <div class="admin-modal-head"><h3>เข้าสู่ระบบแอดมิน</h3><button class="close-x" id="closeLogin">✕</button></div>
@@ -350,7 +368,6 @@
     </div>
   </div>
 
-  <!-- Dashboard overlay -->
   <div class="admin-overlay hidden" id="dashOverlay">
     <div class="admin-modal">
       <div class="admin-modal-head">
@@ -358,6 +375,7 @@
         <button class="close-x" id="closeDash">✕</button>
       </div>
       <div class="admin-tabs">
+        <button class="admin-tab" data-type="calendar">ปฏิทินกิจกรรม</button>
         <button class="admin-tab" data-type="news">ข่าวประชาสัมพันธ์</button>
         <button class="admin-tab" data-type="works">ผลงานนักศึกษา</button>
         <button class="admin-tab" data-type="staff">บุคลากร</button>
@@ -370,10 +388,33 @@
   <div class="save-toast" id="saveToast">บันทึกเรียบร้อย</div>
 
 <script>
-// ---------- Config ----------
-const ADMIN_PASSWORD = "dbt2569"; // เปลี่ยนรหัสผ่านนี้ได้ตามต้องการ (ระบบนี้เป็นการป้องกันฝั่งหน้าเว็บเท่านั้น ไม่ใช่ระบบล็อกอินที่ปลอดภัยจริง)
+const ADMIN_PASSWORD = "dbt2569";
 
 const SECTIONS = {
+  calendar: {
+    key: "dbt_site:calendar", grid: "calendarGrid", label: "ปฏิทินกิจกรรม",
+    fields: [
+      {name:"day", label:"วันที่ (ตัวเลขวัน)", placeholder:"20"},
+      {name:"month", label:"เดือนและปี", placeholder:"พ.ค. 2026"},
+      {name:"title", label:"ชื่อกิจกรรม"},
+      {name:"location", label:"สถานที่และเวลา", placeholder:"📍 หอประชุม | เวลา 09.00 น."}
+    ],
+    seed: [
+      {id:"c1", day:"20", month:"พ.ค. 2026", title:"ปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 2569", location:"📍 หอประชุมใหญ่ | เวลา 09.00 - 12.00 น."},
+      {id:"c2", day:"10", month:"มิ.ย. 2026", title:"กิจกรรมอบรมพัฒนาทักษะ Digital Marketing", location:"📍 ห้องปฏิบัติการคอมพิวเตอร์ ชั้น 3 | เวลา 13.00 น."},
+      {id:"c3", day:"15", month:"ส.ค. 2026", title:"การแข่งขันประกวดโครงงานนวัตกรรมดิจิทัล", location:"📍 โถงอาคารเรียนรวม | เวลา 08.30 น."}
+    ],
+    render: (item) => `
+      <div class="cal-date">
+        <span class="cal-day">${esc(item.day)}</span>
+        <span class="cal-month">${esc(item.month)}</span>
+      </div>
+      <div class="cal-info">
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.location)}</p>
+      </div>`,
+    wrapClass: "calendar-card"
+  },
   news: {
     key: "dbt_site:news", grid: "newsGrid", label: "ข่าวประชาสัมพันธ์",
     fields: [
@@ -388,9 +429,12 @@ const SECTIONS = {
       {id:"n4", date:"28 ธ.ค. 2025", title:"คว้าชัยแข่งนวัตกรรมดิจิทัล", desc:"นักศึกษาสาขา DBT คว้ารางวัลชนะเลิศการแข่งพัฒนาเว็บ"}
     ],
     render: (item) => `
-      <div class="date">${esc(item.date)}</div>
-      <h3>${esc(item.title)}</h3>
-      <p>${esc(item.desc)}</p>`
+      <div class="body">
+        <span class="date">${esc(item.date)}</span>
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.desc)}</p>
+      </div>`,
+    wrapClass: "news-card"
   },
   works: {
     key: "dbt_site:works", grid: "worksGrid", label: "ผลงานนักศึกษา",
@@ -432,7 +476,7 @@ const SECTIONS = {
     wrapClass: "faculty-card"
   },
   downloads: {
-    key: "dbt_site:downloads", grid: "dlGrid", label: "ไฟล์ดาวน์โหลด", listTag: "li",
+    key: "dbt_site:downloads", grid: "dlGrid", label: "ไฟล์ดาวน์โหลด",
     fields: [
       {name:"badge", label:"ประเภทไฟล์", placeholder:"PDF"},
       {name:"label", label:"ชื่อรายการ"},
@@ -453,7 +497,7 @@ const SECTIONS = {
 
 const state = {};
 let isAdmin = false;
-let activeTab = "news";
+let activeTab = "calendar";
 let editingId = null;
 
 function esc(str){
@@ -466,12 +510,7 @@ function toast(msg){
   setTimeout(()=>t.classList.remove("show"), 1800);
 }
 
-// ---------- Storage ----------
-// หมายเหตุ: ใช้ localStorage ของเบราว์เซอร์ในการบันทึกข้อมูล ซึ่งจะช่วยให้ข้อมูล
-// ยังอยู่ครบเมื่อปิดหน้าแล้วเปิดใหม่ "บนเครื่อง/เบราว์เซอร์เดียวกัน" เท่านั้น
-// ถ้าต้องการให้ทุกคนที่เข้าเว็บเห็นข้อมูลชุดเดียวกัน (แก้ครั้งเดียวเห็นทุกคน)
-// ต้องมีระบบฐานข้อมูล/เซิร์ฟเวอร์เก็บข้อมูลจริง ซึ่ง localStorage ทำแบบนั้นไม่ได้
-async function loadSection(type){
+function loadSection(type){
   const cfg = SECTIONS[type];
   try{
     const raw = localStorage.getItem(cfg.key);
@@ -480,17 +519,26 @@ async function loadSection(type){
     state[type] = cfg.seed.slice();
   }
 }
-async function saveSection(type){
+function saveSection(type){
   const cfg = SECTIONS[type];
   try{
     localStorage.setItem(cfg.key, JSON.stringify(state[type]));
   }catch(e){
     console.error("บันทึกไม่สำเร็จ", e);
-    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะรูปภาพมีขนาดใหญ่เกินไป ลองใช้รูปที่เล็กลงหรือใช้ลิงก์รูปภาพแทน");
+    alert("บันทึกไม่สำเร็จ อาจเป็นเพราะไฟล์รูปภาพใหญ่เกินไป");
   }
 }
 
-// ---------- Public render ----------
+function renderCardTools(type, id){
+  if(!isAdmin) return "";
+  return `
+    <div class="card-tools">
+      <button class="edit-btn" onclick="editItem('${type}','${id}')" title="แก้ไข">✏️</button>
+      <button class="del-btn" onclick="deleteItemDirect('${type}','${id}')" title="ลบ">🗑️</button>
+    </div>
+  `;
+}
+
 function renderPublic(type){
   const cfg = SECTIONS[type];
   const grid = document.getElementById(cfg.grid);
@@ -501,15 +549,18 @@ function renderPublic(type){
     return;
   }
   grid.innerHTML = items.map(item => {
-    const wrapClass = cfg.wrapClass ? cfg.wrapClass : (type === "news" ? "news-card" : "");
-    return `<div class="${wrapClass}" style="position:relative;">${cfg.render(item)}</div>`;
+    const wrapClass = cfg.wrapClass || "";
+    return `<div class="${wrapClass}">${renderCardTools(type, item.id)}${cfg.render(item)}</div>`;
   }).join("");
 }
+
 function renderAllPublic(){
-  Object.keys(SECTIONS).forEach(renderPublic);
+  Object.keys(SECTIONS).forEach(type => {
+    loadSection(type);
+    renderPublic(type);
+  });
 }
 
-// ---------- Admin dashboard ----------
 function openDash(){
   document.getElementById("dashOverlay").classList.remove("hidden");
   switchTab(activeTab);
@@ -537,7 +588,7 @@ function renderDashBody(){
         <div class="img-upload-box">
           <img class="img-preview ${current ? "" : "hidden"}" data-preview="${f.name}" src="${esc(current)}" alt="">
           <input type="file" accept="image/*" data-imgfile="${f.name}">
-          <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือวางลิงก์รูปภาพ (URL) ตรงนี้" value="${esc(current)}">
+          <input type="text" data-field="${f.name}" class="img-url-input" placeholder="หรือวางลิงก์รูปภาพ (URL)" value="${esc(current)}">
         </div>
       </div>`;
     }
@@ -553,11 +604,11 @@ function renderDashBody(){
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[1] ? cfg.fields[1].name : cfg.fields[0].name])}</b>
+      <div class="info"><b>${esc(item[cfg.fields[2]?.name || cfg.fields[1].name])}</b>
         <span>${esc(item[cfg.fields[0].name])}</span></div>
       <div class="row-actions">
-        <button class="edit-btn" data-edit="${item.id}">แก้ไข</button>
-        <button class="del-btn" data-del="${item.id}">ลบ</button>
+        <button class="edit-btn" onclick="editItemFromDash('${item.id}')">แก้ไข</button>
+        <button class="del-btn" onclick="deleteItemDirect('${activeTab}','${item.id}')">ลบ</button>
       </div>
     </div>`).join("") || `<p style="font-size:12.5px;color:var(--text-soft);">ยังไม่มีรายการ</p>`;
 
@@ -567,7 +618,7 @@ function renderDashBody(){
       ${formFields}
       <div class="form-actions">
         <button type="submit" class="btn-save">${editingItem ? "บันทึกการแก้ไข" : "เพิ่มรายการ"}</button>
-        ${editingItem ? `<button type="button" class="btn-cancel" id="cancelEdit">ยกเลิก</button>` : ""}
+        ${editingItem ? `<button type="button" class="btn-cancel" onclick="cancelEditing()">ยกเลิก</button>` : ""}
       </div>
     </form>
     <hr style="margin:22px 0;border:none;border-top:1px solid var(--line);">
@@ -581,7 +632,7 @@ function renderDashBody(){
       const file = input.files[0];
       if(!file) return;
       if(file.size > 1.8 * 1024 * 1024){
-        alert("ไฟล์รูปภาพใหญ่เกินไป กรุณาเลือกไฟล์ไม่เกิน ~1.8MB หรือลดขนาดรูปก่อนอัปโหลด");
+        alert("ไฟล์รูปภาพใหญ่เกินไป กรุณาเลือกไฟล์ไม่เกิน ~1.8MB");
         input.value = "";
         return;
       }
@@ -605,10 +656,25 @@ function renderDashBody(){
       else { preview.classList.add("hidden"); }
     });
   });
-  const cancelBtn = document.getElementById("cancelEdit");
-  if(cancelBtn) cancelBtn.addEventListener("click", () => { editingId = null; renderDashBody(); });
-  body.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => { editingId = b.dataset.edit; renderDashBody(); }));
-  body.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => onDeleteItem(b.dataset.del)));
+}
+
+function cancelEditing(){ editingId = null; renderDashBody(); }
+function editItemFromDash(id){ editingId = id; renderDashBody(); }
+function editItem(type, id){
+  activeTab = type;
+  editingId = id;
+  openDash();
+}
+
+async function deleteItemDirect(type, id){
+  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
+  state[type] = state[type].filter(i => i.id !== id);
+  saveSection(type);
+  renderPublic(type);
+  if(!document.getElementById("dashOverlay").classList.contains("hidden")){
+    renderDashBody();
+  }
+  toast("ลบรายการแล้ว");
 }
 
 async function onSubmitItem(e){
@@ -617,7 +683,7 @@ async function onSubmitItem(e){
   const data = {};
   cfg.fields.forEach(f => {
     const el = e.target.querySelector(`[data-field="${f.name}"]`);
-    data[f.name] = el.value.trim();
+    data[f.name] = el ? el.value.trim() : "";
   });
   if(editingId){
     const idx = state[activeTab].findIndex(i => i.id === editingId);
@@ -625,52 +691,48 @@ async function onSubmitItem(e){
   } else {
     state[activeTab].push({id: uid(), ...data});
   }
-  await saveSection(activeTab);
+  saveSection(activeTab);
   editingId = null;
   renderDashBody();
   renderPublic(activeTab);
   toast("บันทึกเรียบร้อย");
 }
 
-async function onDeleteItem(id){
-  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
-  state[activeTab] = state[activeTab].filter(i => i.id !== id);
-  await saveSection(activeTab);
-  renderDashBody();
-  renderPublic(activeTab);
-  toast("ลบรายการแล้ว");
-}
-
-// ---------- Login ----------
-function openLogin(){ document.getElementById("loginOverlay").classList.remove("hidden"); document.getElementById("pwInput").value=""; document.getElementById("loginError").textContent=""; }
-function closeLogin(){ document.getElementById("loginOverlay").classList.add("hidden"); }
-
+// Event Listeners
 document.getElementById("adminEntryBtn").addEventListener("click", () => {
-  if(isAdmin){ openDash(); } else { openLogin(); }
+  if(isAdmin){ openDash(); } else {
+    document.getElementById("loginOverlay").classList.remove("hidden");
+    document.getElementById("pwInput").value = "";
+    document.getElementById("loginError").textContent = "";
+  }
 });
-document.getElementById("closeLogin").addEventListener("click", closeLogin);
-document.getElementById("pwSubmit").addEventListener("click", tryLogin);
-document.getElementById("pwInput").addEventListener("keydown", e => { if(e.key === "Enter") tryLogin(); });
-function tryLogin(){
-  const val = document.getElementById("pwInput").value;
-  if(val === ADMIN_PASSWORD){
+document.getElementById("closeLogin").addEventListener("click", () => {
+  document.getElementById("loginOverlay").classList.add("hidden");
+});
+document.getElementById("closeDash").addEventListener("click", closeDash);
+
+document.getElementById("pwSubmit").addEventListener("click", () => {
+  const pw = document.getElementById("pwInput").value;
+  if(pw === ADMIN_PASSWORD){
     isAdmin = true;
-    closeLogin();
+    document.getElementById("loginOverlay").classList.add("hidden");
     document.getElementById("openDashboardFab").classList.remove("hidden");
+    renderAllPublic();
     openDash();
+    toast("เข้าสู่ระบบแอดมินสำเร็จ");
   } else {
     document.getElementById("loginError").textContent = "รหัสผ่านไม่ถูกต้อง";
   }
-}
-document.getElementById("closeDash").addEventListener("click", closeDash);
-document.getElementById("openDashboardFab").addEventListener("click", openDash);
-document.querySelectorAll(".admin-tab").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.type)));
+});
 
-// ---------- Init ----------
-(async function init(){
-  for(const type of Object.keys(SECTIONS)) await loadSection(type);
-  renderAllPublic();
-})();
+document.getElementById("openDashboardFab").addEventListener("click", openDash);
+
+document.querySelectorAll(".admin-tab").forEach(tab => {
+  tab.addEventListener("click", () => switchTab(tab.dataset.type));
+});
+
+// เริ่มต้นโหลดข้อมูลทั้งหมด
+renderAllPublic();
 </script>
 </body>
 </html>
