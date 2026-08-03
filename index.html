@@ -86,7 +86,7 @@
 
   .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
 
-  /* ===== Calendar Section ===== */
+  /* ===== Calendar ===== */
   .calendar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
   .calendar-card{
     background:#fff;border-radius:12px;padding:18px;
@@ -104,13 +104,21 @@
   .calendar-info h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:4px;}
   .calendar-info p{font-size:12px;color:var(--text-soft);display:flex;align-items:center;gap:4px;margin-top:2px;}
 
-  /* ===== News ===== */
-  .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-  .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);position:relative;}
-  .news-card .body{padding:18px;}
-  .news-card .date{font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
-  .news-card h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
-  .news-card p{font-size:12.5px;color:var(--text-soft);}
+  /* ===== News Section (ปรับปรุงให้รองรับรูปภาพ) ===== */
+  .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
+  .news-card{
+    background:var(--card);border-radius:14px;overflow:hidden;
+    box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);
+    display:flex;flex-direction:column;transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .news-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(47,15,92,0.12);}
+  .news-img-box{width:100%;height:180px;overflow:hidden;background:#f2e9fb;position:relative;}
+  .news-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+  .news-card:hover .news-img-box img{transform:scale(1.05);}
+  .news-card .body{padding:18px;display:flex;flex-direction:column;flex-grow:1;}
+  .news-card .date{font-size:11.5px;color:var(--gold);font-weight:700;margin-bottom:6px;display:block;}
+  .news-card h3{font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.4;}
+  .news-card p{font-size:13px;color:var(--text-soft);line-height:1.5;margin-top:auto;}
 
   /* ===== Course ===== */
   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
@@ -129,25 +137,23 @@
   .portfolio-overlay h4{font-size:15px;}
 
   /* ===== Faculty ===== */
-  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:24px 16px;justify-content:center;}
-  .faculty-card{text-align:center;display:flex;flex-direction:column;align-items:center;background:#fff;padding:18px 12px;border-radius:16px;box-shadow:0 4px 12px rgba(47,15,92,0.03);border:1px solid var(--line);transition:transform .2s ease;}
-  .faculty-card:hover{transform:translateY(-3px);}
-  .faculty-photo{position:relative;width:110px;height:110px;margin-bottom:12px;}
+  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));gap:20px 16px;justify-content:center;}
+  .faculty-card{text-align:center;display:flex;flex-direction:column;align-items:center;background:#fff;padding:18px 12px;border-radius:16px;box-shadow:0 4px 12px rgba(47,15,92,0.03);border:1px solid var(--line);}
+  .faculty-photo{position:relative;width:100px;height:100px;margin-bottom:12px;}
   .faculty-photo .ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold));}
   .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;display:block;}
-  .faculty-card h4{font-size:14px;color:var(--ink);font-weight:600;margin-bottom:6px;line-height:1.3;}
-  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:20px;width:100%;word-wrap:break-word;margin-bottom:8px;}
-  .faculty-contact{margin-top:auto;font-size:11.5px;color:var(--text-soft);width:100%;border-top:1px dashed var(--line);padding-top:8px;}
+  .faculty-card h4{font-size:13.5px;color:var(--ink);font-weight:600;margin-bottom:6px;line-height:1.3;}
+  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10px;font-weight:600;padding:4px 8px;border-radius:20px;width:100%;margin-bottom:8px;}
+  .faculty-contact{margin-top:auto;font-size:11px;color:var(--text-soft);width:100%;border-top:1px dashed var(--line);padding-top:8px;}
   .faculty-contact p{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:2px;word-break:break-all;}
   .faculty-contact a{color:var(--purple-mid);text-decoration:none;}
-  .faculty-contact a:hover{text-decoration:underline;}
 
   /* ===== Downloads ===== */
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
   .dl-item{background:#fff;padding:14px 18px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;}
   .dl-item .label{font-size:13px;display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;}
   .dl-badge{font-size:10px;font-weight:700;background:var(--purple);color:#fff;padding:3px 7px;border-radius:4px;flex-shrink:0;}
-  .dl-item a{text-decoration:none;color:var(--purple);font-weight:600;font-size:12.5px;white-space:nowrap;flex-shrink:0;}
+  .dl-item a{text-decoration:none;color:var(--purple);font-weight:600;font-size:12.5px;white-space:nowrap;}
 
   /* ===== Footer ===== */
   footer{background:var(--purple-deep);color:#fff;padding:40px 24px 20px;}
@@ -198,7 +204,7 @@
   
   .admin-fab{position:fixed;bottom:20px;right:20px;z-index:150;background:var(--purple);color:#fff;border:none;border-radius:30px;padding:10px 16px;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(74,22,128,0.35);display:flex;align-items:center;gap:6px;}
 
-  /* ===== Responsive ===== */
+  /* ===== Responsive Mobile ===== */
   @media (max-width: 768px) {
     .menu-toggle { display: block; }
     .nav-links {
@@ -210,13 +216,12 @@
     .nav-links li a::after { display: none; }
     .hero-inner { flex-direction: column-reverse; text-align: center; padding: 36px 20px 40px; }
     .hero-photo { width: 180px; height: 180px; }
-    .hero-title { font-size: 30px; }
+    .hero-title { font-size: 28px; }
     .hero-desc { margin-left: auto; margin-right: auto; }
     .hero-actions { justify-content: center; width: 100%; }
-    .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; min-width: 130px; }
-    .faculty-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
-    .faculty-photo { width: 85px; height: 85px; }
-    .faculty-card h4 { font-size: 12.5px; }
+    .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; min-width: 120px; }
+    .faculty-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 10px; }
+    .faculty-photo { width: 80px; height: 80px; }
     .admin-modal { height: 100vh; max-height: 100vh; border-radius: 0; }
   }
 </style>
@@ -364,7 +369,7 @@
 <script>
 // ---------- CONFIG ----------
 const ADMIN_PASSWORD = "dbt2569";
-const SHEET_API_URL = "นำ URL ล่าสุดที่ก๊อบปี้มาจาก Google Apps Script มาวางตรงนี้";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwtMTHy5S2X2d08aB_mJ338E1m6o/exec"; 
 
 const SECTIONS = {
   calendar: {
@@ -378,8 +383,7 @@ const SECTIONS = {
     ],
     seed: [
       {id:"cal1", day:"18", month:"ส.ค. 69", title:"โครงการแข่งขันทักษะการพัฒนาเว็บแอปพลิเคชัน", time:"09:00 - 16:00 น.", location:"ห้องปฏิบัติการ DBT 2"},
-      {id:"cal2", day:"25", month:"ส.ค. 69", title:"สัมมนาเทคโนโลยี AI กับธุรกิจยุคดิจิทัล", time:"13:00 - 16:30 น.", location:"หอประชุมใหญ่"},
-      {id:"cal3", day:"05", month:"ก.ย. 69", title:"กิจกรรมปฐมนิเทศและเตรียมความพร้อมนักศึกษา", time:"08:30 - 12:00 น.", location:"อาคารเรียนชั้น 3"}
+      {id:"cal2", day:"25", month:"ส.ค. 69", title:"สัมมนาเทคโนโลยี AI กับธุรกิจยุคดิจิทัล", time:"13:00 - 16:30 น.", location:"หอประชุมใหญ่"}
     ],
     render: (item) => `
       <div class="calendar-date-box">
@@ -398,13 +402,21 @@ const SECTIONS = {
     fields: [
       {name:"date", label:"วันที่", placeholder:"15 ม.ค. 2026"},
       {name:"title", label:"หัวข้อข่าว"},
-      {name:"desc", label:"รายละเอียดย่อ", area:true}
+      {name:"desc", label:"รายละเอียดย่อ", area:true},
+      {name:"img", label:"รูปภาพข่าว (ไม่ใส่ก็ได้)", image:true}
     ],
     seed: [
-      {id:"n1", date:"15 ม.ค. 2026", title:"รับสมัครนักศึกษาใหม่ 2569", desc:"เปิดรับสมัครนักศึกษาใหม่ โควตาพิเศษและรอบทั่วไป"},
-      {id:"n2", date:"10 ม.ค. 2026", title:"กิจกรรมปฐมนิเทศนักศึกษา", desc:"กำหนดการปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 1/2569"}
+      {id:"n1", date:"15 ม.ค. 2026", title:"รับสมัครนักศึกษาใหม่ 2569", desc:"เปิดรับสมัครนักศึกษาใหม่ โควตาพิเศษและรอบทั่วไป", img:"https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop"},
+      {id:"n2", date:"10 ม.ค. 2026", title:"กิจกรรมปฐมนิเทศนักศึกษา", desc:"กำหนดการปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 1/2569", img:""}
     ],
-    render: (item) => `<div class="body"><div class="date">${esc(item.date)}</div><h3>${esc(item.title)}</h3><p>${esc(item.desc)}</p></div>`
+    render: (item) => `
+      ${item.img ? `<div class="news-img-box"><img src="${esc(item.img)}" alt=""></div>` : ''}
+      <div class="body">
+        <span class="date">${esc(item.date)}</span>
+        <h3>${esc(item.title)}</h3>
+        <p>${esc(item.desc)}</p>
+      </div>`,
+    wrapClass: "news-card"
   },
   courses: {
     key: "dbt_site:courses", grid: "courseGrid", label: "หลักสูตรที่เปิดสอน",
@@ -481,7 +493,7 @@ let editingId = null;
 
 function esc(str){ return String(str ?? "").replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s])); }
 function uid(){ return "id" + Date.now() + Math.floor(Math.random()*1000); }
-function toast(msg){ const t = document.getElementById("saveToast"); t.textContent = msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 1800); }
+function toast(msg){ const t = document.getElementById("saveToast"); if(t){ t.textContent = msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 1800); } }
 
 // ---------- STORAGE API ----------
 async function loadSection(type){
@@ -497,7 +509,7 @@ async function loadSection(type){
           return;
         }
       }
-    }catch(e){ console.warn(`โหลด ${type} ไม่สำเร็จ ใช้Localแทน`, e); }
+    }catch(e){ console.warn(`ดึงข้อมูล ${type} จาก Google Sheet ไม่สำเร็จ ใช้ข้อมูลสำรองแทน`, e); }
   }
   try{ const raw = localStorage.getItem(cfg.key); state[type] = raw ? JSON.parse(raw) : cfg.seed.slice(); }
   catch(e){ state[type] = cfg.seed.slice(); }
@@ -514,7 +526,7 @@ async function saveSection(type){
         headers: {"Content-Type": "text/plain;charset=utf-8"},
         body: JSON.stringify({key: cfg.key, value: jsonStr})
       });
-    }catch(e){ console.error("บันทึกไป Google Sheet ไม่สำเร็จ", e); }
+    }catch(e){ console.error("บันทึกข้อมูลไป Google Sheet ไม่สำเร็จ", e); }
   }
 }
 
@@ -565,7 +577,7 @@ function renderDashBody(){
 
   const listHtml = items.map(item => `
     <div class="admin-list-item">
-      <div class="info"><b>${esc(item[cfg.fields[2]?.name || cfg.fields[0].name])}</b><span>${esc(item[cfg.fields[0].name])} ${esc(item[cfg.fields[1]?.name || ''])}</span></div>
+      <div class="info"><b>${esc(item[cfg.fields[1]?.name || cfg.fields[0].name])}</b><span>${esc(item[cfg.fields[0].name])}</span></div>
       <div class="row-actions">
         <button class="edit-btn" data-edit="${item.id}">แก้ไข</button>
         <button class="del-btn" data-del="${item.id}">ลบ</button>
@@ -591,7 +603,11 @@ function renderDashBody(){
   body.querySelectorAll("[data-imgfile]").forEach(input => {
     input.addEventListener("change", () => {
       const file = input.files[0];
-      if(file && file.size <= 1.8 * 1024 * 1024){
+      if(file){
+        if(file.size > 2 * 1024 * 1024){
+          alert("ขนาดไฟล์ภาพใหญ่เกินไป (กรุณาใช้ภาพขนาดไม่เกิน 2MB)");
+          return;
+        }
         const reader = new FileReader();
         reader.onload = () => {
           body.querySelector(`[data-field="${input.dataset.imgfile}"]`).value = reader.result;
@@ -599,6 +615,18 @@ function renderDashBody(){
           prev.src = reader.result; prev.classList.remove("hidden");
         };
         reader.readAsDataURL(file);
+      }
+    });
+  });
+
+  body.querySelectorAll(".img-url-input").forEach(input => {
+    input.addEventListener("input", () => {
+      const prev = body.querySelector(`[data-preview="${input.dataset.field}"]`);
+      if(input.value.trim()){
+        prev.src = input.value.trim();
+        prev.classList.remove("hidden");
+      } else {
+        prev.classList.add("hidden");
       }
     });
   });
@@ -643,8 +671,11 @@ async function onDeleteItem(id){
 // ---------- EVENT HANDLERS ----------
 function setupEvents(){
   const navLinks = document.getElementById("navLinks");
-  document.getElementById("menuToggle").addEventListener("click", () => navLinks.classList.toggle("show"));
-  navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("show")));
+  const menuToggle = document.getElementById("menuToggle");
+  if(menuToggle && navLinks){
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
+    navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("show")));
+  }
 
   document.getElementById("adminEntryBtn").addEventListener("click", () => {
     if(isAdmin) openDash();
@@ -670,9 +701,15 @@ function setupEvents(){
 }
 
 async function init(){
-  setupEvents();
-  for(const type of Object.keys(SECTIONS)){ await loadSection(type); }
-  renderAll();
+  try {
+    setupEvents();
+    for(const type of Object.keys(SECTIONS)){ 
+      await loadSection(type); 
+    }
+    renderAll();
+  } catch(err) {
+    console.error("เกิดข้อผิดพลาดในการเริ่มต้นระบบ:", err);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
