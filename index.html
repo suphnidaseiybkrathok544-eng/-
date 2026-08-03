@@ -81,11 +81,11 @@
 
   .empty-note{grid-column:1/-1;text-align:center;padding:30px;color:var(--text-soft);font-size:13px;border:1px dashed var(--line);border-radius:12px;}
 
-  /* ===== Components Grids ===== */
+  /* ===== Component Grids ===== */
   .calendar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
   .calendar-card{
     background:#fff;border-radius:14px;padding:18px 20px;
-    display:flex;align-items:center;gap:18px;
+    display:flex;gap:18px;
     box-shadow:0 4px 16px rgba(47,15,92,0.06);
     border:1px solid var(--line);
     position:relative;
@@ -100,8 +100,10 @@
   }
   .cal-day{font-family:'Kanit',sans-serif;font-size:22px;font-weight:700;line-height:1;}
   .cal-month{font-size:11px;font-weight:500;color:var(--gold-light);margin-top:2px;}
+  .cal-info{flex:1;}
   .cal-info h3{font-size:15px;color:var(--ink);margin-bottom:4px;font-weight:600;}
-  .cal-info p{font-size:12.5px;color:var(--text-soft);}
+  .cal-info p{font-size:12.5px;color:var(--text-soft);margin-bottom:4px;}
+  .cal-meta{font-size:12px;color:var(--purple);background:#f2e9fb;padding:4px 10px;border-radius:6px;margin-top:6px;display:inline-block;font-weight:500;}
 
   .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
   .news-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(47,15,92,0.06);border:1px solid var(--line);position:relative;}
@@ -124,13 +126,14 @@
   .portfolio-overlay .cat{font-size:11px;color:var(--gold-light);letter-spacing:1px;margin-bottom:3px;}
   .portfolio-overlay h4{font-size:16px;}
 
-  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;}
-  .faculty-card{text-align:center;position:relative;}
-  .faculty-photo{position:relative;width:130px;height:130px;margin:0 auto 14px;}
+  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;}
+  .faculty-card{text-align:center;position:relative;background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(0,0,0,0.03);}
+  .faculty-photo{position:relative;width:120px;height:120px;margin:0 auto 14px;}
   .faculty-photo .ring{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold),var(--gold-light));}
   .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #fff;display:block;}
-  .faculty-card h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:8px;}
-  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;}
+  .faculty-card h4{font-size:14.5px;color:var(--ink);font-weight:600;margin-bottom:6px;}
+  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:10px;}
+  .faculty-contact{font-size:12px;color:var(--text-soft);display:flex;flex-direction:column;gap:3px;border-top:1px dashed var(--line);padding-top:10px;margin-top:8px;}
 
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
   .dl-item{background:#fff;padding:14px 20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:10px;position:relative;}
@@ -376,12 +379,14 @@ const SECTIONS = {
       {name:"day", label:"วันที่ (ตัวเลขวัน)", placeholder:"20"},
       {name:"month", label:"เดือนและปี", placeholder:"พ.ค. 2026"},
       {name:"title", label:"ชื่อกิจกรรม"},
-      {name:"location", label:"สถานที่และเวลา", placeholder:"📍 หอประชุม | เวลา 09.00 น."}
+      {name:"location", label:"สถานที่และเวลา", placeholder:"📍 หอประชุม | เวลา 09.00 น."},
+      {name:"uniform", label:"การแต่งกาย", placeholder:"ชุดนักศึกษา / ชุดพละ"},
+      {name:"detail", label:"รายละเอียดเพิ่มเติม", area:true, placeholder:"รายละเอียดและกำหนดการต่างๆ เพิ่มเติม..."}
     ],
     seed: [
-      {id:"c1", day:"20", month:"พ.ค. 2026", title:"ปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 2569", location:"📍 หอประชุมใหญ่ | เวลา 09.00 - 12.00 น."},
-      {id:"c2", day:"10", month:"มิ.ย. 2026", title:"กิจกรรมอบรมพัฒนาทักษะ Digital Marketing", location:"📍 ห้องปฏิบัติการคอมพิวเตอร์ ชั้น 3 | เวลา 13.00 น."},
-      {id:"c3", day:"15", month:"ส.ค. 2026", title:"การแข่งขันประกวดโครงงานนวัตกรรมดิจิทัล", location:"📍 โถงอาคารเรียนรวม | เวลา 08.30 น."}
+      {id:"c1", day:"20", month:"พ.ค. 2026", title:"ปฐมนิเทศนักศึกษาใหม่ ประจำปีการศึกษา 2569", location:"📍 หอประชุมใหญ่ | เวลา 09.00 - 12.00 น.", uniform:"ชุดนักศึกษาพิธีการ", detail:"ขอให้นักศึกษาทุกคนมาพร้อมกัน ณ หอประชุมใหญ่ก่อนเวลา 30 นาที"},
+      {id:"c2", day:"10", month:"มิ.ย. 2026", title:"กิจกรรมอบรมพัฒนาทักษะ Digital Marketing", location:"📍 ห้องปฏิบัติการคอมพิวเตอร์ ชั้น 3 | เวลา 13.00 น.", uniform:"ชุดนักศึกษาปกติ", detail:"นำโน้ตบุ๊กส่วนตัวมาด้วยเพื่อใช้ในการอบรมปฏิบัติจริง"},
+      {id:"c3", day:"15", month:"ส.ค. 2026", title:"การแข่งขันประกวดโครงงานนวัตกรรมดิจิทัล", location:"📍 โถงอาคารเรียนรวม | เวลา 08.30 น.", uniform:"ชุดสุภาพ / ชุดทีม", detail:"ส่งรายชื่อทีมและโครงงานล่วงหน้าอย่างน้อย 1 สัปดาห์"}
     ],
     render: (item) => `
       <div class="cal-date">
@@ -391,6 +396,8 @@ const SECTIONS = {
       <div class="cal-info">
         <h3>${esc(item.title)}</h3>
         <p>${esc(item.location)}</p>
+        ${item.uniform ? `<p style="font-size:12px;color:var(--purple);font-weight:500;">👕 การแต่งกาย: ${esc(item.uniform)}</p>` : ""}
+        ${item.detail ? `<p style="font-size:12px;color:var(--text-soft);margin-top:2px;">📝 ${esc(item.detail)}</p>` : ""}
       </div>`,
     wrapClass: "calendar-card"
   },
@@ -461,18 +468,24 @@ const SECTIONS = {
     fields: [
       {name:"name", label:"ชื่อ-นามสกุล"},
       {name:"role", label:"ตำแหน่ง / ความเชี่ยวชาญ"},
+      {name:"phone", label:"เบอร์โทรศัพท์", placeholder:"02-xxx-xxxx"},
+      {name:"email", label:"อีเมล", placeholder:"name@institution.ac.th"},
       {name:"img", label:"รูปภาพ", image:true}
     ],
     seed: [
-      {id:"s1", name:"ผศ.ดร.สมชาย ใจดี", role:"หัวหน้าสาขาวิชา", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
-      {id:"s2", name:"อ.ศิริพร วิทยา", role:"เชี่ยวชาญ Digital Marketing", img:"https://images.unsplash.com/photo-1580894732413-a7235a909247?q=80&w=200&auto=format&fit=crop"},
-      {id:"s3", name:"อ.กิตติศักดิ์ พัฒนา", role:"เชี่ยวชาญ Web & App Development", img:"https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"},
-      {id:"s4", name:"อ.นภาวรรณ สุขเสริฐ", role:"เชี่ยวชาญ E-Commerce & UX/UI", img:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop"}
+      {id:"s1", name:"ผศ.ดร.สมชาย ใจดี", role:"หัวหน้าสาขาวิชา", phone:"02-111-2222", email:"somchai@institution.ac.th", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
+      {id:"s2", name:"อ.ศิริพร วิทยา", role:"เชี่ยวชาญ Digital Marketing", phone:"02-111-2223", email:"siriporn@institution.ac.th", img:"https://images.unsplash.com/photo-1580894732413-a7235a909247?q=80&w=200&auto=format&fit=crop"},
+      {id:"s3", name:"อ.กิตติศักดิ์ พัฒนา", role:"เชี่ยวชาญ Web & App Development", phone:"02-111-2224", email:"kittisak@institution.ac.th", img:"https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"},
+      {id:"s4", name:"อ.นภาวรรณ สุขเสริฐ", role:"เชี่ยวชาญ E-Commerce & UX/UI", phone:"02-111-2225", email:"napawan@institution.ac.th", img:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop"}
     ],
     render: (item) => `
       <div class="faculty-photo"><div class="ring"></div><img src="${esc(item.img)}" alt="${esc(item.name)}"></div>
       <h4>${esc(item.name)}</h4>
-      <div class="faculty-badge">${esc(item.role)}</div>`,
+      <div class="faculty-badge">${esc(item.role)}</div>
+      <div class="faculty-contact">
+        ${item.phone ? `<span>📞 ${esc(item.phone)}</span>` : ""}
+        ${item.email ? `<span>✉️ ${esc(item.email)}</span>` : ""}
+      </div>`,
     wrapClass: "faculty-card"
   },
   downloads: {
