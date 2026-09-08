@@ -514,14 +514,15 @@ const SECTIONS = {
       {name:"img", label:"ลิงก์รูปภาพ (URL)", placeholder:"https://..."}
     ],
     seed: [
-      {id:"s1", name:"นางสาวทนกวรรณ ศรีสุข", role:"หัวหน้าสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-234-5678", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=head1&backgroundColor=e8def7"},
-      {id:"s2", name:"นางสาววิภาดา ใจดี", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-111-2233", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff2&backgroundColor=e8def7"},
-      {id:"s3", name:"นายนาถร แสงทอง", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"089-222-3344", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff3&backgroundColor=e8def7"},
-      {id:"s4", name:"นางสาวปิยธิดา จันทร์หอม", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล, phone:"089-233-4455", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff4&backgroundColor=e8def7"},
-      {id:"s6", name:"นายสราวุธ อินทร์ใจ", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff5&backgroundColor=e8def7"}
-      {id:"s7", name:"นายสราวุธ อินทร์ใจ", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff5&backgroundColor=e8def7"}
-      {id:"s8", name:"นายสราวุธ อินทร์ใจ", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff5&backgroundColor=e8def7"}
-      {id:"s9", name:"นายสราวุธ อินทร์ใจ", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff5&backgroundColor=e8def7"}
+      {id:"s1", name:"นางสาวณัชกานต์ รอดสการ", role:"หัวหน้าสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-234-5678", img:"https://rms.rsc.ac.th/files/87016_25011714145016.jpg"},
+      {id:"s2", name:"นางสาวดาวพระศุกร์ ฤทธิบัณฑิตย์", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-111-2233", img:"https://rms.rsc.ac.th/files/62588_25011714145617.jpg"},
+      {id:"s3", name:"นางสาวอัญธิภา พรแสน", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"089-222-3344", img:"https://rms.rsc.ac.th/files/81579_25012013130513.jpg"},
+      {id:"s4", name:"นางมลฤดี พึ่งผล", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล, phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/60753_25011714145200.jpg"},
+       {id:"s5", name:"นางสาวสายฝน บุญสิม", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล, phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/52820_24103011110241.jpg"},
+      {id:"s6", name:"นายพิสิทธิ์ หนีกระโทก", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/04413_25011714145008.jpg"},
+      {id:"s7", name:"นางสาวธารทิพย์ ภาเรือง", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/55486_25011714144741.jpg"},
+      {id:"s8", name:"นางสาวธัญรัตน์ นามยงค์", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/32478_2603100990950.png"},
+      {id:"s9", name:"ว่าที่ ร.ต.กิตติพงษ์ แก้วโสภา", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/3102100013797.jpg"},
     ],
     render: (item) => `
       <div class="faculty-photo"><img src="${esc(item.img)}" alt="${esc(item.name)}"></div>
