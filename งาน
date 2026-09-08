@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กำหนดการ | DBT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="mark">DBT</div>
+    <div class="txt">
+      <h1>สาขาเทคโนโลยีธุรกิจดิจิทัล</h1>
+      <p>DIGITAL BUSINESS TECHNOLOGY</p>
+    </div>
+  </div>
+  <div class="top-right">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span>ค้นหา...</span>
+    </div>
+    <div class="avatar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </div>
+  </div>
+</header>
+
+<nav class="main">
+  <a href="dbt_dashboard.html">🏠 หน้าหลัก</a>
+  <a href="schedule.html" class="active">📅 กำหนดการ</a>
+  <a href="staff.html">👥 บุคลากร</a>
+  <a href="announcements.html">📣 ประกาศ</a>
+</nav>
+
+<main>
+
+  <div class="page-head">
+    <h2>กำหนดการ</h2>
+    <p>ตารางกิจกรรม การสอบ และงานที่ต้องส่งของสาขาเทคโนโลยีธุรกิจดิจิทัล</p>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-chip active">ทั้งหมด</span>
+    <span class="filter-chip">ส่งงาน</span>
+    <span class="filter-chip">สอบ</span>
+    <span class="filter-chip">กิจกรรม</span>
+    <span class="filter-chip">ประชุม</span>
+  </div>
+
+  <div class="sched-layout">
+
+    <!-- ปฏิทินขนาดใหญ่ -->
+    <div class="card big-cal">
+      <div class="card-head">
+        <div class="title"><span class="dot" style="background:var(--purple-100);color:var(--purple-600);">🗓</span> ปฏิทินกันยายน 2569</div>
+      </div>
+      <div class="cal-nav">
+        <button>‹</button>
+        <span>กันยายน 2569</span>
+        <button>›</button>
+      </div>
+      <table class="cal">
+        <tr><th>อา</th><th>จ</th><th>อ</th><th>พ</th><th>พฤ</th><th>ศ</th><th>ส</th></tr>
+        <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        <tr><td>6</td><td><span style="background:var(--purple-600);color:#fff;">7</span></td><td>8</td><td>9</td><td><span style="background:var(--blue-500);color:#fff;">10</span></td><td>11</td><td>12</td></tr>
+        <tr><td>13</td><td>14</td><td><span style="background:var(--pink-500);color:#fff;">15</span></td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
+        <tr><td><span style="background:var(--green-500);color:#fff;">20</span></td><td>22</td><td>23</td><td>24</td><td><span style="background:var(--orange-500);color:#fff;">25</span></td><td>25</td><td>26</td></tr>
+        <tr><td>27</td><td>28</td><td>29</td><td>30</td><td></td><td></td><td></td></tr>
+      </table>
+      <div class="cal-legend">
+        <span><span class="sw" style="background:var(--purple-600);"></span>ส่งงาน</span>
+        <span><span class="sw" style="background:var(--blue-500);"></span>สอบ</span>
+        <span><span class="sw" style="background:var(--pink-500);"></span>กิจกรรม</span>
+        <span><span class="sw" style="background:var(--orange-500);"></span>ประชุม</span>
+      </div>
+    </div>
+
+    <!-- รายการกำหนดการแบบ agenda -->
+    <div class="card">
+      <div class="card-head">
+        <div class="title"><span class="dot" style="background:var(--blue-100);color:var(--blue-500);">📋</span> รายการกำหนดการ</div>
+      </div>
+
+      <div class="agenda-day">
+        <div class="d-label">10 กันยายน 2569</div>
+        <div class="sched-item">
+          <div class="date-chip" style="background:var(--purple-600);"><span class="d">10</span><span class="m">ก.ย. 69</span></div>
+          <div class="body">
+            <p class="t">ส่งงานวิชา การตลาดดิจิทัล</p>
+            <p class="d">เวลา 16:00 น. | ห้อง 302</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-day">
+        <div class="d-label">15 กันยายน 2569</div>
+        <div class="sched-item">
+          <div class="date-chip" style="background:var(--blue-500);"><span class="d">15</span><span class="m">ก.ย. 69</span></div>
+          <div class="body">
+            <p class="t">สอบกลางภาคเรียนที่ 1/2569</p>
+            <p class="d">เวลา 09:00 น. | ห้อง 301</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-day">
+        <div class="d-label">20 กันยายน 2569</div>
+        <div class="sched-item">
+          <div class="date-chip" style="background:var(--pink-500);"><span class="d">20</span><span class="m">ก.ย. 69</span></div>
+          <div class="body">
+            <p class="t">กิจกรรมสาขา DBT</p>
+            <p class="d">เวลา 08:30 น. | ห้องประชุม</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-day">
+        <div class="d-label">25 กันยายน 2569</div>
+        <div class="sched-item">
+          <div class="date-chip" style="background:var(--green-500);"><span class="d">25</span><span class="m">ก.ย. 69</span></div>
+          <div class="body">
+            <p class="t">ประชุมผู้ปกครอง</p>
+            <p class="d">เวลา 13:00 น. | ห้อง 302</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>© 2025 สาขาเทคโนโลยีธุรกิจดิจิทัล | วิทยาลัยอาชีวศึกษาสระบุรี</footer>
+
+</body>
+</html>
