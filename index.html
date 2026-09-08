@@ -128,14 +128,25 @@
   .portfolio-overlay .cat{font-size:10.5px;color:var(--gold-light);letter-spacing:1px;margin-bottom:2px;}
   .portfolio-overlay h4{font-size:14px;}
 
-  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;}
-  .faculty-card{text-align:center;position:relative;background:#fff;padding:16px 12px;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(0,0,0,0.03);}
-  .faculty-photo{position:relative;width:96px;height:96px;margin:0 auto 10px;}
-  .faculty-photo .ring{position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 180deg,var(--gold-light),var(--gold),var(--gold-light),var(--gold),var(--gold-light));}
-  .faculty-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:50%;border:3px solid #fff;display:block;}
-  .faculty-card h4{font-size:13.5px;color:var(--ink);font-weight:600;margin-bottom:3px;}
-  .faculty-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--purple-deep);font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-bottom:6px;}
-  .faculty-contact{font-size:11px;color:var(--text-soft);display:flex;flex-direction:column;gap:2px;border-top:1px dashed var(--line);padding-top:6px;margin-top:4px;word-break:break-all;}
+  .faculty-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .faculty-view-all{font-size:12.5px;color:var(--purple);font-weight:600;text-decoration:none;white-space:nowrap;}
+  .faculty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;}
+  .faculty-card{
+    text-align:left;position:relative;overflow:hidden;
+    background:#fff;padding:16px;border-radius:16px;
+    border:1px solid var(--line);box-shadow:0 4px 14px rgba(111,87,184,0.07);
+  }
+  .faculty-card::before{
+    content:"";position:absolute;top:-24px;left:-24px;width:100px;height:100px;
+    background:var(--purple-light);opacity:.55;border-radius:50%;filter:blur(4px);
+  }
+  .faculty-photo{position:relative;z-index:1;width:100%;aspect-ratio:1/1;margin-bottom:12px;}
+  .faculty-photo img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block;background:#ece6fa;}
+  .faculty-card h4{position:relative;z-index:1;font-size:13.5px;color:var(--ink);font-weight:700;margin-bottom:2px;word-break:break-word;}
+  .faculty-role{position:relative;z-index:1;font-size:12px;color:var(--purple);font-weight:600;margin-bottom:4px;}
+  .faculty-subject{position:relative;z-index:1;font-size:11.5px;color:var(--text-soft);margin-bottom:10px;word-break:break-word;}
+  .faculty-contact{position:relative;z-index:1;font-size:12px;color:var(--ink);display:flex;flex-direction:column;gap:3px;}
+  .faculty-contact span{display:flex;align-items:center;gap:6px;word-break:break-all;}
 
   .dl-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;}
   .dl-item{background:#fff;padding:12px 14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--gold);box-shadow:0 2px 6px rgba(0,0,0,0.03);gap:8px;position:relative;}
@@ -325,7 +336,10 @@
 
   <section class="bg-alt admin-live" id="faculty">
     <div class="section-container">
-      <h2 class="section-title-plain">คณาจารย์ประจำสาขา</h2>
+      <div class="faculty-section-head">
+        <h2 class="section-title-plain" style="margin-bottom:0;">👥 บุคลากรสาขา</h2>
+        <a href="#faculty" class="faculty-view-all">ดูทั้งหมด →</a>
+      </div>
       <div class="faculty-grid" id="staffGrid"></div>
     </div>
   </section>
@@ -494,24 +508,25 @@ const SECTIONS = {
     key: "dbt_site:staff", grid: "staffGrid", label: "บุคลากร",
     fields: [
       {name:"name", label:"ชื่อ-นามสกุล"},
-      {name:"role", label:"ตำแหน่ง / ความเชี่ยวชาญ"},
-      {name:"phone", label:"เบอร์โทรศัพท์", placeholder:"02-xxx-xxxx"},
-      {name:"email", label:"อีเมล", placeholder:"name@institution.ac.th"},
+      {name:"role", label:"ตำแหน่ง", placeholder:"ครูประจำสาขา"},
+      {name:"subject", label:"วิชาที่สอน / หน่วยงาน", placeholder:"วิชา การตลาดดิจิทัล"},
+      {name:"phone", label:"เบอร์โทรศัพท์", placeholder:"081-234-5678"},
       {name:"img", label:"ลิงก์รูปภาพ (URL)", placeholder:"https://..."}
     ],
     seed: [
-      {id:"s1", name:"ผศ.ดร.สมชาย ใจดี", role:"หัวหน้าสาขาวิชา", phone:"02-111-2222", email:"somchai@institution.ac.th", img:"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"},
-      {id:"s2", name:"อ.ศิริพร วิทยา", role:"เชี่ยวชาญ Digital Marketing", phone:"02-111-2223", email:"siriporn@institution.ac.th", img:"https://images.unsplash.com/photo-1580894732413-a7235a909247?q=80&w=200&auto=format&fit=crop"},
-      {id:"s3", name:"อ.กิตติศักดิ์ พัฒนา", role:"เชี่ยวชาญ Web & App Development", phone:"02-111-2224", email:"kittisak@institution.ac.th", img:"https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"},
-      {id:"s4", name:"อ.นภาวรรณ สุขเสริฐ", role:"เชี่ยวชาญ E-Commerce & UX/UI", phone:"02-111-2225", email:"napawan@institution.ac.th", img:"https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop"}
+      {id:"s1", name:"นางสาวทนกวรรณ ศรีสุข", role:"หัวหน้าสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-234-5678", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=head1&backgroundColor=e8def7"},
+      {id:"s2", name:"นางสาววิภาดา ใจดี", role:"ครูประจำสาขา", subject:"วิชา การตลาดดิจิทัล", phone:"081-111-2233", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff2&backgroundColor=e8def7"},
+      {id:"s3", name:"นายนาถร แสงทอง", role:"ครูประจำสาขา", subject:"วิชา คอมพิวเตอร์ธุรกิจ", phone:"089-222-3344", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff3&backgroundColor=e8def7"},
+      {id:"s4", name:"นางสาวปิยธิดา จันทร์หอม", role:"ครูประจำสาขา", subject:"วิชา ธุรกิจออนไลน์", phone:"089-233-4455", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff4&backgroundColor=e8def7"},
+      {id:"s5", name:"นายสราวุธ อินทร์ใจ", role:"ครูประจำสาขา", subject:"วิชา เทคโนโลยีสารสนเทศ", phone:"087-444-5566", img:"https://api.dicebear.com/7.x/avataaars/svg?seed=staff5&backgroundColor=e8def7"}
     ],
     render: (item) => `
-      <div class="faculty-photo"><div class="ring"></div><img src="${esc(item.img)}" alt="${esc(item.name)}"></div>
+      <div class="faculty-photo"><img src="${esc(item.img)}" alt="${esc(item.name)}"></div>
       <h4>${esc(item.name)}</h4>
-      <div class="faculty-badge">${esc(item.role)}</div>
+      <div class="faculty-role">${esc(item.role)}</div>
+      ${item.subject ? `<div class="faculty-subject">${esc(item.subject)}</div>` : ""}
       <div class="faculty-contact">
         ${item.phone ? `<span>📞 ${esc(item.phone)}</span>` : ""}
-        ${item.email ? `<span>✉️ ${esc(item.email)}</span>` : ""}
       </div>`,
     wrapClass: "faculty-card"
   },
