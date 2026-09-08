@@ -382,7 +382,7 @@
     <div class="admin-modal" style="max-width:320px; max-height:auto;">
       <div class="admin-modal-head"><h3>เข้าสู่ระบบแอดมิน</h3><button class="close-x" id="closeLogin">✕</button></div>
       <div class="login-box">
-        <p>กรอกรหัสผ่านสำหรับผู้ดูแลระบบ (รหัสผ่านเริ่มต้น: <b>311051</b>)</p>
+        <p>กรอกรหัสผ่านสำหรับผู้ดูแลระบบ (รหัสผ่านเริ่มต้น: <b>dbt2569</b>)</p>
         <div class="field"><input type="password" id="pwInput" placeholder="รหัสผ่าน"></div>
         <button class="btn-save" style="width:100%" id="pwSubmit">เข้าสู่ระบบ</button>
         <div class="status-msg" id="loginError"></div>
@@ -517,8 +517,8 @@ const SECTIONS = {
       {id:"s1", name:"นางสาวณัชกานต์ รอดสการ", role:"หัวหน้าสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-234-5678", img:"https://rms.rsc.ac.th/files/87016_25011714145016.jpg"},
       {id:"s2", name:"นางสาวดาวพระศุกร์ ฤทธิบัณฑิตย์", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"081-111-2233", img:"https://rms.rsc.ac.th/files/62588_25011714145617.jpg"},
       {id:"s3", name:"นางสาวอัญธิภา พรแสน", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"089-222-3344", img:"https://rms.rsc.ac.th/files/81579_25012013130513.jpg"},
-      {id:"s4", name:"นางมลฤดี พึ่งผล", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล, phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/60753_25011714145200.jpg"},
-       {id:"s5", name:"นางสาวสายฝน บุญสิม", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล, phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/52820_24103011110241.jpg"},
+      {id:"s4", name:"นางมลฤดี พึ่งผล", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/60753_25011714145200.jpg"},
+      {id:"s5", name:"นางสาวสายฝน บุญสิม", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"089-233-4455", img:"https://rms.rsc.ac.th/files/52820_24103011110241.jpg"},
       {id:"s6", name:"นายพิสิทธิ์ หนีกระโทก", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/04413_25011714145008.jpg"},
       {id:"s7", name:"นางสาวธารทิพย์ ภาเรือง", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/55486_25011714144741.jpg"},
       {id:"s8", name:"นางสาวธัญรัตน์ นามยงค์", role:"ครูประจำสาขา", subject:"สาขาเทคโนโลยีธุรกิจดิจิทัล", phone:"087-444-5566", img:"https://rms.rsc.ac.th/files/32478_2603100990950.png"},
@@ -609,7 +609,7 @@ function renderPublic(type){
   grid.innerHTML = items.map(item => {
     const wrapClass = cfg.wrapClass || "";
     return `<div class="${wrapClass}">${renderCardTools(type, item.id)}${cfg.render(item)}</div>`;
-  }).join("");
+  }).join('');
 }
 
 function renderAllPublic(){
@@ -619,166 +619,190 @@ function renderAllPublic(){
   });
 }
 
-function openDash(){
-  document.getElementById("dashOverlay").classList.remove("hidden");
-  switchTab(activeTab);
-}
-function closeDash(){ document.getElementById("dashOverlay").classList.add("hidden"); }
-
-function switchTab(type){
-  activeTab = type; editingId = null;
-  document.querySelectorAll(".admin-tab").forEach(b => b.classList.toggle("active", b.dataset.type === type));
-  renderDashBody();
-}
-
-function renderDashBody(){
+function renderDashboardBody(){
+  const body = document.getElementById("dashBody");
   const cfg = SECTIONS[activeTab];
   const items = state[activeTab] || [];
-  const body = document.getElementById("dashBody");
-  const editingItem = editingId ? items.find(i => i.id === editingId) : null;
 
-  const formFields = cfg.fields.map(f => {
-    const val = editingItem ? (editingItem[f.name] || "") : "";
-    if(f.area){
-      return `<div class="field"><label>${f.label}</label><textarea id="field_${f.name}" placeholder="${f.placeholder || ''}">${esc(val)}</textarea></div>`;
-    }
-    return `<div class="field"><label>${f.label}</label><input type="text" id="field_${f.name}" value="${esc(val)}" placeholder="${f.placeholder || ''}"></div>`;
-  }).join("");
+  let html = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h4 style="font-size:13.5px;color:var(--purple-deep);">จัดการ${cfg.label}</h4>
+      <button class="btn-save" onclick="openForm('${activeTab}')">+ เพิ่มรายการใหม่</button>
+    </div>
+  `;
 
-  const listRows = items.length === 0 ? `<p style="font-size:12px;color:var(--text-soft);text-align:center;padding:10px;">ยังไม่มีข้อมูล</p>` :
-    items.map(item => {
-      const primaryText = item.title || item.name || item.label || "รายการ";
-      const secondaryText = item.date || item.month || item.category || item.role || "";
-      return `
+  if(editingId !== null){
+    const item = editingId === "" ? {} : items.find(x => x.id === editingId) || {};
+    html += `
+      <div style="background:var(--paper);padding:12px;border-radius:10px;border:1px solid var(--line);margin-bottom:14px;">
+        <h5 style="font-size:12.5px;margin-bottom:8px;color:var(--purple);">${editingId === "" ? "เพิ่มรายการใหม่" : "แก้ไขรายการ"}</h5>
+        <form onsubmit="saveFormItem(event, '${activeTab}', '${editingId}')">
+    `;
+    cfg.fields.forEach(f => {
+      const val = item[f.name] || "";
+      html += `<div class="field"><label>${f.label}</label>`;
+      if(f.area){
+        html += `<textarea name="${f.name}" placeholder="${f.placeholder || ""}">${esc(val)}</textarea>`;
+      } else {
+        html += `<input type="text" name="${f.name}" value="${esc(val)}" placeholder="${f.placeholder || ""}">`;
+      }
+      html += `</div>`;
+    });
+    html += `
+          <div class="form-actions">
+            <button type="submit" class="btn-save">บันทึก</button>
+            <button type="button" class="btn-cancel" onclick="cancelForm()">ยกเลิก</button>
+          </div>
+        </form>
+      </div>
+    `;
+  }
+
+  if(items.length === 0){
+    html += `<div style="text-align:center;padding:16px;color:var(--text-soft);font-size:12px;">ยังไม่มีข้อมูลในส่วนนี้</div>`;
+  } else {
+    items.forEach(item => {
+      const mainText = item.title || item.name || item.label || item.date || "ไม่มีหัวข้อ";
+      const subText = item.location || item.desc || item.role || item.badge || "";
+      html += `
         <div class="admin-list-item">
           <div class="info">
-            <b>${esc(primaryText)}</b>
-            <span>${esc(secondaryText)}</span>
+            <b>${esc(mainText)}</b>
+            <span>${esc(subText)}</span>
           </div>
           <div class="row-actions">
-            <button class="edit-btn" onclick="editItem('${activeTab}','${item.id}')">แก้ไข</button>
-            <button class="del-btn" onclick="deleteItem('${activeTab}','${item.id}')">ลบ</button>
+            <button class="edit-btn" onclick="openForm('${activeTab}', '${item.id}')">แก้ไข</button>
+            <button class="del-btn" onclick="deleteItem('${activeTab}', '${item.id}')">ลบ</button>
           </div>
         </div>
       `;
-    }).join("");
-
-  body.innerHTML = `
-    <div style="background:var(--paper);padding:12px;border-radius:10px;margin-bottom:14px;border:1px solid var(--line);">
-      <h4 style="font-size:13px;color:var(--purple-deep);margin-bottom:8px;">${editingItem ? "✏️ แก้ไขรายการ" : "➕ เพิ่มรายการใหม่"}</h4>
-      <form id="dashForm" onsubmit="handleFormSubmit(event)">
-        ${formFields}
-        <div class="form-actions">
-          <button type="submit" class="btn-save">${editingItem ? "บันทึกการแก้ไข" : "เพิ่มข้อมูล"}</button>
-          ${editingItem ? `<button type="button" class="btn-cancel" onclick="cancelEdit()">ยกเลิก</button>` : ""}
-        </div>
-      </form>
-    </div>
-    <h4 style="font-size:13px;color:var(--purple-deep);margin-bottom:8px;">รายการทั้งหมดใน ${cfg.label}</h4>
-    <div>${listRows}</div>
-  `;
+    });
+  }
+  body.innerHTML = html;
 }
 
-function handleFormSubmit(e){
+function openForm(type, id = ""){
+  editingId = id;
+  renderDashboardBody();
+}
+function cancelForm(){
+  editingId = null;
+  renderDashboardBody();
+}
+function saveFormItem(e, type, id){
   e.preventDefault();
-  const cfg = SECTIONS[activeTab];
-  const newItem = editingId ? {...(state[activeTab].find(i=>i.id===editingId))} : {id: uid()};
-  
+  const form = e.target;
+  const cfg = SECTIONS[type];
+  const newItem = id === "" ? { id: uid() } : { id };
   cfg.fields.forEach(f => {
-    const el = document.getElementById(`field_${f.name}`);
-    if(el) newItem[f.name] = el.value.trim();
+    newItem[f.name] = form.elements[f.name].value.trim();
   });
 
-  if(!state[activeTab]) state[activeTab] = [];
-  if(editingId){
-    const idx = state[activeTab].findIndex(i => i.id === editingId);
-    if(idx !== -1) state[activeTab][idx] = newItem;
+  if(!state[type]) state[type] = [];
+  if(id === ""){
+    state[type].unshift(newItem);
   } else {
-    state[activeTab].unshift(newItem);
+    const idx = state[type].findIndex(x => x.id === id);
+    if(idx !== -1) state[type][idx] = newItem;
   }
 
-  saveSection(activeTab);
-  renderPublic(activeTab);
+  saveSection(type);
+  renderPublic(type);
   editingId = null;
-  renderDashBody();
-  toast("บันทึกข้อมูลเรียบร้อยแล้ว");
+  renderDashboardBody();
+  toast("บันทึกสำเร็จ");
 }
-
-window.editItem = function(type, id){
+function deleteItem(type, id){
+  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
+  state[type] = (state[type] || []).filter(x => x.id !== id);
+  saveSection(type);
+  renderPublic(type);
+  renderDashboardBody();
+  toast("ลบเรียบร้อย");
+}
+function deleteItemDirect(type, id){
+  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
+  state[type] = (state[type] || []).filter(x => x.id !== id);
+  saveSection(type);
+  renderPublic(type);
+  if(!document.getElementById("dashOverlay").classList.contains("hidden")){
+    renderDashboardBody();
+  }
+  toast("ลบเรียบร้อย");
+}
+function editItem(type, id){
   activeTab = type;
+  document.querySelectorAll(".admin-tab").forEach(t => {
+    t.classList.toggle("active", t.getAttribute("data-type") === type);
+  });
+  document.getElementById("dashOverlay").classList.remove("hidden");
   editingId = id;
-  openDash();
+  renderDashboardBody();
 }
 
-window.deleteItemDirect = function(type, id){
-  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
-  state[type] = (state[type] || []).filter(i => i.id !== id);
-  saveSection(type);
-  renderPublic(type);
-  toast("ลบรายการเรียบร้อยแล้ว");
-}
-
-window.deleteItem = function(type, id){
-  if(!confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) return;
-  state[type] = (state[type] || []).filter(i => i.id !== id);
-  saveSection(type);
-  renderPublic(type);
-  renderDashBody();
-  toast("ลบรายการเรียบร้อยแล้ว");
-}
-
-window.cancelEdit = function(){
-  editingId = null;
-  renderDashBody();
-}
-
-// Event Listeners
+// UI Event Handlers
 document.getElementById("menuToggleBtn").addEventListener("click", () => {
   document.getElementById("navLinksList").classList.toggle("open");
 });
-
 document.querySelectorAll(".nav-link-item").forEach(link => {
   link.addEventListener("click", () => {
     document.getElementById("navLinksList").classList.remove("open");
   });
 });
 
-document.getElementById("adminEntryBtn").addEventListener("click", () => {
+const adminEntryBtn = document.getElementById("adminEntryBtn");
+const loginOverlay = document.getElementById("loginOverlay");
+const dashOverlay = document.getElementById("dashOverlay");
+const openDashboardFab = document.getElementById("openDashboardFab");
+
+adminEntryBtn.addEventListener("click", () => {
   if(isAdmin){
-    document.querySelectorAll(".admin-live").forEach(el => el.classList.toggle("show-admin-tools"));
-    toast(document.querySelectorAll(".admin-live")[0].classList.contains("show-admin-tools") ? "เปิดโหมดจัดการบนหน้าเว็บ" : "ปิดโหมดจัดการบนหน้าเว็บ");
+    dashOverlay.classList.remove("hidden");
+    renderDashboardBody();
   } else {
-    document.getElementById("loginOverlay").classList.remove("hidden");
+    loginOverlay.classList.remove("hidden");
     document.getElementById("pwInput").value = "";
     document.getElementById("loginError").textContent = "";
   }
 });
 
-document.getElementById("closeLogin").addEventListener("click", () => {
-  document.getElementById("loginOverlay").classList.add("hidden");
-});
+document.getElementById("closeLogin").addEventListener("click", () => loginOverlay.classList.add("hidden"));
+document.getElementById("closeDash").addEventListener("click", () => dashOverlay.classList.add("hidden"));
 
 document.getElementById("pwSubmit").addEventListener("click", () => {
   const pw = document.getElementById("pwInput").value;
   if(pw === ADMIN_PASSWORD){
     isAdmin = true;
-    document.getElementById("loginOverlay").classList.add("hidden");
-    document.getElementById("openDashboardFab").classList.remove("hidden");
+    loginOverlay.classList.add("hidden");
+    openDashboardFab.classList.remove("hidden");
     document.querySelectorAll(".admin-live").forEach(el => el.classList.add("show-admin-tools"));
-    toast("เข้าสู่ระบบแอดมินสำเร็จ!");
+    dashOverlay.classList.remove("hidden");
+    renderDashboardBody();
+    toast("เข้าสู่ระบบแอดมินสำเร็จ");
   } else {
     document.getElementById("loginError").textContent = "รหัสผ่านไม่ถูกต้อง";
   }
 });
 
-document.getElementById("openDashboardFab").addEventListener("click", openDash);
-document.getElementById("closeDash").addEventListener("click", closeDash);
-
-document.querySelectorAll(".admin-tab").forEach(tab => {
-  tab.addEventListener("click", () => switchTab(tab.dataset.type));
+openDashboardFab.addEventListener("click", () => {
+  dashOverlay.classList.remove("hidden");
+  renderDashboardBody();
 });
 
-// เริ่มต้นโหลดข้อมูลทั้งหมด
+document.querySelectorAll(".admin-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".admin-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeTab = btn.getAttribute("data-type");
+    editingId = null;
+    renderDashboardBody();
+  });
+});
+
+// Init Default Active Tab
+document.querySelector('.admin-tab[data-type="calendar"]').classList.add("active");
+
+// Run All Renders
 renderAllPublic();
 </script>
 </body>
